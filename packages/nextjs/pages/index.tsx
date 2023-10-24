@@ -224,11 +224,11 @@ const Home: NextPage = () => {
     }
   };
 
-  const playerSelector = async (selectedPlayer: Character) => {
-    if (!selectedPlayer) return console.log("no player selected");
+  const playerSelector = async () => {
+    if (!players) return console.log("no players");
 
-    setPlayer(selectedPlayer);
     await fetchCharMedia();
+
     if (deadIndex >= dead.length) {
       setDeadIndex(0);
 
@@ -338,22 +338,45 @@ const Home: NextPage = () => {
         </div>
 
         <div className="flex justify-center items-center">
-          <div className="border-2 border-white text-center w-full max-w-2xl mx-auto overflow-hidden">
-            {players && players.length > 0 ? (
+          <div className="border-2 border-white text-center w-full max-w-xl overflow-hidden">
+            {dead && dead.length > 0 ? (
               <Slider {...settings}>
-                {players.map((player, index) => (
+                {dead.map((deadCharacter, index) => (
                   <div key={index} className="p-4">
                     <div className="card">
-                      <div>Name: {player.name}</div>
-                      <div>Level: {player.level}</div>
-                      <div>Race: {player.race}</div>
-                      <div>Class: {player.class}</div>
+                      <div>Name: {deadCharacter.name}</div>
+                      <div>Level: {deadCharacter.level}</div>
+                      <div>Race: {deadCharacter.race}</div>
+                      <div>Class: {deadCharacter.class}</div>
+                      <div>
+                        <button
+                          className="border-2 border-black text-center rounded-md mb-1"
+                          onClick={() => {
+                            if (player) {
+                              fetchCharMedia();
+                              render();
+                            } else {
+                              toast.error("No character selected");
+                            }
+                          }}
+                        >
+                          Fetch and Render Equipment
+                        </button>
+                        <br />
+
+                        <button
+                          className="border-2 border-black text-center rounded-md"
+                          onClick={() => setPlayer(deadCharacter)}
+                        >
+                          Select
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
               </Slider>
             ) : (
-              <div>No players</div>
+              <div>No dead characters</div>
             )}
           </div>
         </div>
