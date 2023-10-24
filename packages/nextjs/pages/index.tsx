@@ -266,18 +266,21 @@ const Home: NextPage = () => {
   const InventoryUrl = () => {
     let url = "";
     player?.equipped_items?.map(async (item: any) => {
-      const slot = item.slot.type;
-      const inventorySlot = inventory[`${slot}` as keyof typeof inventory];
-      const equipped_item = {
-        slot: slot,
-        slot_ID: inventorySlot,
-        item_id: item.item.id,
-        item_name: item.name.en_US,
-      };
+      if (item && item.slot && typeof item.slot.type === "string") {
+        const slot = item.slot.type;
+        const inventorySlot = inventory[`${slot}` as keyof typeof inventory];
+        const equipped_item = {
+          slot: slot,
+          slot_ID: inventorySlot,
+          item_id: item.item.id,
+          item_name: item.name.en_US,
+        };
 
-      url = url + `&${slot}=${equipped_item.item_id}`;
+        url = url + `&${slot}=${equipped_item.item_id}`;
+      } else {
+        console.error("Invalid item or slot type", item);
+      }
     });
-    return url;
   };
   const render = () => {
     const index3 = player?.race ? RACES.indexOf(player?.race) + 1 : "1";
@@ -311,8 +314,8 @@ const Home: NextPage = () => {
   // Once the popup is closed
   return (
     <>
-      <div className="flex flex-col items-center justify-center bg-black text-white">
-        <div className="card mb-4">
+      <div className="flex flex-col items-center justify-center bg-black text-white pt-5">
+        <div className="card mb-4 p-4">
           {!user ? (
             <button
               onClick={() => {
@@ -338,7 +341,7 @@ const Home: NextPage = () => {
         </div>
 
         <div className="flex justify-center items-center">
-          <div className="border-2 border-white text-center w-full max-w-xl overflow-hidden">
+          <div className="border-2 border-white text-center max-w-xl overflow-hidden rounded-md p-8">
             {dead && dead.length > 0 ? (
               <Slider {...settings}>
                 {dead.map((deadCharacter, index) => (
