@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
-import { MetaHeader } from "~~/components/MetaHeader";
 import { useAccount } from "wagmi"
+
 
 type Character = {
   id: number;
@@ -39,10 +39,7 @@ const Home: NextPage = () => {
   const [database, setDatabase] = useState<any[]>([]);
   const [player, setPlayer] = useState<Character | undefined>();
   const [deadIndex, setDeadIndex] = useState<number>(0);
-  const [picker, setPicker] = useState<any>(null);
-  const [picker3, setPicker3] = useState<any>(null);
-  const [picker2, setPicker2] = useState<any>(null);
-  const [picker1, setPicker1] = useState<any>(null);
+
 
   // Renderer
   //
@@ -328,7 +325,7 @@ const Home: NextPage = () => {
     toast.success(`success rendering ${index3}`);
     console.log(index3, "index3")
     popup = window.open(
-      `http://localhost:3000/api/render?characterId=${player?.id}&name=${player?.name}&faction=${player?.faction}&class=${player?.class}&gender=${player?.gender == 'MALE' ? 0 : 1}&race=${index3}&facial_hair=${picker ? picker + 1 : 1}&hairStyle=${picker ? picker + 1 : 1}&hairColor=${picker2 ? picker2 + 1 : 1}&facialStyle=${picker3 ? picker3 + 1 : 1}` + url,
+      `http://localhost:3000/api/render?characterId=${player?.id}&name=${player?.name}&faction=${player?.faction}&class=${player?.class}&gender=1&race=${index3}&facial_hair=1&hairStyle=1&hairColor=1&facialStyle=1` + url,
       "targetWindow",
       `toolbar=no,
        location=no,
@@ -345,53 +342,21 @@ const Home: NextPage = () => {
   return (
     <>
 
-      <div className="flex justify-center items-center h-screen">
-        <div hx-get="viewer/viewer" hx-trigger="click">
-          <button>test</button>
-        </div>
-        <button onClick={() => playerSelector()}>select player</button>
 
-        <MetaHeader />
-        <div className="card">
-          {!user ? <button
-            onClick={() => {
-              login();
-            }}
-          >
-            LOGIN WITH BNET
-          </button> : <div>logged in</div>}
-          <button onClick={() => {
-            if (picker > 5 || picker == null) return setPicker(0);
-            setPicker(picker + 1);
-            toast.success(`${picker} "picker"`)
-          }}>picker {picker}</button>
-          <button onClick={() => {
-            if (picker1 > 5 || picker1 == null) return setPicker1(0);
-            setPicker1(picker1 + 1);
-            toast.success(`${picker1} "picker"`)
-          }}>picker1 {picker1}</button>     <button onClick={() => {
-            if (picker2 > 5 || picker2 == null) return setPicker2(0);
-            setPicker2(picker2 + 1);
-            toast.success(`${picker2} "picker"`)
-          }}>picker2 {picker2}</button>     <button onClick={() => {
-            if (picker3 > 5 || picker3 == null) return setPicker3(0);
-            setPicker3(picker3 + 1);
-            toast.success(`${picker3} "picker"`)
-          }}>picker3 {picker3}</button>
-          <br />
-          <button
-            onClick={() => {
-              render();
-            }}
-          >
-            RENDER
-          </button>
-          Bnet User:{user?.token ? user.token : "no data"}
-          <br />
-          Address:{address ? address : "no data"}
 
-          <p>USER:{user ? user.battletag : "no data"}</p>
-        </div>
+      <div className="card">
+        {!user ? <button
+          onClick={() => {
+            login();
+          }}
+        >
+          LOGIN WITH BNET
+        </button> : <div>logged in</div>}
+        Bnet User:{user?.token ? user.token : "no data"}
+        <br />
+        Address:{address ? address : "no data"}
+
+        <p>USER:{user ? user.battletag : "no data"}</p>
         <button
           onClick={e => {
             e.preventDefault();
@@ -401,16 +366,28 @@ const Home: NextPage = () => {
         >
           logout
         </button>
-        <div>
-          <button
-            onClick={e => {
-              e.preventDefault();
-              toast.success("success getting clicked");
-            }}
-          >
-            protected
-          </button>
+      </div>
+      <br />
+      <div className="flex justify-center items-center h-screen">
+        <div className="border-2 border-white">
+          {player ? <div key={player.id}>
+            <div>
+              Id: {player.id}
+              <p>
+                {player.name} level {player.level}
+                <br />
+                {player.race} {player.class} of the {player.faction}
+              </p>
+            </div>
+          </div>
+
+            : <div>no player</div>}
+          <button onClick={() => playerSelector()}>select      <br />  player</button>
         </div>
+        <br />
+
+        <br />
+
 
       </div>
     </>
@@ -418,3 +395,4 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
