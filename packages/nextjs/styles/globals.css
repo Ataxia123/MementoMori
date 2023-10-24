@@ -30,3 +30,27 @@ p {
 .btn.btn-ghost {
   @apply shadow-none;
 }
+
+.slick-prev, .slick-next {
+  font-size: 24px;
+  color: white;
+  z-index: 1;
+}
+
+.slick-prev {
+  left: -30px;
+}
+
+.slick-next {
+  right: -30px;
+}
+
+.card {
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
