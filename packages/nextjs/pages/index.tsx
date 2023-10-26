@@ -364,44 +364,49 @@ const Home: NextPage = () => {
             ) : (
               <div>No dead characters</div>
             )}
-          </div>
-        </div>
-        <br />
-        <div className="card">
-          <div>Name: {player?.name}</div>
-          <div>Level: {player?.level}</div>
-          <div>Race: {player?.race}</div>
-          <div>Class: {player?.class}</div>
-          {player?.equipped_items?.map((item: any) => (
-            <div key={item.slot.type}>
-              {item.quality.type == "COMMON" ? (
-                <div className="text-gray-500">
-                  {item.slot.type}: {item.name.en_US}
-                  <br />
-                </div>
-              ) : (
-                <div>
-                  {" "}
-                  {item.slot.type}:{" "}
-                  {item.quality.type == "UNCOMMON" ? (
-                    <span className="text-green-500">
-                      {item.name.en_US}
-                      <br />
-                    </span>
-                  ) : (
-                    <div>
-                      {" "}
-                      {item.slot.type}:{" "}
-                      <span className="text-blue-500">
-                        {item.name.en_US}
-                        <br />
-                      </span>
-                    </div>
-                  )}
-                </div>
-              )}
+
+            <br />
+            <div>
+              {player?.name} <br />
+              Level {player?.level} {player?.race} {player?.class}
+              <div className="card-bg-black text-left">
+                {player?.equipped_items?.map((item: any) => (
+                  <div key={item.slot.type}>
+                    {item.slot.type}:
+                    {item.quality.type == "POOR" ? (
+                      <span className="text-gray-500"> {item.name.en_US}</span>
+                    ) : (
+                      <>
+                        {item.quality.type == "COMMON" ? (
+                          <span className="text-white-500"> {item.name.en_US}</span>
+                        ) : (
+                          <>
+                            {item.quality.type == "UNCOMMON" ? (
+                              <span className="text-green-500"> {item.name.en_US}</span>
+                            ) : (
+                              <>
+                                {item.quality.type == "RARE" ? (
+                                  <span className="text-blue-500"> {item.name.en_US}</span>
+                                ) : (
+                                  <>
+                                    {item.quality.type == "EPIC" ? (
+                                      <span className="text-purple-500"> {item.name.en_US}</span>
+                                    ) : (
+                                      <span className="text-orange-500"> {item.name.en_US}</span>
+                                    )}
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </>
