@@ -372,7 +372,6 @@ const Home: NextPage = () => {
               <div className="card-bg-black text-left">
                 {player?.equipped_items?.map((item: any) => (
                   <div key={item.slot.type}>
-                    {item.slot.type}:
                     {item.quality.type == "POOR" ? (
                       <span className="text-gray-500"> {item.name.en_US}</span>
                     ) : (
