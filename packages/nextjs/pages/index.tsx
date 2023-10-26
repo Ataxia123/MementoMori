@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import React from "react";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
-import { useAccount } from "wagmi"
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import { useAccount } from "wagmi";
 
 type Character = {
   id: number;
@@ -14,23 +17,12 @@ type Character = {
   race: string;
   faction: string;
   is_ghost: boolean;
-  equipped_items: [{}];
+  equipped_items: [unknown];
   media?: string;
-}
+};
 
 const Home: NextPage = () => {
-
-
-  const RACES = [
-    `Human`,
-    `Orc`,
-    `Dwarf`,
-    `Night Elf`,
-    `Undead`,
-    `Tauren`,
-    `Gnome`,
-    `Troll`];
-
+  const RACES = [`Human`, `Orc`, `Dwarf`, `Night Elf`, `Undead`, `Tauren`, `Gnome`, `Troll`];
 
   const [user, setUser] = useState<any>(null);
   const [players, setPlayers] = useState<any[]>();
@@ -40,32 +32,32 @@ const Home: NextPage = () => {
   const [player, setPlayer] = useState<Character | undefined>();
   const [deadIndex, setDeadIndex] = useState<number>(0);
 
-
   // Renderer
   //
   //
   const inventory = {
-    "HEAD": 1,
-    "NECK": 2,
-    "SHOULDER": 3,
-    "SHIRT": 4,
-    "CHEST": 5,
-    "WAIST": 6,
-    "LEGS": 7,
-    "FEET": 8,
-    "WRIST": 9,
-    "HANDS": 10,
-    "BACK": 15,
-    "MAIN_HAND": 16,
-    "OFF_HAND": 17,
-    "RANGED": 18,
-    "TABBARD": 19,
-  }
-  const account = useAccount()
+    HEAD: 1,
+    NECK: 2,
+    SHOULDER: 3,
+    SHIRT: 4,
+    CHEST: 5,
+    WAIST: 6,
+    LEGS: 7,
+    FEET: 8,
+    WRIST: 9,
+    HANDS: 10,
+    BACK: 15,
+    MAIN_HAND: 16,
+    OFF_HAND: 17,
+    RANGED: 18,
+    TABBARD: 19,
+  };
+  const account = useAccount();
 
   const address = account?.address;
   // LOGIN METHODS
   let popup: Window | null = null;
+
   const login = () => {
     popup = window.open(
       "http://localhost:3000/oauth/battlenet",
@@ -136,7 +128,6 @@ const Home: NextPage = () => {
       const data = await response.json();
       toast.success("success posting dead players to db");
       console.log(data, "POST Player data response");
-
     } catch (e) {
       toast.error("error posting dead players to db");
       console.log(e);
@@ -151,8 +142,7 @@ const Home: NextPage = () => {
       const data = await response.json();
       const wowAccount = data.wow_accounts[0].characters;
       setPlayers(wowAccount);
-    }
-    catch (e) {
+    } catch (e) {
       toast.error("error getting characters");
       console.log(e);
     }
@@ -178,18 +168,15 @@ const Home: NextPage = () => {
         gender: data.gender.type,
         is_ghost: data.is_ghost,
         media: data.equipment.href,
-        equipped_items: [{}]
+        equipped_items: [{}],
       };
-      console.log(data, index1, index2, "data")
+      console.log(data, index1, index2, "data");
       if (data.is_ghost == true && index1 == -1) {
         // maybe update database here
         setDead(prevState => [...prevState, profile]);
 
-
         return console.log(data.name, "dead", data.level);
-
       } else {
-
         if (index0 != -1 || data.level < 10) return console.log(data.name, "already in db", data.level);
         console.log(profile, "profile");
         setAlive(prevState => [...prevState, profile]);
@@ -197,35 +184,31 @@ const Home: NextPage = () => {
         return console.log(data.name, "not dead", data.level);
       }
     } catch (e) {
-      return console.log(e)
+      return console.log(e);
     }
   };
 
   const fetchCharMedia = async () => {
     if (user?.token == null) return console.log("no token");
 
-
     try {
       players?.map((character: any) => {
-        if (character.level < 10) return console.log(character.character.name, "too low level", character.character.level);
+        if (character.level < 10)
+          return console.log(character.character.name, "too low level", character.character.level);
         fetchCharData(character.character.href);
       });
 
-
       //todo: change to dead players
 
+      const url = dead[deadIndex]?.media;
 
-      let url = dead[deadIndex]?.media;
-
-      console.log(url, "url", dead[deadIndex]?.name, "name", deadIndex, "deadIndex")
+      console.log(url, "url", dead[deadIndex]?.name, "name", deadIndex, "deadIndex");
 
       const response = await fetch(`${url}&access_token=${user.token}`);
       const data = await response.json();
       const index = dead?.findIndex(x => x.id === data.character.id);
 
-
-      console.log(response, "data")
-
+      console.log(response, "data");
 
       setDead(prevState => {
         const newState = [...prevState];
@@ -236,44 +219,21 @@ const Home: NextPage = () => {
       });
       console.log(data, dead[index].name, "equipment data", alive, index);
       toast.success(`"success getting characters"${dead[deadIndex].name}`);
-
-    }
-
-    catch (e) {
+    } catch (e) {
       toast.error("error getting equipment");
       console.log(e);
     }
-
   };
 
-  const playerSelector = async () => {
-
+  const playerSelector = async (index: number) => {
     if (!players) return console.log("no players");
 
     await fetchCharMedia();
 
+    setDeadIndex(index);
 
-
-
-
-    if (deadIndex >= dead.length) {
-
-      setDeadIndex(0);
-
-
-      toast.success(`"success getting all players ${dead.length} ${deadIndex + 1}"`);
-
-    } else {
-
-
-      setDeadIndex(deadIndex + 1);
-
-
-    }
-
-  }
-    ;
-
+    toast.success(`"success getting all players ${dead.length} ${deadIndex + 1}"`);
+  };
   useEffect(() => {
     fetchDb();
   }, []);
@@ -288,44 +248,46 @@ const Home: NextPage = () => {
     console.log(players, "players");
 
     players?.map((character: any) => {
-      if (character.level < 10) return console.log(character.character.name, "too low level", character.character.level);
+      if (character.level < 10)
+        return console.log(character.character.name, "too low level", character.character.level);
       fetchCharData(character.character.href);
-
     });
 
-    console.log("dead", dead, "alive", alive)
+    console.log("dead", dead, "alive", alive);
     toast.success("success getting characters");
   }, [players]);
   //this code is so ugly i need to make this console log to remind myself of how ugly it is
 
-  console.log("FIX ME PLEASE💀💀💀💀")
-
-
+  console.log("FIX ME PLEASE💀💀💀💀");
 
   const InventoryUrl = () => {
-    let url = '';
+    let url = "";
     player?.equipped_items?.map(async (item: any) => {
-      const slot = item.slot.type;
-      const inventorySlot = inventory[`${slot}` as keyof typeof inventory]
-      const equipped_item = {
-        "slot": slot,
-        "slot_ID": inventorySlot,
-        "item_id": item.item.id,
-        "item_name": item.name.en_US,
-      }
+      if (item && item.slot && typeof item.slot.type === "string") {
+        const slot = item.slot.type;
+        const inventorySlot = inventory[`${slot}` as keyof typeof inventory];
+        const equipped_item = {
+          slot: slot,
+          slot_ID: inventorySlot,
+          item_id: item.item.id,
+          item_name: item.name.en_US,
+        };
 
-      url = url + `&${slot}=${equipped_item.item_id}`
-    })
-    return url
-  }
+        url = url + `&${slot}=${equipped_item.item_id}`;
+      } else {
+        console.error("Invalid item or slot type", item);
+      }
+    });
+  };
   const render = () => {
     const index3 = player?.race ? RACES.indexOf(player?.race) + 1 : "1";
-    const url = InventoryUrl()
-    console.log(url)
+    const url = InventoryUrl();
+    console.log(url);
     toast.success(`success rendering ${index3}`);
-    console.log(index3, "index3")
+    console.log(index3, "index3");
     popup = window.open(
-      `http://localhost:3000/api/render?characterId=${player?.id}&name=${player?.name}&faction=${player?.faction}&class=${player?.class}&gender=1&race=${index3}&facial_hair=1&hairStyle=1&hairColor=1&facialStyle=1` + url,
+      `http://localhost:3000/api/render?characterId=${player?.id}&name=${player?.name}&faction=${player?.faction}&class=${player?.class}&gender=1&race=${index3}&facial_hair=1&hairStyle=1&hairColor=1&facialStyle=1` +
+        url,
       "targetWindow",
       `toolbar=no,
        location=no,
@@ -335,64 +297,119 @@ const Home: NextPage = () => {
        resizable=yes,
        width=620,
        height=700`,
-    )    //listen for response
-
+    ); //listen for response
   };
+
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   // Once the popup is closed
   return (
     <>
+      <div className="flex flex-col items-center justify-center bg-black text-white pt-5">
+        <div className="card mb-4 p-4">
+          {!user ? (
+            <button
+              onClick={() => {
+                login();
+              }}
+            >
+              LOGIN WITH BNET
+            </button>
+          ) : (
+            <div>Logged in as {user.battletag}</div>
+          )}
+          <div>Bnet User: {user?.token || "no data"}</div>
+          <div>Address: {address || "no data"}</div>
+          <div>User: {user ? user.battletag : "no data"}</div>
+          <button
+            onClick={() => {
+              logout();
+              toast.success("Successfully logged out");
+            }}
+          >
+            Logout
+          </button>
+        </div>
 
+        <div className="flex justify-center items-center">MEMENTO MORI</div>
+        <div className="flex justify-center items-center">
+          <div className="border-2 border-white text-center max-w-xl overflow-hidden rounded-md p-8">
+            {dead && dead.length > 0 ? (
+              <Slider {...settings}>
+                {dead.map((deadCharacter, index) => (
+                  <div key={index} className="p-4">
+                    <div className="card">
+                      <div>Name: {deadCharacter.name}</div>
+                      <div>Level: {deadCharacter.level}</div>
+                      <div>Race: {deadCharacter.race}</div>
+                      <div>Class: {deadCharacter.class}</div>
+                      <div>
+                        <button
+                          className="border-2 border-black text-center rounded-md"
+                          onClick={() => playerSelector(index)}
+                        >
+                          Select
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </Slider>
+            ) : (
+              <div>No dead characters</div>
+            )}
 
-
-      <div className="card">
-        {!user ? <button
-          onClick={() => {
-            login();
-          }}
-        >
-          LOGIN WITH BNET
-        </button> : <div>logged in</div>}
-        Bnet User:{user?.token ? user.token : "no data"}
-        <br />
-        Address:{address ? address : "no data"}
-
-        <p>USER:{user ? user.battletag : "no data"}</p>
-        <button
-          onClick={e => {
-            e.preventDefault();
-            logout();
-            toast.success("success getting clicked");
-          }}
-        >
-          logout
-        </button>
-      </div>
-      <br />
-      <div className="flex justify-center items-center h-screen">
-        <div className="border-2 border-white">
-          {player ? <div key={player.id}>
+            <br />
             <div>
-              Id: {player.id}
-              <p>
-                {player.name} level {player.level}
-                <br />
-                {player.race} {player.class} of the {player.faction}
-              </p>
+              {player?.name} <br />
+              Level {player?.level} {player?.race} {player?.class}
+              <div className="card-bg-black text-left">
+                {player?.equipped_items?.map((item: any) => (
+                  <div key={item.slot.type}>
+                    {item.quality.type == "POOR" ? (
+                      <span className="text-gray-500"> {item.name.en_US}</span>
+                    ) : (
+                      <>
+                        {item.quality.type == "COMMON" ? (
+                          <span className="text-white-500"> {item.name.en_US}</span>
+                        ) : (
+                          <>
+                            {item.quality.type == "UNCOMMON" ? (
+                              <span className="text-green-500"> {item.name.en_US}</span>
+                            ) : (
+                              <>
+                                {item.quality.type == "RARE" ? (
+                                  <span className="text-blue-500"> {item.name.en_US}</span>
+                                ) : (
+                                  <>
+                                    {item.quality.type == "EPIC" ? (
+                                      <span className="text-purple-500"> {item.name.en_US}</span>
+                                    ) : (
+                                      <span className="text-orange-500"> {item.name.en_US}</span>
+                                    )}
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-
-            : <div>no player</div>}
-          <button onClick={() => playerSelector()}>select      <br />  player</button>
         </div>
-        <br />
-
-        <br />
-
-
       </div>
     </>
   );
 };
 
 export default Home;
-
