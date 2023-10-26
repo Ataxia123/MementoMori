@@ -57,6 +57,7 @@ const Home: NextPage = () => {
   const address = account?.address;
   // LOGIN METHODS
   let popup: Window | null = null;
+
   const login = () => {
     popup = window.open(
       "http://localhost:3000/oauth/battlenet",
@@ -224,18 +225,14 @@ const Home: NextPage = () => {
     }
   };
 
-  const playerSelector = async () => {
+  const playerSelector = async (index: number) => {
     if (!players) return console.log("no players");
 
     await fetchCharMedia();
 
-    if (deadIndex >= dead.length) {
-      setDeadIndex(0);
+    setDeadIndex(index);
 
-      toast.success(`"success getting all players ${dead.length} ${deadIndex + 1}"`);
-    } else {
-      setDeadIndex(deadIndex + 1);
-    }
+    toast.success(`"success getting all players ${dead.length} ${deadIndex + 1}"`);
   };
   useEffect(() => {
     fetchDb();
@@ -340,6 +337,7 @@ const Home: NextPage = () => {
           </button>
         </div>
 
+        <div className="flex justify-center items-center">MEMENTO MORI</div>
         <div className="flex justify-center items-center">
           <div className="border-2 border-white text-center max-w-xl overflow-hidden rounded-md p-8">
             {dead && dead.length > 0 ? (
@@ -353,23 +351,8 @@ const Home: NextPage = () => {
                       <div>Class: {deadCharacter.class}</div>
                       <div>
                         <button
-                          className="border-2 border-black text-center rounded-md mb-1"
-                          onClick={() => {
-                            if (player) {
-                              fetchCharMedia();
-                              render();
-                            } else {
-                              toast.error("No character selected");
-                            }
-                          }}
-                        >
-                          Fetch and Render Equipment
-                        </button>
-                        <br />
-
-                        <button
                           className="border-2 border-black text-center rounded-md"
-                          onClick={() => setPlayer(deadCharacter)}
+                          onClick={() => playerSelector(index)}
                         >
                           Select
                         </button>
@@ -382,6 +365,43 @@ const Home: NextPage = () => {
               <div>No dead characters</div>
             )}
           </div>
+        </div>
+        <br />
+        <div className="card">
+          <div>Name: {player?.name}</div>
+          <div>Level: {player?.level}</div>
+          <div>Race: {player?.race}</div>
+          <div>Class: {player?.class}</div>
+          {player?.equipped_items?.map((item: any) => (
+            <div key={item.slot.type}>
+              {item.quality.type == "COMMON" ? (
+                <div className="text-gray-500">
+                  {item.slot.type}: {item.name.en_US}
+                  <br />
+                </div>
+              ) : (
+                <div>
+                  {" "}
+                  {item.slot.type}:{" "}
+                  {item.quality.type == "UNCOMMON" ? (
+                    <span className="text-green-500">
+                      {item.name.en_US}
+                      <br />
+                    </span>
+                  ) : (
+                    <div>
+                      {" "}
+                      {item.slot.type}:{" "}
+                      <span className="text-blue-500">
+                        {item.name.en_US}
+                        <br />
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </>
