@@ -311,9 +311,11 @@ const Home: NextPage = () => {
   // Once the popup is closed
   return (
     <>
-      {/* Logo Image */}
-      <img src="logo.jpg" alt="Logo" className="w-64 h-64" />
-      <div className="flex flex-col items-center justify-center bg-transparent text-black pt-5">
+      <div className="flex justify-center items-center pt-5">
+        {/* Logo Image */}
+        <img src="logo.jpg" alt="Logo" className="w-64 h-48" />
+      </div>
+      <div className="flex flex-col items-center justify-center bg-transparent text-black pt-5 relative z-10">
         <div className="card mb-4 p-4">
           {!user ? (
             <button
