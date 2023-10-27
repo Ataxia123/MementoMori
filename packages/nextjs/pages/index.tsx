@@ -312,34 +312,34 @@ const Home: NextPage = () => {
   return (
     <>
       {/* Logo Image */}
+      <div className="card mb-4 p-4">
+        {!user ? (
+          <button
+            className="border-2 border-black rounded-md"
+            onClick={() => {
+              login();
+            }}
+          >
+            LOGIN WITH BNET
+          </button>
+        ) : (
+          <div>Logged in as {user.battletag}</div>
+        )}
+        <div>Bnet User: {user?.token || "no data"}</div>
+        <div>Address: {address || "no data"}</div>
+        <div>User: {user ? user.battletag : "no data"}</div>
+        <button
+          onClick={() => {
+            logout();
+            toast.success("Successfully logged out");
+          }}
+        >
+          Logout
+        </button>
+      </div>
 
       <div className="flex flex-col items-center justify-center bg-transparent text-black pt-5">
         <img src="/logo.png" alt="Logo" height={500} width={500} />
-        <div className="card mb-4 p-4">
-          {!user ? (
-            <button
-              className="border-2 border-black rounded-md"
-              onClick={() => {
-                login();
-              }}
-            >
-              LOGIN WITH BNET
-            </button>
-          ) : (
-            <div>Logged in as {user.battletag}</div>
-          )}
-          <div>Bnet User: {user?.token || "no data"}</div>
-          <div>Address: {address || "no data"}</div>
-          <div>User: {user ? user.battletag : "no data"}</div>
-          <button
-            onClick={() => {
-              logout();
-              toast.success("Successfully logged out");
-            }}
-          >
-            Logout
-          </button>
-        </div>
 
         <div className="flex justify-center items-center">MEMENTO MORI</div>
         <div className="flex justify-center items-center">
