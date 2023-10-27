@@ -75,7 +75,7 @@ export const Footer = () => {
           </div>
         </ul>
       </div>
-      <Image src="/femock33.png" fill alt="footer" />
+      <Image src="/femock33.png" fill alt="footer" style={{ pointerEvents: "none" }} />
     </div>
   );
 };
