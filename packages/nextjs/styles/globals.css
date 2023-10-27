@@ -8,7 +8,6 @@
   background-position: center center, center center, top right; /* adjust as needed */
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-size: cover, 50%, 10%; /* adjust as needed */
-  z-index: -1;
 }
 
 body {
