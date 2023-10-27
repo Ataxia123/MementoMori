@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import React from "react";
+import Image from "next/image";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
 import Slider from "react-slick";
@@ -312,8 +313,9 @@ const Home: NextPage = () => {
   return (
     <>
       {/* Logo Image */}
-      <img src="logo.jpg" alt="Logo" className="w-64 h-64" />
+
       <div className="flex flex-col items-center justify-center bg-transparent text-black pt-5">
+        <Image src="/logo.jpg" alt="Logo" width={500} height={500} />
         <div className="card mb-4 p-4">
           {!user ? (
             <button
