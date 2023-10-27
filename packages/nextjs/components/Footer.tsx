@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { hardhat } from "viem/chains";
 import { CurrencyDollarIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -74,6 +75,7 @@ export const Footer = () => {
           </div>
         </ul>
       </div>
+      <Image src="/femock33.png" fill alt="footer" />
     </div>
   );
 };
