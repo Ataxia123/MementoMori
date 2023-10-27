@@ -315,7 +315,7 @@ const Home: NextPage = () => {
       {/* Logo Image */}
 
       <div className="flex flex-col items-center justify-center bg-transparent text-black pt-5">
-        <Image src="/logo.jpg" alt="Logo" width={500} height={500} />
+        <Image src="/logo.png" alt="Logo" width={500} height={500} />
         <div className="card mb-4 p-4">
           {!user ? (
             <button
