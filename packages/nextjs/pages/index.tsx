@@ -314,15 +314,10 @@ const Home: NextPage = () => {
   return (
     <>
       <div
-        className="overflow-hidden rounded-full"
+        className="overflow-hidden rounded-full fixed h-1/2 w-1/4 top-2 left-1/2 transform scale-125 -translate-x-1/2 translate-y-1/3"
         style={{
           opacity: "1",
-          marginTop: "3rem",
-          marginLeft: "42rem",
-          scale: "1.05",
-          height: "35rem",
-          width: "35rem",
-          position: "fixed",
+          scale: "1",
           backgroundImage: "url('/mmoriball.png')",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
