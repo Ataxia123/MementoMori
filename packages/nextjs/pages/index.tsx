@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
 import Slider from "react-slick";
+import Ticker from "react-ticker";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { useAccount } from "wagmi";
@@ -314,32 +315,48 @@ const Home: NextPage = () => {
   return (
     <div className="flex flex-col items-center justify-center bg-transparent text-black pt-5">
       <div
-        className="overflow-hidden rounded-full bg-white"
+        className="overflow-hidden rounded-full"
         style={{
-          marginTop: "15rem",
-          scale: "1.1",
+          opacity: "1",
+          marginTop: "13rem",
+          scale: "1.05",
           height: "33rem",
           width: "33rem",
-          position: "fixed",
+          position: "absolute",
           backgroundImage: "url('/mmoriball.png')",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
+          zIndex: 1,
         }}
       >
-        <span
+        <Image
+          src="/mmoriball2.png"
+          fill
+          alt="mmoriball"
+          object-fit="cover"
+          style={{
+            animation: "pulse 1s infinite alternate",
+            transform: "scale(3.6, 2.5)",
+            opacity: "0.5",
+            zIndex: 0,
+          }}
+        />
+        <div
           style={{
             position: "relative",
-            top: "50%",
-            left: "90%",
+            marginTop: "13rem",
+            height: "100%",
+            width: "100%",
+            zIndex: 2,
           }}
-          className="text-green-500"
-        >
-          MMORIBALL
-        </span>
-        roundstuff
+        ></div>
       </div>
-      <div className="border-2 border-white text-center max-w-xl bg-black overflow-hidden rounded-md p-8 -translate-y-full">
+
+      <div
+        style={{ zIndex: 10 }}
+        className="border-2 border-white text-center max-w-xl bg-black overflow-hidden rounded-md p-8"
+      >
         {dead && dead.length > 0 ? (
           <Slider {...settings}>
             {dead.map((deadCharacter, index) => (
