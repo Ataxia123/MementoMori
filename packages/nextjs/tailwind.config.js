@@ -75,6 +75,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      backgroundImage: {
+        mmori: "url('/mmoriball.png')",
+      },
       boxShadow: {
         center: "0 0 12px -2px rgb(0 0 0 / 0.05)",
       },

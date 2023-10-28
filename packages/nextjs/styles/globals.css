@@ -4,11 +4,15 @@
 
 :root,
 [data-theme] {
-
+  background-image: url('/background1.jpg');
+  background-position: center center, center center, top right; /* adjust as needed */
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size: cover, cover, cover; /* adjust as needed */
+  position:"fixed";
 }
 
 body {
-  min-height: 100vh;
+  min-height: 1vh;
 }
 
 h1,

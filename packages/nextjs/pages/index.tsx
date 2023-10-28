@@ -32,6 +32,7 @@ const Home: NextPage = () => {
   const [database, setDatabase] = useState<any[]>([]);
   const [player, setPlayer] = useState<Character | undefined>();
   const [deadIndex, setDeadIndex] = useState<number>(0);
+  const [mmToggle, setMmToggle] = useState<boolean>(false);
 
   // Renderer
   //
@@ -311,10 +312,34 @@ const Home: NextPage = () => {
 
   // Once the popup is closed
   return (
-    <div className="flex flex-col items-center justify-center bg-black text-black pt-5">
-      <img src="/logo.png" alt="Logo" height={500} width={500} />
-
-      <div className="border-2 border-white text-center max-w-xl overflow-hidden rounded-md p-8">
+    <div className="flex flex-col items-center justify-center bg-transparent text-black pt-5">
+      <div
+        className="overflow-hidden rounded-full bg-white"
+        style={{
+          marginTop: "15rem",
+          scale: "1.1",
+          height: "33rem",
+          width: "33rem",
+          position: "fixed",
+          backgroundImage: "url('/mmoriball.png')",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+      >
+        <span
+          style={{
+            position: "relative",
+            top: "50%",
+            left: "90%",
+          }}
+          className="text-green-500"
+        >
+          MMORIBALL
+        </span>
+        roundstuff
+      </div>
+      <div className="border-2 border-white text-center max-w-xl bg-black overflow-hidden rounded-md p-8 -translate-y-full">
         {dead && dead.length > 0 ? (
           <Slider {...settings}>
             {dead.map((deadCharacter, index) => (
@@ -343,7 +368,7 @@ const Home: NextPage = () => {
         <br />
 
         <div className="card-bg-black ml-40 text-left text-white">
-          {" "}
+          MEMENTO MORI
           <br />
           {player?.name} <br />
           ---------------------
@@ -383,32 +408,33 @@ const Home: NextPage = () => {
             </div>
           ))}
         </div>
-      </div>
+        <br />
 
-      <div className="card mb-4 p-4">
-        {!user ? (
+        <div className="card mb-4 p-4">
+          {!user ? (
+            <button
+              className="border-2 border-black rounded-md"
+              onClick={() => {
+                login();
+              }}
+            >
+              LOGIN WITH BNET
+            </button>
+          ) : (
+            <div>Logged in as {user.battletag}</div>
+          )}
+          <div>Bnet User: {user?.token || "no data"}</div>
+          <div>Address: {address || "no data"}</div>
+          <div>User: {user ? user.battletag : "no data"}</div>
           <button
-            className="border-2 border-black rounded-md"
             onClick={() => {
-              login();
+              logout();
+              toast.success("Successfully logged out");
             }}
           >
-            LOGIN WITH BNET
+            Logout
           </button>
-        ) : (
-          <div>Logged in as {user.battletag}</div>
-        )}
-        <div>Bnet User: {user?.token || "no data"}</div>
-        <div>Address: {address || "no data"}</div>
-        <div>User: {user ? user.battletag : "no data"}</div>
-        <button
-          onClick={() => {
-            logout();
-            toast.success("Successfully logged out");
-          }}
-        >
-          Logout
-        </button>
+        </div>
       </div>
     </div>
   );

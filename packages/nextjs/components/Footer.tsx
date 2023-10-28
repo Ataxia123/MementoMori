@@ -22,6 +22,13 @@ export const Footer = () => {
       <div className="min-h-0 py-5 px-1 mb-11 lg:mb-0 bg-transparent">
         <div>
           <div className="fixed flex justify-between items-center w-full z-10 p-4 bottom-0 left-0 pointer-events-none">
+            <img
+              src="/logo.png"
+              alt="Logo"
+              height={500}
+              width={500}
+              style={{ marginTop: -250, marginLeft: 700, zIndex: 10, position: "fixed" }}
+            />
             <div className="flex flex-col md:flex-row gap-2 pointer-events-auto">
               {nativeCurrencyPrice > 0 && (
                 <div>
@@ -42,13 +49,13 @@ export const Footer = () => {
               )}
             </div>
             <SwitchTheme className={`pointer-events-auto ${isLocalNetwork ? "self-end md:self-auto" : ""}`} />
-          </div>{" "}
-          <Image
-            src="/femock33.png"
-            fill
-            alt="footer"
-            style={{ pointerEvents: "none", objectFit: "cover", overflow: "visible", marginTop: 270 }}
-          />
+            <Image
+              src="/femock33.png"
+              fill
+              alt="footer"
+              style={{ pointerEvents: "none", objectFit: "cover", overflow: "visible", marginTop: -400 }}
+            />
+          </div>
         </div>
 
         <div className="w-full">
