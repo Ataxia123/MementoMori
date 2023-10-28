@@ -313,16 +313,17 @@ const Home: NextPage = () => {
 
   // Once the popup is closed
   return (
-    <div className="flex flex-col items-center justify-center bg-transparent text-black pt-5">
+    <>
       <div
         className="overflow-hidden rounded-full"
         style={{
           opacity: "1",
-          marginTop: "13rem",
+          marginTop: "5rem",
+          marginLeft: "42rem",
           scale: "1.05",
           height: "33rem",
-          width: "33rem",
-          position: "absolute",
+          width: "35rem",
+          position: "fixed",
           backgroundImage: "url('/mmoriball.png')",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
@@ -339,7 +340,7 @@ const Home: NextPage = () => {
             animation: "pulse 1s infinite alternate",
             transform: "scale(3.6, 2.5)",
             opacity: "0.5",
-            zIndex: 0,
+            zIndex: 9,
           }}
         />
         <div
@@ -348,112 +349,131 @@ const Home: NextPage = () => {
             marginTop: "13rem",
             height: "100%",
             width: "100%",
-            zIndex: 2,
+            zIndex: 10,
           }}
-        ></div>
+        >
+          <div className="relative flex overflow-x-hidden">
+            <div className="py-12 animate-marquee whitespace-nowrap text-black">
+              <span className="text-4xl mx-4">Marquee Item 1</span>
+              <span className="text-4xl mx-4">Marquee Item 2</span>
+              <span className="text-4xl mx-4">Marquee Item 3</span>
+              <span className="text-4xl mx-4">Marquee Item 4</span>
+              <span className="text-4xl mx-4">Marquee Item 5</span>
+            </div>
+            <div className="py-12 animate-marquee whitespace-nowrap text-black">
+              <span className="text-4xl mx-4">Marquee Item 1</span>
+              <span className="text-4xl mx-4">Marquee Item 2</span>
+              <span className="text-4xl mx-4">Marquee Item 3</span>
+              <span className="text-4xl mx-4">Marquee Item 4</span>
+              <span className="text-4xl mx-4">Marquee Item 5</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div
-        style={{ zIndex: 10 }}
-        className="border-2 border-white text-center max-w-xl bg-black overflow-hidden rounded-md p-8"
-      >
-        {dead && dead.length > 0 ? (
-          <Slider {...settings}>
-            {dead.map((deadCharacter, index) => (
-              <div key={index} className="p-4">
-                <div className="card">
-                  <div>Name: {deadCharacter.name}</div>
-                  <div>Level: {deadCharacter.level}</div>
-                  <div>Race: {deadCharacter.race}</div>
-                  <div>Class: {deadCharacter.class}</div>
-                  <div>
-                    <button
-                      className="border-2 border-black text-center rounded-md"
-                      onClick={() => playerSelector(index)}
-                    >
-                      Select
-                    </button>
+      <div className="flex flex-col items-center justify-center bg-transparent text-black pt-5">
+        <div
+          style={{ zIndex: 10 }}
+          className="border-2 border-white text-center max-w-xl bg-black overflow-hidden rounded-md p-8 opacity-0"
+        >
+          {dead && dead.length > 0 ? (
+            <Slider {...settings}>
+              {dead.map((deadCharacter, index) => (
+                <div key={index} className="p-4">
+                  <div className="card">
+                    <div>Name: {deadCharacter.name}</div>
+                    <div>Level: {deadCharacter.level}</div>
+                    <div>Race: {deadCharacter.race}</div>
+                    <div>Class: {deadCharacter.class}</div>
+                    <div>
+                      <button
+                        className="border-2 border-black text-center rounded-md"
+                        onClick={() => playerSelector(index)}
+                      >
+                        Select
+                      </button>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </Slider>
+          ) : (
+            <div>No dead characters</div>
+          )}
+
+          <br />
+
+          <div className="card-bg-black ml-40 text-left text-white">
+            MEMENTO MORI
+            <br />
+            {player?.name} <br />
+            ---------------------
+            <br />
+            Level {player?.level} {player?.race} {player?.class}
+            {player?.equipped_items?.map((item: any) => (
+              <div key={item.slot.type}>
+                {item.quality.type == "POOR" ? (
+                  <span className="text-gray-500"> {item.name.en_US}</span>
+                ) : (
+                  <>
+                    {item.quality.type == "COMMON" ? (
+                      <span className="text-white"> {item.name.en_US}</span>
+                    ) : (
+                      <>
+                        {item.quality.type == "UNCOMMON" ? (
+                          <span className="text-green-500"> {item.name.en_US}</span>
+                        ) : (
+                          <>
+                            {item.quality.type == "RARE" ? (
+                              <span className="text-blue-500"> {item.name.en_US}</span>
+                            ) : (
+                              <>
+                                {item.quality.type == "EPIC" ? (
+                                  <span className="text-purple-500"> {item.name.en_US}</span>
+                                ) : (
+                                  <span className="text-orange-500"> {item.name.en_US}</span>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
               </div>
             ))}
-          </Slider>
-        ) : (
-          <div>No dead characters</div>
-        )}
-
-        <br />
-
-        <div className="card-bg-black ml-40 text-left text-white">
-          MEMENTO MORI
+          </div>
           <br />
-          {player?.name} <br />
-          ---------------------
-          <br />
-          Level {player?.level} {player?.race} {player?.class}
-          {player?.equipped_items?.map((item: any) => (
-            <div key={item.slot.type}>
-              {item.quality.type == "POOR" ? (
-                <span className="text-gray-500"> {item.name.en_US}</span>
-              ) : (
-                <>
-                  {item.quality.type == "COMMON" ? (
-                    <span className="text-white"> {item.name.en_US}</span>
-                  ) : (
-                    <>
-                      {item.quality.type == "UNCOMMON" ? (
-                        <span className="text-green-500"> {item.name.en_US}</span>
-                      ) : (
-                        <>
-                          {item.quality.type == "RARE" ? (
-                            <span className="text-blue-500"> {item.name.en_US}</span>
-                          ) : (
-                            <>
-                              {item.quality.type == "EPIC" ? (
-                                <span className="text-purple-500"> {item.name.en_US}</span>
-                              ) : (
-                                <span className="text-orange-500"> {item.name.en_US}</span>
-                              )}
-                            </>
-                          )}
-                        </>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-        <br />
 
-        <div className="card mb-4 p-4">
-          {!user ? (
+          <div className="card mb-4 p-4">
+            {!user ? (
+              <button
+                className="border-2 border-black rounded-md"
+                onClick={() => {
+                  login();
+                }}
+              >
+                LOGIN WITH BNET
+              </button>
+            ) : (
+              <div>Logged in as {user.battletag}</div>
+            )}
+            <div>Bnet User: {user?.token || "no data"}</div>
+            <div>Address: {address || "no data"}</div>
+            <div>User: {user ? user.battletag : "no data"}</div>
             <button
-              className="border-2 border-black rounded-md"
               onClick={() => {
-                login();
+                logout();
+                toast.success("Successfully logged out");
               }}
             >
-              LOGIN WITH BNET
+              Logout
             </button>
-          ) : (
-            <div>Logged in as {user.battletag}</div>
-          )}
-          <div>Bnet User: {user?.token || "no data"}</div>
-          <div>Address: {address || "no data"}</div>
-          <div>User: {user ? user.battletag : "no data"}</div>
-          <button
-            onClick={() => {
-              logout();
-              toast.success("Successfully logged out");
-            }}
-          >
-            Logout
-          </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
