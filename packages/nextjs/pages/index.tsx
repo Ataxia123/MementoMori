@@ -4,7 +4,6 @@ import Image from "next/image";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
 import Slider from "react-slick";
-import Ticker from "react-ticker";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { useAccount } from "wagmi";
@@ -318,10 +317,10 @@ const Home: NextPage = () => {
         className="overflow-hidden rounded-full"
         style={{
           opacity: "1",
-          marginTop: "5rem",
+          marginTop: "3rem",
           marginLeft: "42rem",
           scale: "1.05",
-          height: "33rem",
+          height: "35rem",
           width: "35rem",
           position: "fixed",
           backgroundImage: "url('/mmoriball.png')",
@@ -340,13 +339,14 @@ const Home: NextPage = () => {
             animation: "pulse 1s infinite alternate",
             transform: "scale(3.6, 2.5)",
             opacity: "0.5",
+            position: "absolute",
             zIndex: 9,
           }}
         />
         <div
           style={{
             position: "relative",
-            marginTop: "13rem",
+            marginTop: "10rem",
             height: "100%",
             width: "100%",
             zIndex: 10,
@@ -354,18 +354,19 @@ const Home: NextPage = () => {
         >
           <div className="relative flex overflow-x-hidden">
             <div className="py-12 animate-marquee whitespace-nowrap text-black">
-              <span className="text-4xl mx-4">Marquee Item 1</span>
-              <span className="text-4xl mx-4">Marquee Item 2</span>
-              <span className="text-4xl mx-4">Marquee Item 3</span>
-              <span className="text-4xl mx-4">Marquee Item 4</span>
-              <span className="text-4xl mx-4">Marquee Item 5</span>
+              {" "}
+              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+              <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+              <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span>
             </div>
             <div className="py-12 animate-marquee whitespace-nowrap text-black">
-              <span className="text-4xl mx-4">Marquee Item 1</span>
-              <span className="text-4xl mx-4">Marquee Item 2</span>
-              <span className="text-4xl mx-4">Marquee Item 3</span>
-              <span className="text-4xl mx-4">Marquee Item 4</span>
-              <span className="text-4xl mx-4">Marquee Item 5</span>
+              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+              <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+              <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span>
             </div>
           </div>
         </div>
