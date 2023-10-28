@@ -311,66 +311,66 @@ const Home: NextPage = () => {
 
   // Once the popup is closed
   return (
-    <div className="flex flex-col items-center justify-center bg-transparent text-black pt-5">
+    <div className="flex flex-col items-center justify-center bg-black text-black pt-5">
       <img src="/logo.png" alt="Logo" height={500} width={500} />
 
-      <div className="flex justify-center items-center">MEMENTO MORI</div>
-      <div className="flex justify-center items-center">
-        <div className="border-2 border-white text-center max-w-xl overflow-hidden rounded-md p-8">
-          {dead && dead.length > 0 ? (
-            <Slider {...settings}>
-              {dead.map((deadCharacter, index) => (
-                <div key={index} className="p-4">
-                  <div className="card">
-                    <div>Name: {deadCharacter.name}</div>
-                    <div>Level: {deadCharacter.level}</div>
-                    <div>Race: {deadCharacter.race}</div>
-                    <div>Class: {deadCharacter.class}</div>
-                    <div>
-                      <button
-                        className="border-2 border-black text-center rounded-md"
-                        onClick={() => playerSelector(index)}
-                      >
-                        Select
-                      </button>
-                    </div>
+      <div className="border-2 border-white text-center max-w-xl overflow-hidden rounded-md p-8">
+        {dead && dead.length > 0 ? (
+          <Slider {...settings}>
+            {dead.map((deadCharacter, index) => (
+              <div key={index} className="p-4">
+                <div className="card">
+                  <div>Name: {deadCharacter.name}</div>
+                  <div>Level: {deadCharacter.level}</div>
+                  <div>Race: {deadCharacter.race}</div>
+                  <div>Class: {deadCharacter.class}</div>
+                  <div>
+                    <button
+                      className="border-2 border-black text-center rounded-md"
+                      onClick={() => playerSelector(index)}
+                    >
+                      Select
+                    </button>
                   </div>
                 </div>
-              ))}
-            </Slider>
-          ) : (
-            <div>No dead characters</div>
-          )}
+              </div>
+            ))}
+          </Slider>
+        ) : (
+          <div>No dead characters</div>
+        )}
 
+        <br />
+
+        <div className="card-bg-black ml-40 text-left text-white">
+          {" "}
           <br />
-          <div>
-            {player?.name} <br />
-            Level {player?.level} {player?.race} {player?.class}
-            <div className="card-bg-black text-left">
-              {player?.equipped_items?.map((item: any) => (
-                <div key={item.slot.type}>
-                  {item.quality.type == "POOR" ? (
-                    <span className="text-gray-500"> {item.name.en_US}</span>
+          {player?.name} <br />
+          ---------------------
+          <br />
+          Level {player?.level} {player?.race} {player?.class}
+          {player?.equipped_items?.map((item: any) => (
+            <div key={item.slot.type}>
+              {item.quality.type == "POOR" ? (
+                <span className="text-gray-500"> {item.name.en_US}</span>
+              ) : (
+                <>
+                  {item.quality.type == "COMMON" ? (
+                    <span className="text-white"> {item.name.en_US}</span>
                   ) : (
                     <>
-                      {item.quality.type == "COMMON" ? (
-                        <span className="text-white-500"> {item.name.en_US}</span>
+                      {item.quality.type == "UNCOMMON" ? (
+                        <span className="text-green-500"> {item.name.en_US}</span>
                       ) : (
                         <>
-                          {item.quality.type == "UNCOMMON" ? (
-                            <span className="text-green-500"> {item.name.en_US}</span>
+                          {item.quality.type == "RARE" ? (
+                            <span className="text-blue-500"> {item.name.en_US}</span>
                           ) : (
                             <>
-                              {item.quality.type == "RARE" ? (
-                                <span className="text-blue-500"> {item.name.en_US}</span>
+                              {item.quality.type == "EPIC" ? (
+                                <span className="text-purple-500"> {item.name.en_US}</span>
                               ) : (
-                                <>
-                                  {item.quality.type == "EPIC" ? (
-                                    <span className="text-purple-500"> {item.name.en_US}</span>
-                                  ) : (
-                                    <span className="text-orange-500"> {item.name.en_US}</span>
-                                  )}
-                                </>
+                                <span className="text-orange-500"> {item.name.en_US}</span>
                               )}
                             </>
                           )}
@@ -378,10 +378,10 @@ const Home: NextPage = () => {
                       )}
                     </>
                   )}
-                </div>
-              ))}
+                </>
+              )}
             </div>
-          </div>
+          ))}
         </div>
       </div>
 

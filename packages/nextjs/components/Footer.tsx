@@ -47,7 +47,7 @@ export const Footer = () => {
             src="/femock33.png"
             fill
             alt="footer"
-            style={{ pointerEvents: "none", objectFit: "cover", overflow: "visible", marginTop: 160 }}
+            style={{ pointerEvents: "none", objectFit: "cover", overflow: "visible", marginTop: 270 }}
           />
         </div>
 
