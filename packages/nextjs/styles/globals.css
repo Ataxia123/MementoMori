@@ -53,10 +53,11 @@ p {
 }
 
 .card {
-  background-color: #fff;
-  color: #000;
+  background-color: rgba(0,0,0,0.9);
+  color: #fff;
   padding-top: 1vw;
   padding-bottom: 1vw;
+  padding-left: 1vw;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

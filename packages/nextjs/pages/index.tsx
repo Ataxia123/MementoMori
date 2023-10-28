@@ -367,16 +367,16 @@ const Home: NextPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-center bg-transparent text-black pt-5">
+      <div className="flex flex-col items-center justify-center bg-transparent text-black pt-4 -mt-4">
         <div
           style={{ zIndex: 10 }}
-          className="border-2 border-white text-center max-w-xl bg-black overflow-hidden rounded-md p-8 opacity-0"
+          className="text-center max-w-xl bg-black-opacity-50 overflow-hidden rounded-md p-8 opacity-1"
         >
           {dead && dead.length > 0 ? (
             <Slider {...settings}>
               {dead.map((deadCharacter, index) => (
-                <div key={index} className="p-4">
-                  <div className="card">
+                <div key={index} className="p-4 bg-black">
+                  <div className="card mr-3">
                     <div>Name: {deadCharacter.name}</div>
                     <div>Level: {deadCharacter.level}</div>
                     <div>Race: {deadCharacter.race}</div>
@@ -399,7 +399,7 @@ const Home: NextPage = () => {
 
           <br />
 
-          <div className="card-bg-black ml-40 text-left text-white">
+          <div className="border-2 border-gray-500 card ml-10 mr-10 text-center text-white">
             MEMENTO MORI
             <br />
             {player?.name} <br />
