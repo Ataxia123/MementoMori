@@ -313,162 +313,178 @@ const Home: NextPage = () => {
   // Once the popup is closed
   return (
     <>
-      <div
-        className="overflow-hidden rounded-full fixed h-1/2 w-1/4 top-2 left-1/2 transform scale-125 -translate-x-1/2 translate-y-1/3"
-        style={{
-          opacity: "1",
-          scale: "1",
-          backgroundImage: "url('/mmoriball.png')",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          zIndex: 1,
-        }}
-      >
+      <div className="fixed w-full h-full">
         <Image
-          src="/mmoriball2.png"
+          src="/mmoriball3.png"
           fill
           alt="mmoriball"
-          object-fit="cover"
-          style={{
-            animation: "pulse 1s infinite alternate",
-            transform: "scale(3.6, 2.5)",
-            opacity: "0.5",
-            position: "absolute",
-            zIndex: 9,
-          }}
+          className="-mt-12 transform -translate-y-1/6 scale-75 scale-y-125 scale-x-90"
         />
         <div
+          className="overflow-hidden rounded-full fixed h-1/2 w-1/4 top-2 left-1/2 transform scale-150 -translate-x-1/2 translate-y-1/3 z-10"
           style={{
-            position: "relative",
-            marginTop: "10rem",
-            height: "100%",
-            width: "100%",
-            zIndex: 10,
+            opacity: "1",
+            scale: "1",
+            backgroundImage: "url('/mmoriball.png')",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
           }}
         >
-          <div className="relative flex overflow-x-hidden">
-            <div className="py-12 animate-marquee whitespace-nowrap text-black">
-              {" "}
-              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-              <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-              <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span>
-            </div>
-            <div className="py-12 animate-marquee whitespace-nowrap text-black">
-              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-              <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-              <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-              <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span>
+          <Image
+            src="/mmoriball2.png"
+            fill
+            alt="mmoriball"
+            object-fit="cover"
+            style={{
+              animation: "pulse 1s infinite alternate",
+              transform: "scale(3.6, 2.5)",
+              opacity: "0.5",
+              position: "absolute",
+              zIndex: 9,
+            }}
+          />
+
+          <div
+            style={{
+              position: "relative",
+              marginTop: "10rem",
+              height: "100%",
+              width: "100%",
+              zIndex: 10,
+            }}
+          >
+            <div className="relative flex overflow-x-hidden">
+              <div className="py-12 animate-marquee whitespace-nowrap text-black">
+                {" "}
+                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+                <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+                <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span>
+              </div>
+              <div className="py-12 animate-marquee whitespace-nowrap text-black">
+                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+                <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
+                <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div className="flex flex-col items-center justify-center bg-transparent text-black pt-4 -mt-4">
-        <div
-          style={{ zIndex: 10 }}
-          className="text-center max-w-xl bg-black-opacity-50 overflow-hidden rounded-md p-8 opacity-1"
-        >
-          {dead && dead.length > 0 ? (
-            <Slider {...settings}>
-              {dead.map((deadCharacter, index) => (
-                <div key={index} className="p-4 bg-black">
-                  <div className="card mr-3">
-                    <div>Name: {deadCharacter.name}</div>
-                    <div>Level: {deadCharacter.level}</div>
-                    <div>Race: {deadCharacter.race}</div>
-                    <div>Class: {deadCharacter.class}</div>
-                    <div>
-                      <button
-                        className="border-2 border-black text-center rounded-md"
-                        onClick={() => playerSelector(index)}
-                      >
-                        Select
-                      </button>
+      {mmToggle == true ? (
+        <div className="flex flex-col items-center justify-center bg-transparent text-black pt-4 -mt-4">
+          <div style={{ zIndex: 10 }} className="text-center max-w-xl bg-transparent overflow-hidden rounded-md p-8">
+            {dead && dead.length > 0 ? (
+              <Slider {...settings}>
+                {dead.map((deadCharacter, index) => (
+                  <div key={index} className="p-4 bg-black">
+                    <div className="card mr-3">
+                      <div>In Memoriam to {deadCharacter.name}</div>
+                      <div>
+                        Level {deadCharacter.level} {deadCharacter.race}
+                        {deadCharacter.class}
+                      </div>
+                      <div>
+                        <button
+                          className="border-2 border-black text-center rounded-md"
+                          onClick={() => playerSelector(index)}
+                        >
+                          Select
+                        </button>
+                      </div>
                     </div>
                   </div>
+                ))}
+              </Slider>
+            ) : (
+              <div>
+                No dead <br /> characters
+              </div>
+            )}
+
+            <br />
+
+            <div className="border-2 border-gray-500 card ml-10 mr-10 text-center text-white">
+              MEMENTO MORI
+              <br />
+              {player?.name} <br />
+              ---------------------
+              <br />
+              Level {player?.level} {player?.race} {player?.class}
+              {player?.equipped_items?.map((item: any) => (
+                <div key={item.slot.type}>
+                  {item.quality.type == "POOR" ? (
+                    <span className="text-gray-500"> {item.name.en_US}</span>
+                  ) : (
+                    <>
+                      {item.quality.type == "COMMON" ? (
+                        <span className="text-white"> {item.name.en_US}</span>
+                      ) : (
+                        <>
+                          {item.quality.type == "UNCOMMON" ? (
+                            <span className="text-green-500"> {item.name.en_US}</span>
+                          ) : (
+                            <>
+                              {item.quality.type == "RARE" ? (
+                                <span className="text-blue-500"> {item.name.en_US}</span>
+                              ) : (
+                                <>
+                                  {item.quality.type == "EPIC" ? (
+                                    <span className="text-purple-500"> {item.name.en_US}</span>
+                                  ) : (
+                                    <span className="text-orange-500"> {item.name.en_US}</span>
+                                  )}
+                                </>
+                              )}
+                            </>
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
                 </div>
               ))}
-            </Slider>
-          ) : (
-            <div>No dead characters</div>
-          )}
-
-          <br />
-
-          <div className="border-2 border-gray-500 card ml-10 mr-10 text-center text-white">
-            MEMENTO MORI
+            </div>
             <br />
-            {player?.name} <br />
-            ---------------------
-            <br />
-            Level {player?.level} {player?.race} {player?.class}
-            {player?.equipped_items?.map((item: any) => (
-              <div key={item.slot.type}>
-                {item.quality.type == "POOR" ? (
-                  <span className="text-gray-500"> {item.name.en_US}</span>
-                ) : (
-                  <>
-                    {item.quality.type == "COMMON" ? (
-                      <span className="text-white"> {item.name.en_US}</span>
-                    ) : (
-                      <>
-                        {item.quality.type == "UNCOMMON" ? (
-                          <span className="text-green-500"> {item.name.en_US}</span>
-                        ) : (
-                          <>
-                            {item.quality.type == "RARE" ? (
-                              <span className="text-blue-500"> {item.name.en_US}</span>
-                            ) : (
-                              <>
-                                {item.quality.type == "EPIC" ? (
-                                  <span className="text-purple-500"> {item.name.en_US}</span>
-                                ) : (
-                                  <span className="text-orange-500"> {item.name.en_US}</span>
-                                )}
-                              </>
-                            )}
-                          </>
-                        )}
-                      </>
-                    )}
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-          <br />
-
-          <div className="card mb-4 p-4">
-            {!user ? (
-              <button
-                className="border-2 border-black rounded-md"
-                onClick={() => {
-                  login();
-                }}
-              >
-                LOGIN WITH BNET
-              </button>
-            ) : (
-              <div>Logged in as {user.battletag}</div>
-            )}
-            <div>Bnet User: {user?.token || "no data"}</div>
-            <div>Address: {address || "no data"}</div>
-            <div>User: {user ? user.battletag : "no data"}</div>
-            <button
-              onClick={() => {
-                logout();
-                toast.success("Successfully logged out");
-              }}
-            >
-              Logout
-            </button>
           </div>
         </div>
+      ) : (
+        <div></div>
+      )}
+      <div className="card mb-0 pb-0 absolute">
+        {!user ? (
+          <button
+            className="border-2 border-black rounded-md"
+            onClick={() => {
+              login();
+            }}
+          >
+            LOGIN WITH BNET
+          </button>
+        ) : (
+          <div>Logged in as {user.battletag}</div>
+        )}
+        <div>Address: {address || "no data"}</div>
+        <div>User: {user ? user.battletag : "no data"}</div>
+        <button
+          onClick={() => {
+            logout();
+            toast.success("Successfully logged out");
+          }}
+        >
+          Logout
+        </button>
       </div>
+      <div
+        className="fixed top-2/3 left-1/2 w-1/5 h-1/5 z-50 mt-14 ml-1 transform -translate-x-1/2 bg-black border-2 border-red-500"
+        onClick={() => {
+          mmToggle ? setMmToggle(false) : setMmToggle(true);
+          toast.success(mmToggle.toString());
+        }}
+      ></div>
     </>
   );
 };
