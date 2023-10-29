@@ -83,7 +83,6 @@ const Home: NextPage = () => {
 
         if (event.data) {
           setUser(event.data);
-          toast.success("success");
           popup?.close();
         }
       },
@@ -129,7 +128,6 @@ const Home: NextPage = () => {
       });
 
       const data = await response.json();
-      toast.success("success posting dead players to db");
       console.log(data, "POST Player data response");
     } catch (e) {
       toast.error("error posting dead players to db");
@@ -191,7 +189,7 @@ const Home: NextPage = () => {
     }
   };
 
-  const fetchCharMedia = async () => {
+  const fetchCharMedia = async (index: number) => {
     if (user?.token == null) return console.log("no token");
 
     try {
@@ -203,25 +201,24 @@ const Home: NextPage = () => {
 
       //todo: change to dead players
 
-      const url = dead[deadIndex]?.media;
+      const url = dead[index]?.media;
 
-      console.log(url, "url", dead[deadIndex]?.name, "name", deadIndex, "deadIndex");
+      console.log(url, "url", dead[index]?.name, "name", index, "deadIndex");
 
       const response = await fetch(`${url}&access_token=${user.token}`);
       const data = await response.json();
-      const index = dead?.findIndex(x => x.id === data.character.id);
+      const dindex = dead?.findIndex(x => x.id === data.character.id);
 
       console.log(response, "data");
 
       setDead(prevState => {
         const newState = [...prevState];
-        newState[index].equipped_items = data.equipped_items;
+        newState[dindex].equipped_items = data.equipped_items;
         setPlayer(newState[index]);
         player ? postDb(player) : console.log("fuck off");
         return newState;
       });
-      console.log(data, dead[index].name, "equipment data", alive, index);
-      toast.success(`"success getting characters"${dead[deadIndex].name}`);
+      console.log(data, dead[dindex].name, "equipment data", alive, index);
     } catch (e) {
       toast.error("error getting equipment");
       console.log(e);
@@ -231,9 +228,7 @@ const Home: NextPage = () => {
   const playerSelector = async (index: number) => {
     if (!players) return console.log("no players");
     setDeadIndex(index);
-    await fetchCharMedia();
-
-    toast.success(`"success getting all players ${dead.length} ${deadIndex + 1}"`);
+    await fetchCharMedia(index);
   };
   useEffect(() => {
     fetchDb();
@@ -242,7 +237,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (user === null) return;
     fetchCharacter();
-    toast.success("success");
   }, [user]);
 
   useEffect(() => {
@@ -255,11 +249,7 @@ const Home: NextPage = () => {
     });
 
     console.log("dead", dead, "alive", alive);
-    toast.success("success getting characters");
   }, [players]);
-  //this code is so ugly i need to make this console log to remind myself of how ugly it is
-
-  console.log("FIX ME PLEASE💀💀💀💀");
 
   const InventoryUrl = () => {
     let url = "";
@@ -514,8 +504,8 @@ const Home: NextPage = () => {
                               Pay Respects
                             </button>
                           </div>
+                          Press the Button to Submit your Memorial
                         </div>
-                        Press the Button to Submit your Memorial
                       </>
                     )}
                   </div>
