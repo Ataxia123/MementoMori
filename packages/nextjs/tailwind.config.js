@@ -76,16 +76,16 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        marquee: 'marquee 65s linear infinite',
-        marquee2: 'marquee2 60s linear infinite',
+        marquee: 'marquee 306s linear infinite',
+        marquee2: 'marquee2 306s linear infinite',
       },
       keyframes: {
         marquee: {
           '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-1000%)' },
+          '100%': { transform: 'translateX(-15000%)' },
         },
         marquee2: {
-          '0%': { transform: 'translateX(-1000%)' },
+          '0%': { transform: 'translateX(-15000%)' },
           '100%': { transform: 'translateX(100%)' },
         },
         backgroundImage: {

@@ -310,8 +310,30 @@ const Home: NextPage = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-
   // Once the popup is closed
+  //
+  const playerColor = (character: Character) => {
+    if (character.class == "Druid") {
+      return "text-orange-500";
+    } else if (character.class == "Priest") {
+      return "text-gray-500";
+    } else if (character.class == "Warlock") {
+      return "text-purple-500";
+    } else if (character.class == "Warrior") {
+      return "text-brown-500";
+    } else if (character.class == "Paladin") {
+      return "text-pink-500";
+    } else if (character.class == "Rogue") {
+      return "text-yellow-500";
+    } else if (character.class == "Mage") {
+      return "text-blue-50";
+    } else if (character.class == "Shaman") {
+      return "text-blue-500";
+    } else {
+      return "text-green-500";
+    }
+  };
+
   return (
     <>
       <div className="fixed w-full h-full">
@@ -340,163 +362,85 @@ const Home: NextPage = () => {
             style={{
               animation: "pulse 1s infinite alternate",
               transform: "scale(3.6, 2.5)",
-              opacity: "0.2",
+              opacity: "0.35",
               position: "absolute",
-              zIndex: 9,
-            }}
-          />
-
-          <div
-            style={{
-              position: "relative",
-              marginTop: "1rem",
-              height: "100%",
-              width: "100%",
               zIndex: 8,
             }}
-          >
-            <div className="relative flex overflow-y-hidden">
-              {database?.map((character: any, index: number) => (
-                <>
-                  <div className="-py-10 animate-marquee2 whitespace-nowrap text-black h-full w-max ">
-                    {" "}
-                    <span key={index} className="text-xl">
-                      <div className="">
-                        MEMENTO MORI
-                        <br />
-                        {character?.name} <br /> Level {character?.level} {character?.race} {character?.class}
-                        <br />
-                        {character?.equipped_items?.map((item: any) => (
-                          <div key={item.slot.type}>
-                            {" "}
-                            {item.quality.type == "POOR" ? (
-                              <span className="text-gray-500"> {item.name.en_US}</span>
-                            ) : (
-                              <>
-                                {item.quality.type == "COMMON" ? (
-                                  <span className="text-white"> {item.name.en_US}</span>
-                                ) : (
-                                  <>
-                                    {item.quality.type == "UNCOMMON" ? (
-                                      <span className="text-green-500"> {item.name.en_US}</span>
-                                    ) : (
-                                      <>
-                                        {item.quality.type == "RARE" ? (
-                                          <span className="text-blue-500"> {item.name.en_US}</span>
-                                        ) : (
-                                          <>
-                                            {item.quality.type == "EPIC" ? (
-                                              <span className="text-purple-500"> {item.name.en_US}</span>
-                                            ) : (
-                                              <span className="text-orange-500"> {item.name.en_US}</span>
-                                            )}
-                                          </>
-                                        )}
-                                      </>
-                                    )}
-                                  </>
-                                )}
-                              </>
-                            )}
-                          </div>
-                        ))}
-                        {character?.name} Level {character?.level} {character?.race} {character?.class}
-                      </div>
+          />
+          <div className="mt-10 relative flex overflow-hidden font-mono">
+            {database?.map((character: any, index: number) => (
+              <>
+                <div className="mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap text-black h-full w-max ">
+                  {" "}
+                  <div key={Math.floor(Math.random() * database.length)} className="text-2xl">
+                    <span className={playerColor(character)}>
+                      {" "}
+                      {character?.name} <br />
+                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      {character?.race} {character.class}
                     </span>
                   </div>
-                  <div className="mb-0 animate-marquee whitespace-nowrap text-black h-full w-max ">
-                    {" "}
-                    <span key={index++} className="text-s">
-                      <div className="">
-                        MEMENTO MORI
-                        <br />
-                        <br />
-                        Level {character?.level} {character?.race} {character?.class}
-                        {character?.equipped_items?.map((item: any) => (
-                          <div key={item.slot.type}>
-                            {item.quality.type == "POOR" ? (
-                              <span className="text-gray-500"> {item.name.en_US}</span>
-                            ) : (
-                              <>
-                                {item.quality.type == "COMMON" ? (
-                                  <span className="text-white"> {item.name.en_US}</span>
-                                ) : (
-                                  <>
-                                    {item.quality.type == "UNCOMMON" ? (
-                                      <span className="text-green-500"> {item.name.en_US}</span>
-                                    ) : (
-                                      <>
-                                        {item.quality.type == "RARE" ? (
-                                          <span className="text-blue-500"> {item.name.en_US}</span>
-                                        ) : (
-                                          <>
-                                            {item.quality.type == "EPIC" ? (
-                                              <span className="text-purple-500"> {item.name.en_US}</span>
-                                            ) : (
-                                              <span className="text-orange-500"> {item.name.en_US}</span>
-                                            )}
-                                          </>
-                                        )}
-                                      </>
-                                    )}
-                                  </>
-                                )}
-                              </>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </span>
-                    {character?.name} Level {character?.level} {character?.race} {character?.class}
-                  </div>
-                  <div className="py-3 animate-marquee whitespace-nowrap text-black h-full w-max ">
-                    {" "}
-                    <span key={index + 2} className="text-3xl">
-                      <div className="">
-                        MEMENTO MORI
-                        <br />
-                        {character?.name} level {character?.level} {character?.race} {character?.class}
-                        <br />
-                        {character?.equipped_items?.map((item: any) => (
-                          <div key={item.slot.type}>
-                            {item.quality.type == "POOR" ? (
-                              <span className="text-gray-500"> {item.name.en_US}</span>
-                            ) : (
-                              <>
-                                {item.quality.type == "COMMON" ? (
-                                  <span className="text-white"> {item.name.en_US}</span>
-                                ) : (
-                                  <>
-                                    {item.quality.type == "UNCOMMON" ? (
-                                      <span className="text-green-500"> {item.name.en_US}</span>
-                                    ) : (
-                                      <>
-                                        {item.quality.type == "RARE" ? (
-                                          <span className="text-blue-500"> {item.name.en_US}</span>
-                                        ) : (
-                                          <>
-                                            {item.quality.type == "EPIC" ? (
-                                              <span className="text-purple-500"> {item.name.en_US}</span>
-                                            ) : (
-                                              <span className="text-orange-500"> {item.name.en_US}</span>
-                                            )}
-                                          </>
-                                        )}
-                                      </>
-                                    )}
-                                  </>
-                                )}
-                              </>
-                            )}
-                          </div>
-                        ))}
-                        {character?.name} level {character?.level} {character?.race} {character?.class}
-                      </div>
+                </div>
+                <div className="mt-4  animate-marquee whitespace-nowrap text-black h-full w-max ">
+                  {" "}
+                  <div key={Math.floor(Math.random() * database.length)} className="text-3xl">
+                    <span className={playerColor(character)}>
+                      {" "}
+                      {character?.name} <br />
+                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      {character?.race} {character.class}
                     </span>
                   </div>
-                </>
-              ))}
-            </div>
+                </div>
+                <div className="mt-12 animate-marquee whitespace-nowrap text-black h-full w-max ">
+                  {" "}
+                  <div key={Math.floor(Math.random() * database.length)} className="text-3xl">
+                    <span className={playerColor(character)}>
+                      {" "}
+                      {character?.name} <br />
+                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      {character?.race} {character.class}
+                    </span>
+
+                    <br />
+                  </div>
+                </div>
+                <div className="mt-16 -translate-y-1/2 animate-marquee whitespace-nowrap text-black h-full w-max ">
+                  {" "}
+                  <div key={Math.floor(Math.random() * database.length)} className="text-xl">
+                    <span className={playerColor(character)}>
+                      {" "}
+                      {character?.name} <br />
+                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      {character?.race} {character.class}
+                    </span>
+                    <br />
+                  </div>
+                </div>
+                <div className="mt-24 animate-marquee whitespace-nowrap text-black h-full w-max ">
+                  {" "}
+                  <div key={Math.floor(Math.random() * database.length)} className="text-l">
+                    <span className={playerColor(character)}>
+                      {" "}
+                      {character?.name} <br />
+                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      {character?.race} {character.class}
+                    </span>
+                  </div>
+                </div>
+                <div className=" animate-marquee whitespace-nowrap text-black h-full w-max ">
+                  {" "}
+                  <div key={Math.floor(Math.random() * database.length)} className="text-l">
+                    <span className={playerColor(character)}>
+                      {" "}
+                      {character?.name} <br />
+                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      {character?.race} {character.class}
+                    </span>
+                  </div>
+                </div>
+              </>
+            ))}
           </div>
         </div>
       </div>
