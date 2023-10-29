@@ -230,10 +230,8 @@ const Home: NextPage = () => {
 
   const playerSelector = async (index: number) => {
     if (!players) return console.log("no players");
-
-    await fetchCharMedia();
-
     setDeadIndex(index);
+    await fetchCharMedia();
 
     toast.success(`"success getting all players ${dead.length} ${deadIndex + 1}"`);
   };
@@ -309,6 +307,9 @@ const Home: NextPage = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    onClick: () => {
+      render();
+    },
   };
   // Once the popup is closed
   //
@@ -344,7 +345,7 @@ const Home: NextPage = () => {
           className="-mt-12 transform -translate-y-1/6 scale-75 scale-y-125 scale-x-90"
         />
         <div
-          className="overflow-hidden rounded-full fixed h-1/2 w-1/4 top-2 left-1/2 transform scale-150 -translate-x-1/2 translate-y-1/3 z-10"
+          className="overflow-hidden rounded-full fixed h-1/2 w-1/4 top-2 left-1/2 transform scale-150 -translate-x-1/2 translate-y-1/3 z-10 shadow-xl shadow-black"
           style={{
             opacity: "1",
             scale: "1",
@@ -367,12 +368,12 @@ const Home: NextPage = () => {
               zIndex: 8,
             }}
           />
-          <div className="mt-10 relative flex overflow-hidden font-mono">
+          <div className="mt-24 h-full relative flex overflow-hidden font-mono">
             {database?.map((character: any, index: number) => (
               <>
                 <div className="mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap text-black h-full w-max ">
                   {" "}
-                  <div key={Math.floor(Math.random() * database.length)} className="text-2xl">
+                  <div key={Math.floor(Math.random() * database.length)} className="text-2xl  drop-shadow-lg-inherit">
                     <span className={playerColor(character)}>
                       {" "}
                       {character?.name} <br />
@@ -445,27 +446,78 @@ const Home: NextPage = () => {
         </div>
       </div>
       {mmToggle == true ? (
-        <div className="flex flex-col items-center justify-center bg-transparent text-black pt-4 -mt-4">
+        <div className="flex flex-col items-center justify-center bg-transparent text-black pt-4 -mt-16">
           <div style={{ zIndex: 10 }} className="text-center max-w-xl bg-transparent overflow-hidden rounded-md p-8">
             {dead && dead.length > 0 ? (
               <Slider {...settings}>
                 {dead.map((deadCharacter, index) => (
-                  <div key={index} className="p-4 bg-black">
-                    <div className="card mr-3">
-                      <div>In Memoriam to {deadCharacter.name}</div>
-                      <div>
-                        Level {deadCharacter.level} {deadCharacter.race}
-                        {deadCharacter.class}
-                      </div>
-                      <div>
-                        <button
-                          className="border-2 border-black text-center rounded-md"
-                          onClick={() => playerSelector(index)}
-                        >
-                          Select
-                        </button>
-                      </div>
-                    </div>
+                  <div key={index} className="p-4">
+                    {deadCharacter?.name == player?.name ? (
+                      <>
+                        <div className="border-2 border-gray-500 card mt-4 ml-10 mr-10 text-center text-white font-mono text-xl">
+                          MEMENTO MORI
+                          <br />
+                          {player?.name} <br />
+                          ---------------------
+                          <br />
+                          <span className="text-lg text-left">
+                            Level {player?.level} {player?.race} {player?.class}
+                            {player?.equipped_items?.map((item: any) => (
+                              <div key={item.slot.type}>
+                                {item.quality.type == "POOR" ? (
+                                  <span className="text-gray-500"> {item.name.en_US}</span>
+                                ) : (
+                                  <>
+                                    {item.quality.type == "COMMON" ? (
+                                      <span className="text-white"> {item.name.en_US}</span>
+                                    ) : (
+                                      <>
+                                        {item.quality.type == "UNCOMMON" ? (
+                                          <span className="text-green-500"> {item.name.en_US}</span>
+                                        ) : (
+                                          <>
+                                            {item.quality.type == "RARE" ? (
+                                              <span className="text-blue-500"> {item.name.en_US}</span>
+                                            ) : (
+                                              <>
+                                                {item.quality.type == "EPIC" ? (
+                                                  <span className="text-purple-500"> {item.name.en_US}</span>
+                                                ) : (
+                                                  <span className="text-orange-500"> {item.name.en_US}</span>
+                                                )}
+                                              </>
+                                            )}
+                                          </>
+                                        )}
+                                      </>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                            ))}
+                          </span>
+                        </div>
+                        <br />
+                      </>
+                    ) : (
+                      <>
+                        <div className="card mr-3">
+                          <div className="font-mono text-xl">
+                            In Memoriam to: <br /> {deadCharacter.name}
+                          </div>
+                          <div>
+                            <br />
+                            <button
+                              className="border-2 border-white text-center rounded-md p-2"
+                              onClick={() => playerSelector(index)}
+                            >
+                              Pay Respects
+                            </button>
+                          </div>
+                        </div>
+                        Press the Button to Submit your Memorial
+                      </>
+                    )}
                   </div>
                 ))}
               </Slider>
@@ -476,54 +528,12 @@ const Home: NextPage = () => {
             )}
 
             <br />
-
-            <div className="border-2 border-gray-500 card ml-10 mr-10 text-center text-white">
-              MEMENTO MORI
-              <br />
-              {player?.name} <br />
-              ---------------------
-              <br />
-              Level {player?.level} {player?.race} {player?.class}
-              {player?.equipped_items?.map((item: any) => (
-                <div key={item.slot.type}>
-                  {item.quality.type == "POOR" ? (
-                    <span className="text-gray-500"> {item.name.en_US}</span>
-                  ) : (
-                    <>
-                      {item.quality.type == "COMMON" ? (
-                        <span className="text-white"> {item.name.en_US}</span>
-                      ) : (
-                        <>
-                          {item.quality.type == "UNCOMMON" ? (
-                            <span className="text-green-500"> {item.name.en_US}</span>
-                          ) : (
-                            <>
-                              {item.quality.type == "RARE" ? (
-                                <span className="text-blue-500"> {item.name.en_US}</span>
-                              ) : (
-                                <>
-                                  {item.quality.type == "EPIC" ? (
-                                    <span className="text-purple-500"> {item.name.en_US}</span>
-                                  ) : (
-                                    <span className="text-orange-500"> {item.name.en_US}</span>
-                                  )}
-                                </>
-                              )}
-                            </>
-                          )}
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
-              ))}
-            </div>
-            <br />
           </div>
         </div>
       ) : (
         <div></div>
       )}
+
       <div className="card mb-0 pb-0 absolute">
         {!user ? (
           <button
