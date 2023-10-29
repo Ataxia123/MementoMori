@@ -340,7 +340,7 @@ const Home: NextPage = () => {
             style={{
               animation: "pulse 1s infinite alternate",
               transform: "scale(3.6, 2.5)",
-              opacity: "0.5",
+              opacity: "0.2",
               position: "absolute",
               zIndex: 9,
             }}
@@ -349,10 +349,10 @@ const Home: NextPage = () => {
           <div
             style={{
               position: "relative",
-              marginTop: "10rem",
+              marginTop: "1rem",
               height: "100%",
               width: "100%",
-              zIndex: 10,
+              zIndex: 8,
             }}
           >
             <div className="relative flex overflow-y-hidden">
