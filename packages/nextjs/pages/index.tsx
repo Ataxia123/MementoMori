@@ -324,7 +324,29 @@ const Home: NextPage = () => {
       return "text-green-500";
     }
   };
+  function MyComponent(props: any) {
+    const { index } = props;
+    useEffect(() => {
+      const handleKeyPress = (event: any) => {
+        if (event.key === "F" || event.key === "f") {
+          // Call your function here
+          playerSelector(index);
+        }
+      };
 
+      const myFunction = () => {
+        console.log('"F" key pressed');
+      };
+
+      document.addEventListener("keydown", handleKeyPress);
+
+      return () => {
+        document.removeEventListener("keydown", handleKeyPress);
+      };
+    }, []);
+
+    return <>Press F to pay Respects</>;
+  }
   return (
     <>
       <div className="fixed w-full h-full">
@@ -367,7 +389,7 @@ const Home: NextPage = () => {
                     <span className={playerColor(character)}>
                       {" "}
                       {character?.name} <br />
-                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      <span className="text-black"> Level {character?.level} </span>
                       {character?.race} {character.class}
                     </span>
                   </div>
@@ -378,7 +400,7 @@ const Home: NextPage = () => {
                     <span className={playerColor(character)}>
                       {" "}
                       {character?.name} <br />
-                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      <span className="text-black"> Lvl {character?.level} </span>
                       {character?.race} {character.class}
                     </span>
                   </div>
@@ -389,7 +411,7 @@ const Home: NextPage = () => {
                     <span className={playerColor(character)}>
                       {" "}
                       {character?.name} <br />
-                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      <span className="text-black"> Lvl {character?.level} </span>
                       {character?.race} {character.class}
                     </span>
 
@@ -402,7 +424,7 @@ const Home: NextPage = () => {
                     <span className={playerColor(character)}>
                       {" "}
                       {character?.name} <br />
-                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      <span className="text-black"> Lvl {character?.level} </span>
                       {character?.race} {character.class}
                     </span>
                     <br />
@@ -414,7 +436,7 @@ const Home: NextPage = () => {
                     <span className={playerColor(character)}>
                       {" "}
                       {character?.name} <br />
-                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      <span className="text-black"> Lvl {character?.level} </span>
                       {character?.race} {character.class}
                     </span>
                   </div>
@@ -425,7 +447,7 @@ const Home: NextPage = () => {
                     <span className={playerColor(character)}>
                       {" "}
                       {character?.name} <br />
-                      <span className="text-black"> MEMENTO MORI Level {character?.level} </span>
+                      <span className="text-black"> Lvl {character?.level} </span>
                       {character?.race} {character.class}
                     </span>
                   </div>
@@ -445,13 +467,12 @@ const Home: NextPage = () => {
                     {deadCharacter?.name == player?.name ? (
                       <>
                         <div className="border-2 border-gray-500 card mt-4 ml-10 mr-10 text-center text-white font-mono text-xl">
-                          MEMENTO MORI
                           <br />
-                          {player?.name} <br />
+                          <span className="font-bold text-2xl">{player?.name}</span> <br />
+                          Level {player?.level} {player?.race} {player?.class} <br />
                           ---------------------
                           <br />
                           <span className="text-lg text-left">
-                            Level {player?.level} {player?.race} {player?.class}
                             {player?.equipped_items?.map((item: any) => (
                               <div key={item.slot.type}>
                                 {item.quality.type == "POOR" ? (
@@ -497,14 +518,16 @@ const Home: NextPage = () => {
                           </div>
                           <div>
                             <br />
+
                             <button
                               className="border-2 border-white text-center rounded-md p-2"
                               onClick={() => playerSelector(index)}
                             >
-                              Pay Respects
+                              Memento Mori
                             </button>
+                            <br />
                           </div>
-                          Press the Button to Submit your Memorial
+                          <MyComponent index={index} />
                         </div>
                       </>
                     )}
