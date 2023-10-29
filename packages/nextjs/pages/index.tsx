@@ -324,6 +324,14 @@ const Home: NextPage = () => {
       return "text-green-500";
     }
   };
+
+  const factionColor = (character: Character) => {
+    if (character.faction == "ALLIANCE") {
+      return "text-blue-500";
+    } else {
+      return "text-red-500";
+    }
+  };
   function MyComponent(props: any) {
     const { index } = props;
     useEffect(() => {
@@ -469,7 +477,11 @@ const Home: NextPage = () => {
                         <div className="border-2 border-gray-500 card mt-4 ml-10 mr-10 text-center text-white font-mono text-xl">
                           <br />
                           <span className="font-bold text-2xl">{player?.name}</span> <br />
-                          Level {player?.level} {player?.race} {player?.class} <br />
+                          <span className="font-bold">
+                            Level {player?.level} <span>{player?.race}</span>
+                            <span> {player?.class}</span>{" "}
+                          </span>
+                          <br />
                           ---------------------
                           <br />
                           <span className="text-lg text-left">
