@@ -8,6 +8,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { useAccount } from "wagmi";
+import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 
 type Character = {
   id: number;
@@ -382,18 +383,21 @@ const Home: NextPage = () => {
             object-fit="cover"
             style={{
               animation: "pulse 1s infinite alternate",
-              transform: "scale(3.6, 2.5)",
-              opacity: "0.35",
+              opacity: "0.65",
               position: "absolute",
-              zIndex: 8,
+              zIndex: 1,
+              scale: "1.05",
             }}
           />
-          <div className="mt-24 h-full relative flex overflow-hidden font-mono">
+          <div className="mt-24 h-full relative flex overflow-hidden font-mono z-50">
             {database?.map((character: any, index: number) => (
               <>
                 <div className="mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap text-black h-full w-max ">
                   {" "}
-                  <div key={Math.floor(Math.random() * database.length)} className="text-2xl  drop-shadow-lg-inherit">
+                  <div
+                    key={Math.floor(Math.random() * database.length)}
+                    className="text-2xl  drop-shadow-lg shadow-inherit"
+                  >
                     <span className={playerColor(character)}>
                       {" "}
                       {character?.name} <br />
@@ -525,7 +529,7 @@ const Home: NextPage = () => {
                     ) : (
                       <>
                         <div className="card mr-3">
-                          <div className="font-mono text-xl">
+                          <div className="font-serif text-xl">
                             In Memoriam to: <br /> {deadCharacter.name}
                           </div>
                           <div>
@@ -559,19 +563,26 @@ const Home: NextPage = () => {
         <div></div>
       )}
 
-      <div className="card mb-0 pb-0 absolute">
-        {!user ? (
-          <button
-            className="border-2 border-black rounded-md"
-            onClick={() => {
-              login();
-            }}
-          >
-            LOGIN WITH BNET
-          </button>
+      <div className="card fixed right-20 top-2/3 mt-24 pr-2 z-50 font-mono">
+        {!address ? (
+          <RainbowKitCustomConnectButton />
         ) : (
-          <div>Logged in as {user.battletag}</div>
+          <>
+            {!user ? (
+              <button
+                className="border-2 border-black rounded-md"
+                onClick={() => {
+                  login();
+                }}
+              >
+                LOGIN WITH BNET
+              </button>
+            ) : (
+              <div>Logged in as {user.battletag}</div>
+            )}
+          </>
         )}
+
         <div>Address: {address || "no data"}</div>
         <div>User: {user ? user.battletag : "no data"}</div>
         <button
@@ -590,6 +601,21 @@ const Home: NextPage = () => {
           toast.success(mmToggle.toString());
         }}
       ></div>
+      <div className="fixed z-50 bg-black border-2 border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-60">
+        Once upon a time, in a distant digital universe, countless adventurers thrived. They faced endless battles and
+        overcame numerous dangers until they each met their inevitable end. <br /> <br />
+        Just like in our reality, death is irreversible. However, the actions of these heroes leave lasting marks that
+        resonate beyond their lifespan and reverberate throughout the Multiverse.
+        <br />
+        <br />
+        Enter Memento Mori
+        <br />
+        <br />
+        MementoMori is an onChain memorial to fallen hardcore adventurers which records each adventurers gear, their
+        name, race and level at their time of death and stores it on chain for use throughout the Metaverse. Stats,
+        images, and other functionality are intentionally omitted for others to interpret. Feel free to use MementoMori
+        in any way you want.
+      </div>
     </>
   );
 };
