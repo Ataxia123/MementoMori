@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import Image from "next/image";
+import { randomInt } from "crypto";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
 import Slider from "react-slick";
@@ -354,22 +355,147 @@ const Home: NextPage = () => {
               zIndex: 10,
             }}
           >
-            <div className="relative flex overflow-x-hidden">
-              <div className="py-12 animate-marquee whitespace-nowrap text-black">
-                {" "}
-                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-                <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-                <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span>
-              </div>
-              <div className="py-12 animate-marquee whitespace-nowrap text-black">
-                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-                <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-                <span className="text-4xl mx-4">MORI MEMENTO MORI MEMENTO MORI MEMENTO MORI</span> <br />
-                <span className="text-4xl mx-4">MEMENTO MORI MEMENTO MORI MEMENTO MORI</span>
-              </div>
+            <div className="relative flex overflow-y-hidden">
+              {database?.map((character: any, index: number) => (
+                <>
+                  <div className="-py-10 animate-marquee2 whitespace-nowrap text-black h-full w-max ">
+                    {" "}
+                    <span key={index} className="text-xl">
+                      <div className="">
+                        MEMENTO MORI
+                        <br />
+                        {character?.name} <br />
+                        <br />
+                        {character?.equipped_items?.map((item: any) => (
+                          <div key={item.slot.type}>
+                            {" "}
+                            {item.quality.type == "POOR" ? (
+                              <span className="text-gray-500"> {item.name.en_US}</span>
+                            ) : (
+                              <>
+                                {item.quality.type == "COMMON" ? (
+                                  <span className="text-white"> {item.name.en_US}</span>
+                                ) : (
+                                  <>
+                                    {item.quality.type == "UNCOMMON" ? (
+                                      <span className="text-green-500"> {item.name.en_US}</span>
+                                    ) : (
+                                      <>
+                                        {item.quality.type == "RARE" ? (
+                                          <span className="text-blue-500"> {item.name.en_US}</span>
+                                        ) : (
+                                          <>
+                                            {item.quality.type == "EPIC" ? (
+                                              <span className="text-purple-500"> {item.name.en_US}</span>
+                                            ) : (
+                                              <span className="text-orange-500"> {item.name.en_US}</span>
+                                            )}
+                                          </>
+                                        )}
+                                      </>
+                                    )}
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        ))}
+                        Level {character?.level} {character?.race} {character?.class}
+                      </div>
+                    </span>
+                  </div>
+                  <div className="py-1/2 animate-marquee whitespace-nowrap text-black h-full w-max ">
+                    {" "}
+                    <span key={index++} className="text-s">
+                      <div className="">
+                        MEMENTO MORI
+                        <br />
+                        {character?.name} <br />
+                        <br />
+                        Level {character?.level} {character?.race} {character?.class}
+                        {character?.equipped_items?.map((item: any) => (
+                          <div key={item.slot.type}>
+                            {item.quality.type == "POOR" ? (
+                              <span className="text-gray-500"> {item.name.en_US}</span>
+                            ) : (
+                              <>
+                                {item.quality.type == "COMMON" ? (
+                                  <span className="text-white"> {item.name.en_US}</span>
+                                ) : (
+                                  <>
+                                    {item.quality.type == "UNCOMMON" ? (
+                                      <span className="text-green-500"> {item.name.en_US}</span>
+                                    ) : (
+                                      <>
+                                        {item.quality.type == "RARE" ? (
+                                          <span className="text-blue-500"> {item.name.en_US}</span>
+                                        ) : (
+                                          <>
+                                            {item.quality.type == "EPIC" ? (
+                                              <span className="text-purple-500"> {item.name.en_US}</span>
+                                            ) : (
+                                              <span className="text-orange-500"> {item.name.en_US}</span>
+                                            )}
+                                          </>
+                                        )}
+                                      </>
+                                    )}
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </span>
+                  </div>
+                  <div className="py-3 animate-marquee whitespace-nowrap text-black h-full w-max ">
+                    {" "}
+                    <span key={index + 2} className="text-3xl">
+                      <div className="">
+                        MEMENTO MORI
+                        <br />
+                        {character?.name} <br />
+                        <br />
+                        Level {character?.level} {character?.race} {character?.class}
+                        {character?.equipped_items?.map((item: any) => (
+                          <div key={item.slot.type}>
+                            {item.quality.type == "POOR" ? (
+                              <span className="text-gray-500"> {item.name.en_US}</span>
+                            ) : (
+                              <>
+                                {item.quality.type == "COMMON" ? (
+                                  <span className="text-white"> {item.name.en_US}</span>
+                                ) : (
+                                  <>
+                                    {item.quality.type == "UNCOMMON" ? (
+                                      <span className="text-green-500"> {item.name.en_US}</span>
+                                    ) : (
+                                      <>
+                                        {item.quality.type == "RARE" ? (
+                                          <span className="text-blue-500"> {item.name.en_US}</span>
+                                        ) : (
+                                          <>
+                                            {item.quality.type == "EPIC" ? (
+                                              <span className="text-purple-500"> {item.name.en_US}</span>
+                                            ) : (
+                                              <span className="text-orange-500"> {item.name.en_US}</span>
+                                            )}
+                                          </>
+                                        )}
+                                      </>
+                                    )}
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </span>
+                  </div>
+                </>
+              ))}
             </div>
           </div>
         </div>
