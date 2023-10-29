@@ -364,7 +364,7 @@ const Home: NextPage = () => {
                       <div className="">
                         MEMENTO MORI
                         <br />
-                        {character?.name} <br />
+                        {character?.name} <br /> Level {character?.level} {character?.race} {character?.class}
                         <br />
                         {character?.equipped_items?.map((item: any) => (
                           <div key={item.slot.type}>
@@ -400,17 +400,16 @@ const Home: NextPage = () => {
                             )}
                           </div>
                         ))}
-                        Level {character?.level} {character?.race} {character?.class}
+                        {character?.name} Level {character?.level} {character?.race} {character?.class}
                       </div>
                     </span>
                   </div>
-                  <div className="py-1/2 animate-marquee whitespace-nowrap text-black h-full w-max ">
+                  <div className="mb-0 animate-marquee whitespace-nowrap text-black h-full w-max ">
                     {" "}
                     <span key={index++} className="text-s">
                       <div className="">
                         MEMENTO MORI
                         <br />
-                        {character?.name} <br />
                         <br />
                         Level {character?.level} {character?.race} {character?.class}
                         {character?.equipped_items?.map((item: any) => (
@@ -448,6 +447,7 @@ const Home: NextPage = () => {
                         ))}
                       </div>
                     </span>
+                    {character?.name} Level {character?.level} {character?.race} {character?.class}
                   </div>
                   <div className="py-3 animate-marquee whitespace-nowrap text-black h-full w-max ">
                     {" "}
@@ -455,9 +455,8 @@ const Home: NextPage = () => {
                       <div className="">
                         MEMENTO MORI
                         <br />
-                        {character?.name} <br />
+                        {character?.name} level {character?.level} {character?.race} {character?.class}
                         <br />
-                        Level {character?.level} {character?.race} {character?.class}
                         {character?.equipped_items?.map((item: any) => (
                           <div key={item.slot.type}>
                             {item.quality.type == "POOR" ? (
@@ -491,6 +490,7 @@ const Home: NextPage = () => {
                             )}
                           </div>
                         ))}
+                        {character?.name} level {character?.level} {character?.race} {character?.class}
                       </div>
                     </span>
                   </div>
