@@ -35,7 +35,7 @@ const Home: NextPage = () => {
   const [player, setPlayer] = useState<Character | undefined>();
   const [deadIndex, setDeadIndex] = useState<number>(0);
   const [mmToggle, setMmToggle] = useState<boolean>(false);
-
+  const [infoToggle, setInfoToggle] = useState<boolean>(false);
   // Renderer
   //
   //
@@ -529,7 +529,7 @@ const Home: NextPage = () => {
                     ) : (
                       <>
                         <div className="card mr-3">
-                          <div className="font-serif text-xl">
+                          <div className="font-mono text-xl">
                             In Memoriam to: <br /> {deadCharacter.name}
                           </div>
                           <div>
@@ -595,27 +595,42 @@ const Home: NextPage = () => {
         </button>
       </div>
       <div
-        className="fixed top-2/3 left-1/2 w-1/5 h-1/5 z-50 mt-14 ml-1 transform -translate-x-1/2 bg-black border-2 border-red-500"
+        className="fixed animate-pulse top-2/3 right-96 mr-96 w-1/5 h-1/5 z-50 mt-14 transform -translate-x-1/2 bg-red-800 border-15 border-red-500"
         onClick={() => {
           mmToggle ? setMmToggle(false) : setMmToggle(true);
-          toast.success(mmToggle.toString());
         }}
       ></div>
-      <div className="fixed z-50 bg-black border-2 border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-60">
-        Once upon a time, in a distant digital universe, countless adventurers thrived. They faced endless battles and
-        overcame numerous dangers until they each met their inevitable end. <br /> <br />
-        Just like in our reality, death is irreversible. However, the actions of these heroes leave lasting marks that
-        resonate beyond their lifespan and reverberate throughout the Multiverse.
-        <br />
-        <br />
-        Enter Memento Mori
-        <br />
-        <br />
-        MementoMori is an onChain memorial to fallen hardcore adventurers which records each adventurers gear, their
-        name, race and level at their time of death and stores it on chain for use throughout the Metaverse. Stats,
-        images, and other functionality are intentionally omitted for others to interpret. Feel free to use MementoMori
-        in any way you want.
-      </div>
+      {infoToggle == true ? (
+        <div className="fixed z-50 border-gray-500 font-mono p-4 w-40 h-40 left-96 mr-60 top-96">
+          <div
+            className="animate-bounce absolute right-20 -left-5 h-80 w-60 scale-x-110 scale-y-110"
+            onClick={() => setInfoToggle(!infoToggle)}
+          >
+            <Image fill className="fixed" src="/question.png" alt="?" />
+          </div>
+        </div>
+      ) : (
+        <div className="fixed z-50 bg-black border-2 border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-60">
+          <span className="absolute right-5" onClick={() => setInfoToggle(!infoToggle)}>
+            {"| X |"}{" "}
+          </span>
+          <span className="font-bold justify-center pl-96">
+            💀 Memento Mori 💀
+            <br />
+            <br />
+          </span>
+          Once upon a time, in a distant digital universe, countless adventurers thrived. They faced endless battles and
+          overcame numerous dangers until they each met their inevitable end. <br /> <br />
+          Just like in our reality, death is irreversible. However, the actions of these heroes leave lasting marks that
+          resonate beyond their lifespan and reverberate throughout the Multiverse.
+          <br />
+          <br />
+          <span className="font-bold">💀 Memento Mori 💀</span> is an onChain memorial to fallen hardcore adventurers
+          which records their unique journey through their gear, their name, race and level at their time of death and
+          stores it for use throughout the Metaverse. Stats, images, and other functionality are intentionally omitted
+          for others to interpret. Feel free to use MementoMori in any way you want.
+        </div>
+      )}
     </>
   );
 };

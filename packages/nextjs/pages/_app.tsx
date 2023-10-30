@@ -42,7 +42,6 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
         theme={isDarkTheme ? darkTheme() : lightTheme()}
       >
         <div className="flex flex-col min-h-screen">
-          <Header />
           <main className="relative flex flex-col flex-1 overflow-hidden">
             <Component {...pageProps} />
           </main>
