@@ -8,7 +8,6 @@
   background-position: center center, center center, top right; /* adjust as needed */
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-size: cover, cover, cover; /* adjust as needed */
-  position:"fixed";
 }
 @keyframes pulse {
 	0% {

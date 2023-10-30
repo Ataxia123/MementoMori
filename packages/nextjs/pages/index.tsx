@@ -389,6 +389,7 @@ const Home: NextPage = () => {
               scale: "1.05",
             }}
           />
+          {/* this is the text in the background */}
           <div className="mt-24 h-full relative flex overflow-hidden font-mono z-50">
             {database?.map((character: any, index: number) => (
               <>
@@ -562,7 +563,7 @@ const Home: NextPage = () => {
       ) : (
         <div></div>
       )}
-
+      {/*login logo pulse portion and ? thing*/}
       <div className="card fixed right-20 top-2/3 mt-24 pr-2 z-50 font-mono">
         {!address ? (
           <RainbowKitCustomConnectButton />
@@ -594,8 +595,9 @@ const Home: NextPage = () => {
           Logout
         </button>
       </div>
+
       <div
-        className="fixed animate-pulse top-2/3 right-96 mr-96 w-1/5 h-1/5 z-50 mt-14 transform -translate-x-1/2 bg-red-800 border-15 border-red-500"
+        className="fixed animate-pulse top-2/3 right-96 mr-96 w-1/5 h-1/5 z-50 mt-14 transform -translate-x-1/2"
         onClick={() => {
           mmToggle ? setMmToggle(false) : setMmToggle(true);
         }}
