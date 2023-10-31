@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import Image from "next/image";
-import { randomInt } from "crypto";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { useAccount } from "wagmi";
-import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
+import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 
 type Character = {
   id: number;
@@ -25,38 +24,19 @@ type Character = {
 };
 
 const Home: NextPage = () => {
-  const RACES = [`Human`, `Orc`, `Dwarf`, `Night Elf`, `Undead`, `Tauren`, `Gnome`, `Troll`];
-
   const [user, setUser] = useState<any>(null);
   const [players, setPlayers] = useState<any[]>();
   const [dead, setDead] = useState<Character[]>([]);
   const [alive, setAlive] = useState<Character[]>([]);
   const [database, setDatabase] = useState<any[]>([]);
   const [player, setPlayer] = useState<Character | undefined>();
-  const [deadIndex, setDeadIndex] = useState<number>(0);
   const [mmToggle, setMmToggle] = useState<boolean>(false);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
   // Renderer
   //
   //
-  const inventory = {
-    HEAD: 1,
-    NECK: 2,
-    SHOULDER: 3,
-    SHIRT: 4,
-    CHEST: 5,
-    WAIST: 6,
-    LEGS: 7,
-    FEET: 8,
-    WRIST: 9,
-    HANDS: 10,
-    BACK: 15,
-    MAIN_HAND: 16,
-    OFF_HAND: 17,
-    RANGED: 18,
-    TABBARD: 19,
-  };
+
   const account = useAccount();
 
   const address = account?.address;
@@ -65,7 +45,7 @@ const Home: NextPage = () => {
 
   const login = () => {
     popup = window.open(
-      "http://localhost:3000/oauth/battlenet",
+      "https://memento-backend-cf191cb4715d.herokuapp.com/oauth/battlenet",
       "targetWindow",
       `toolbar=no,
        location=no,
@@ -80,7 +60,7 @@ const Home: NextPage = () => {
     window.addEventListener(
       "message",
       event => {
-        if (event.origin !== "http://localhost:3000") return;
+        if (event.origin !== "https://memento-backend-cf191cb4715d.herokuapp.com") return;
         console.log("event", event);
 
         if (event.data) {
@@ -94,7 +74,7 @@ const Home: NextPage = () => {
 
   const logout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/oauth/logout", {
+      const response = await fetch("https://memento-backend-cf191cb4715d.herokuapp.com/oauth/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -112,7 +92,7 @@ const Home: NextPage = () => {
   };
 
   const fetchDb = async () => {
-    const response = await fetch("http://localhost:3000/api/database"); // assume the same host
+    const response = await fetch("https://memento-backend-cf191cb4715d.herokuapp.com/api/database"); // assume the same host
     const data = await response.json();
     console.log(data, "Player data from DB");
     setDatabase(data.players);
@@ -120,7 +100,7 @@ const Home: NextPage = () => {
 
   const postDb = async (players: Character) => {
     try {
-      const response = await fetch("http://localhost:3000/api/db", {
+      const response = await fetch("https://memento-backend-cf191cb4715d.herokuapp.com/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -229,7 +209,6 @@ const Home: NextPage = () => {
 
   const playerSelector = async (index: number) => {
     if (!players) return console.log("no players");
-    setDeadIndex(index);
     await fetchCharMedia(index);
   };
   useEffect(() => {
@@ -253,55 +232,12 @@ const Home: NextPage = () => {
     console.log("dead", dead, "alive", alive);
   }, [players]);
 
-  const InventoryUrl = () => {
-    let url = "";
-    player?.equipped_items?.map(async (item: any) => {
-      if (item && item.slot && typeof item.slot.type === "string") {
-        const slot = item.slot.type;
-        const inventorySlot = inventory[`${slot}` as keyof typeof inventory];
-        const equipped_item = {
-          slot: slot,
-          slot_ID: inventorySlot,
-          item_id: item.item.id,
-          item_name: item.name.en_US,
-        };
-
-        url = url + `&${slot}=${equipped_item.item_id}`;
-      } else {
-        console.error("Invalid item or slot type", item);
-      }
-    });
-  };
-  const render = () => {
-    const index3 = player?.race ? RACES.indexOf(player?.race) + 1 : "1";
-    const url = InventoryUrl();
-    console.log(url);
-    toast.success(`success rendering ${index3}`);
-    console.log(index3, "index3");
-    popup = window.open(
-      `http://localhost:3000/api/render?characterId=${player?.id}&name=${player?.name}&faction=${player?.faction}&class=${player?.class}&gender=1&race=${index3}&facial_hair=1&hairStyle=1&hairColor=1&facialStyle=1` +
-        url,
-      "targetWindow",
-      `toolbar=no,
-       location=no,
-       status=no,
-       menubar=no,
-       scrollbars=yes,
-       resizable=yes,
-       width=620,
-       height=700`,
-    ); //listen for response
-  };
-
   const settings = {
     dots: true,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    onClick: () => {
-      render();
-    },
   };
   // Once the popup is closed
   //
@@ -342,10 +278,6 @@ const Home: NextPage = () => {
           // Call your function here
           playerSelector(index);
         }
-      };
-
-      const myFunction = () => {
-        console.log('"F" key pressed');
       };
 
       document.addEventListener("keydown", handleKeyPress);
@@ -690,7 +622,7 @@ const Home: NextPage = () => {
               <br />
             </>
           ) : (
-            <div className="p-60 text-center">
+            <div className="p-40 text-center">
               <span className="font-bold">
                 This project is dedicated to the memory of my dog 🐶 Tuto.
                 <br />
