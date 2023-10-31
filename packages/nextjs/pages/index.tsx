@@ -633,20 +633,17 @@ const Home: NextPage = () => {
           </div>
         </div>
       ) : (
-        <div
-          className="fixed z-50 bg-black border-2  border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20"
-          onClick={() => setTutoggle(!tutoggle)}
-        >
+        <div className="fixed z-50 bg-black border-2  border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20">
           <span className="absolute right-5" onClick={() => setInfoToggle(!infoToggle)}>
             {"| X |"}{" "}
           </span>
+          <span className="font-bold justify-center pl-96" onClick={() => setTutoggle(!tutoggle)}>
+            💀 Memento Mori 💀
+            <br />
+            <br />
+          </span>
           {tutoggle == true ? (
             <>
-              <span className="font-bold justify-center pl-96">
-                💀 Memento Mori 💀
-                <br />
-                <br />
-              </span>
               Once upon a time, in a distant digital universe, countless adventurers thrived. They faced endless battles
               and overcame numerous dangers until they each met their inevitable end. <br /> <br />
               Just like in our reality, death is irreversible. However, the actions of these heroes leave lasting marks
@@ -662,28 +659,28 @@ const Home: NextPage = () => {
               Connect with us: <br />
               <span className="text-blue-500">
                 {" "}
-                <a href="https://discord.gg/3Qq8qW6Z" target="_blank" rel="noreferrer">
+                <a href="https://discord.gg/sdmpRhNC" target="_blank" rel="noreferrer">
                   Discord
                 </a>
               </span>
               <br />
               <span className="text-blue-500">
                 {" "}
-                <a href="https://discord.gg/3Qq8qW6Z" target="_blank" rel="noreferrer">
+                <a href="https://t.me/+N_-pUunbjHw3Y2Vh" target="_blank" rel="noreferrer">
                   Telegram
                 </a>
               </span>
               <br />
               <span className="text-blue-500">
                 {" "}
-                <a href="https://discord.gg/3Qq8qW6Z" target="_blank" rel="noreferrer">
+                <a href="https://twitter.com/MMoriOnChain" target="_blank" rel="noreferrer">
                   Twitter
                 </a>
               </span>
               <br />
               <span className="text-blue-500">
                 {" "}
-                <a href="https://discord.gg/3Qq8qW6Z" target="_blank" rel="noreferrer">
+                <a href="https://github.com/Ataxia123/MementoMori" target="_blank" rel="noreferrer">
                   Github
                 </a>
               </span>
