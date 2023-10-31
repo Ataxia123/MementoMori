@@ -33,8 +33,6 @@
   "devDependencies": {
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18",
-    "@types/react-slick": "^0",
-    "@types/slick-carousel": "^1",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3"
   },
@@ -43,8 +41,6 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-slick": "^0.29.0",
-    "slick-carousel": "^1.8.1"
+    "react-dom": "^18.2.0"
   }
 }
