@@ -598,23 +598,26 @@ const Home: NextPage = () => {
       </div>
 
       <div
-        className="fixed animate-pulse top-2/3 right-96 mr-96 w-1/5 h-1/5 z-50 mt-14 transform -translate-x-1/2"
+        className="fixed top-2/3 left-1/2 w-1/4 h-1/3 z-50 transform -translate-x-1/2 scale-105 hover:scale-110"
         onClick={() => {
           mmToggle ? setMmToggle(false) : setMmToggle(true);
         }}
-      ></div>
+      >
+        <Image src="/logo.png" alt="Logo" fill />
+      </div>
+
       {infoToggle == true ? (
         <div className="fixed z-50 border-gray-500 font-mono p-4 w-40 h-40 left-96 mr-60 top-96">
           <div
-            className="animate-bounce absolute right-20 -left-5 h-80 w-60 scale-x-110 scale-y-110"
+            className="animate-bounce absolute right-20 -left-6 h-80 w-60 scale-x-110 scale-y-110"
             onClick={() => setInfoToggle(!infoToggle)}
           >
-            <Image fill className="fixed" src="/question.png" alt="?" />
+            <Image fill className="fixed hover:scale-110" src="/question.png" alt="?" />
           </div>
         </div>
       ) : (
         <div
-          className="fixed z-50 bg-black border-2 border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20"
+          className="fixed z-50 bg-black border-2  border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20"
           onClick={() => setTutoggle(!tutoggle)}
         >
           <span className="absolute right-5" onClick={() => setInfoToggle(!infoToggle)}>
