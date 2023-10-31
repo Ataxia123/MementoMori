@@ -36,7 +36,7 @@ const Home: NextPage = () => {
   const [deadIndex, setDeadIndex] = useState<number>(0);
   const [mmToggle, setMmToggle] = useState<boolean>(false);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
-  const [tutoggle, setTutoggle] = useState<boolean>(false);
+  const [tutoggle, setTutoggle] = useState<boolean>(true);
   // Renderer
   //
   //
