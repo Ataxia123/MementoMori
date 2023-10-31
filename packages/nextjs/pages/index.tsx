@@ -36,6 +36,7 @@ const Home: NextPage = () => {
   const [deadIndex, setDeadIndex] = useState<number>(0);
   const [mmToggle, setMmToggle] = useState<boolean>(false);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
+  const [tutoggle, setTutoggle] = useState<boolean>(false);
   // Renderer
   //
   //
@@ -529,7 +530,7 @@ const Home: NextPage = () => {
                       </>
                     ) : (
                       <>
-                        <div className="card mr-3">
+                        <div className="card mr-3 mt-4">
                           <div className="font-mono text-xl">
                             In Memoriam to: <br /> {deadCharacter.name}
                           </div>
@@ -612,25 +613,73 @@ const Home: NextPage = () => {
           </div>
         </div>
       ) : (
-        <div className="fixed z-50 bg-black border-2 border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-60">
+        <div
+          className="fixed z-50 bg-black border-2 border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20"
+          onClick={() => setTutoggle(!tutoggle)}
+        >
           <span className="absolute right-5" onClick={() => setInfoToggle(!infoToggle)}>
             {"| X |"}{" "}
           </span>
-          <span className="font-bold justify-center pl-96">
-            💀 Memento Mori 💀
-            <br />
-            <br />
-          </span>
-          Once upon a time, in a distant digital universe, countless adventurers thrived. They faced endless battles and
-          overcame numerous dangers until they each met their inevitable end. <br /> <br />
-          Just like in our reality, death is irreversible. However, the actions of these heroes leave lasting marks that
-          resonate beyond their lifespan and reverberate throughout the Multiverse.
-          <br />
-          <br />
-          <span className="font-bold">💀 Memento Mori 💀</span> is an onChain memorial to fallen hardcore adventurers
-          which records their unique journey through their gear, their name, race and level at their time of death and
-          stores it for use throughout the Metaverse. Stats, images, and other functionality are intentionally omitted
-          for others to interpret. Feel free to use MementoMori in any way you want.
+          {tutoggle == true ? (
+            <>
+              <span className="font-bold justify-center pl-96">
+                💀 Memento Mori 💀
+                <br />
+                <br />
+              </span>
+              Once upon a time, in a distant digital universe, countless adventurers thrived. They faced endless battles
+              and overcame numerous dangers until they each met their inevitable end. <br /> <br />
+              Just like in our reality, death is irreversible. However, the actions of these heroes leave lasting marks
+              that resonate beyond their lifespan and reverberate throughout the Multiverse.
+              <br />
+              <br />
+              <span className="font-bold">💀 Memento Mori 💀</span> is an onChain memorial to fallen hardcore
+              adventurers which records their unique journey through their gear, their name, race and level at their
+              time of death and stores it for use throughout the Metaverse. Stats, images, and other functionality are
+              intentionally omitted for others to interpret. Feel free to use MementoMori in any way you want.
+              <br />
+              <br />
+              Connect with us: <br />
+              <span className="text-blue-500">
+                {" "}
+                <a href="https://discord.gg/3Qq8qW6Z" target="_blank" rel="noreferrer">
+                  Discord
+                </a>
+              </span>
+              <br />
+              <span className="text-blue-500">
+                {" "}
+                <a href="https://discord.gg/3Qq8qW6Z" target="_blank" rel="noreferrer">
+                  Telegram
+                </a>
+              </span>
+              <br />
+              <span className="text-blue-500">
+                {" "}
+                <a href="https://discord.gg/3Qq8qW6Z" target="_blank" rel="noreferrer">
+                  Twitter
+                </a>
+              </span>
+              <br />
+              <span className="text-blue-500">
+                {" "}
+                <a href="https://discord.gg/3Qq8qW6Z" target="_blank" rel="noreferrer">
+                  Github
+                </a>
+              </span>
+              <br />
+              <br />
+              Made with {"<3"} by At0x.eth and the NERDS
+              <br />
+            </>
+          ) : (
+            <div className="p-60 text-center">
+              <span className="font-bold">
+                This project is dedicated to the memory of my dog 🐶 Tuto.
+                <br />
+              </span>
+            </div>
+          )}
         </div>
       )}
     </>
