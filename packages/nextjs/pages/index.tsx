@@ -553,8 +553,25 @@ const Home: NextPage = () => {
                 ))}
               </Slider>
             ) : (
-              <div>
-                No dead <br /> characters
+              <div className="card mt-60 pr-2 z-50 font-mono">
+                {!address ? (
+                  <RainbowKitCustomConnectButton />
+                ) : (
+                  <>
+                    {!user ? (
+                      <button
+                        className="border-2 border-black rounded-md"
+                        onClick={() => {
+                          login();
+                        }}
+                      >
+                        LOGIN WITH BNET
+                      </button>
+                    ) : (
+                      <div>Logged in as {user.battletag}</div>
+                    )}
+                  </>
+                )}
               </div>
             )}
 
