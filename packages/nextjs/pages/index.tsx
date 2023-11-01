@@ -92,10 +92,15 @@ const Home: NextPage = () => {
   };
 
   const fetchDb = async () => {
-    const response = await fetch("https://backend.nerddao.xyz/api/database"); // assume the same host
-    const data = await response.json();
-    console.log(data, "Player data from DB");
-    setDatabase(data.players);
+    try {
+      const response = await fetch("https://backend.nerddao.xyz/api/database"); // assume the same host
+      const data = await response.json();
+      console.log(data, "Player data from DB");
+      setDatabase(data.players);
+    } catch (e: any) {
+      toast.error("error posting dead players to db");
+      console.log(e.message);
+    }
   };
 
   const postDb = async (players: Character) => {
