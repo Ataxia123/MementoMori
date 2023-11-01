@@ -102,6 +102,7 @@ const Home: NextPage = () => {
     try {
       const response = await fetch("https://memento-backend-cf191cb4715d.herokuapp.com/api/db", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
