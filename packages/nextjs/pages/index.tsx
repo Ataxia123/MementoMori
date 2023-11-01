@@ -112,9 +112,9 @@ const Home: NextPage = () => {
 
       const data = await response.json();
       console.log(data, "POST Player data response");
-    } catch (e) {
+    } catch (e: any) {
       toast.error("error posting dead players to db");
-      console.log(e);
+      console.log(e.message);
     }
   };
 
