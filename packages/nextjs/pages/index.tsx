@@ -45,7 +45,7 @@ const Home: NextPage = () => {
 
   const login = () => {
     popup = window.open(
-      "https://memento-backend-cf191cb4715d.herokuapp.com/oauth/battlenet",
+      "https://backend.nerddao.xyz/oauth/battlenet",
       "targetWindow",
       `toolbar=no,
        location=no,
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
 
   const logout = async () => {
     try {
-      const response = await fetch("backend.nerddao.xyz/oauth/logout", {
+      const response = await fetch("https://backend.nerddao.xyz/oauth/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -92,7 +92,7 @@ const Home: NextPage = () => {
   };
 
   const fetchDb = async () => {
-    const response = await fetch("backend.nerddao.xyz/api/database"); // assume the same host
+    const response = await fetch("https://backend.nerddao.xyz/api/database"); // assume the same host
     const data = await response.json();
     console.log(data, "Player data from DB");
     setDatabase(data.players);
@@ -100,7 +100,7 @@ const Home: NextPage = () => {
 
   const postDb = async (players: Character) => {
     try {
-      const response = await fetch("backend.nerddao.xyz/api/db", {
+      const response = await fetch("https://backend.nerddao.xyz/api/db", {
         method: "POST",
         credentials: "include",
         headers: {
