@@ -100,7 +100,7 @@ const Home: NextPage = () => {
 
   const postDb = async (players: Character) => {
     try {
-      const response = await fetch("https://memento-backend-cf191cb4715d.herokuapp.com/", {
+      const response = await fetch("https://memento-backend-cf191cb4715d.herokuapp.com/api/db", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
