@@ -60,7 +60,7 @@ const Home: NextPage = () => {
     window.addEventListener(
       "message",
       event => {
-        if (event.origin !== "https://memento-backend-cf191cb4715d.herokuapp.com") return;
+        if (event.origin !== "https://backend.nerddao.xyz") return;
         console.log("event", event);
 
         if (event.data) {
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
 
   const logout = async () => {
     try {
-      const response = await fetch("https://memento-backend-cf191cb4715d.herokuapp.com/oauth/logout", {
+      const response = await fetch("backend.nerddao.xyz/oauth/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -92,7 +92,7 @@ const Home: NextPage = () => {
   };
 
   const fetchDb = async () => {
-    const response = await fetch("https://memento-backend-cf191cb4715d.herokuapp.com/api/database"); // assume the same host
+    const response = await fetch("backend.nerddao.xyz/api/database"); // assume the same host
     const data = await response.json();
     console.log(data, "Player data from DB");
     setDatabase(data.players);
@@ -100,7 +100,7 @@ const Home: NextPage = () => {
 
   const postDb = async (players: Character) => {
     try {
-      const response = await fetch("https://memento-backend-cf191cb4715d.herokuapp.com/api/db", {
+      const response = await fetch("backend.nerddao.xyz/api/db", {
         method: "POST",
         credentials: "include",
         headers: {
