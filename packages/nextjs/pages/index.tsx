@@ -30,7 +30,7 @@ const Home: NextPage = () => {
   const [alive, setAlive] = useState<Character[]>([]);
   const [database, setDatabase] = useState<any[]>([]);
   const [player, setPlayer] = useState<Character | undefined>();
-  const [mmToggle, setMmToggle] = useState<boolean>(false);
+  const [mmToggle, setMmToggle] = useState<boolean>(true);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
   // Renderer
