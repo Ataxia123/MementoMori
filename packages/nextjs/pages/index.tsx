@@ -597,7 +597,7 @@ const Home: NextPage = () => {
               Connect with us: <br />
               <span className="text-blue-500">
                 {" "}
-                <a href="https://discord.gg/sdmpRhNC" target="_blank" rel="noreferrer">
+                <a href="https://discord.gg/yGuUY8ZsFr" target="_blank" rel="noreferrer">
                   Discord
                 </a>
               </span>
