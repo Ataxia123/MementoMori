@@ -178,37 +178,55 @@ const Home: NextPage = () => {
   };
 
   const fetchCharMedia = async (index: number) => {
-    if (user?.token == null) return console.log("no token");
+    if (!user?.token) {
+      console.log("No token available.");
+      return;
+    }
 
     try {
-      players?.map((character: any) => {
-        if (character.level < 10)
-          return console.log(character.character.name, "too low level", character.character.level);
+      players?.forEach(character => {
+        if (character.level < 10) {
+          console.log(`${character.character.name} is too low level: ${character.character.level}`);
+          return;
+        }
         fetchCharData(character.character.href);
       });
 
-      //todo: change to dead players
+      // Ensure the dead array has elements and the index is valid
+      if (dead.length === 0 || index < 0 || index >= dead.length) {
+        console.log("Invalid index or empty dead array.");
+        return;
+      }
 
-      const url = dead[index]?.media;
+      const characterMedia = dead[index];
+      if (!characterMedia?.media) {
+        console.log(`No media URL found for character at index ${index}.`);
+        return;
+      }
 
-      console.log(url, "url", dead[index]?.name, "name", index, "deadIndex");
-
-      const response = await fetch(`${url}&access_token=${user.token}`);
+      const url = `${characterMedia.media}&access_token=${user.token}`;
+      const response = await fetch(url);
       const data = await response.json();
-      const dindex = dead?.findIndex(x => x.id === data.character.id);
 
-      console.log(response, "data");
+      const dindex = dead.findIndex(x => x.id === data.character.id);
+      if (dindex === -1) {
+        console.log("Character not found in dead array.");
+        return;
+      }
 
-      setDead(prevState => {
-        const newState = [...prevState];
-        newState[dindex].equipped_items = data.equipped_items;
-        setPlayer(newState[index]);
-        player ? postDb(player) : console.log("fuck off");
-        return newState;
-      });
-      console.log(data, dead[dindex].name, "equipment data", alive, index);
-    } catch (e) {
-      toast.error("error getting equipment");
+      setDead(prevState =>
+        prevState.map((item, idx) => (idx === dindex ? { ...item, equipped_items: data.equipped_items } : item)),
+      );
+
+      const updatedPlayer = dead[dindex];
+      setPlayer(updatedPlayer);
+      if (updatedPlayer) {
+        postDb(updatedPlayer);
+      } else {
+        console.log("Player not set.");
+      }
+    } catch (e: any) {
+      toast.error("Error getting equipment: " + e.message);
       console.log(e);
     }
   };
