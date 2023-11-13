@@ -214,9 +214,9 @@ const Home: NextPage = () => {
   };
 
   const playerSelector = async (index: number) => {
-    if (!players) return console.log("no players");
     await fetchCharMedia(index);
   };
+
   useEffect(() => {
     fetchDb();
   }, []);
@@ -269,13 +269,6 @@ const Home: NextPage = () => {
     }
   };
 
-  const factionColor = (character: Character) => {
-    if (character.faction == "ALLIANCE") {
-      return "text-blue-500";
-    } else {
-      return "text-red-500";
-    }
-  };
   function MyComponent(props: any) {
     const { index } = props;
     useEffect(() => {
