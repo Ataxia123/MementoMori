@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import React from "react";
 import Image from "next/image";
 import type { NextPage } from "next";
@@ -291,22 +291,40 @@ const Home: NextPage = () => {
 
   function MyComponent(props: any) {
     const { index } = props;
+    const componentRef = useRef(null); // Reference to the component
+
     useEffect(() => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Component is visible, add event listener
+            document.addEventListener("keydown", handleKeyPress);
+          } else {
+            // Component is not visible, remove event listener
+            document.removeEventListener("keydown", handleKeyPress);
+          }
+        });
+      });
+
       const handleKeyPress = (event: any) => {
         if (event.key === "F" || event.key === "f") {
-          // Call your function here
           playerSelector(index);
         }
       };
 
-      document.addEventListener("keydown", handleKeyPress);
+      if (componentRef.current) {
+        observer.observe(componentRef.current); // Start observing
+      }
 
       return () => {
+        if (componentRef.current) {
+          observer.unobserve(componentRef.current); // Clean up
+        }
         document.removeEventListener("keydown", handleKeyPress);
       };
-    }, []);
+    }, [index]);
 
-    return <>Press F to pay Respects</>;
+    return <div ref={componentRef}>Press F to pay Respects</div>;
   }
   return (
     <>
