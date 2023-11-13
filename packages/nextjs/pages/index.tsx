@@ -214,9 +214,11 @@ const Home: NextPage = () => {
         return;
       }
 
-      setDead(prevState =>
-        prevState.map((item, idx) => (idx === dindex ? { ...item, equipped_items: data.equipped_items } : item)),
-      );
+      setDead(prevState => {
+        const newState = [...prevState];
+        newState[dindex].equipped_items = data.equipped_items;
+        return newState;
+      });
 
       const updatedPlayer = dead[dindex];
       setPlayer(updatedPlayer);
