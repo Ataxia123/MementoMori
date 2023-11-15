@@ -31,16 +31,14 @@
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {
-    "@types/react": "^18.0.9",
-    "@types/react-dom": "^18",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3"
+    "@types/simple-oauth2": "^5",
+    "husky": "^8.0.1"
   },
   "resolutions": {
     "usehooks-ts@^2.7.2": "patch:usehooks-ts@npm:^2.7.2#./.yarn/patches/usehooks-ts-npm-2.7.2-fceffe0e43.patch"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "lint-staged": "^15.1.0",
+    "simple-oauth2": "^5.0.0"
   }
 }

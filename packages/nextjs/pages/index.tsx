@@ -283,7 +283,6 @@ const Home: NextPage = () => {
       setPlayer(updatedPlayer);
       if (updatedPlayer) {
         postDb(updatedPlayer);
-        await fecthAttestation();
       } else {
         console.log("Player not set.");
       }
