@@ -43,7 +43,7 @@ const Home: NextPage = () => {
   const provider = useEthersProvider();
   const signer = useEthersSigner();
 
-  const EASContractAddress = "0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587"; // Sepolia v0.26
+  const EASContractAddress = "0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587"; //
 
   // Initialize the sdk with the address of the EAS Schema contract address
   const eas = new EAS(EASContractAddress);
@@ -283,7 +283,7 @@ const Home: NextPage = () => {
       setPlayer(updatedPlayer);
       if (updatedPlayer) {
         postDb(updatedPlayer);
-        fecthAttestation();
+        await fecthAttestation();
       } else {
         console.log("Player not set.");
       }
