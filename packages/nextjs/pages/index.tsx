@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import React from "react";
 import Image from "next/image";
+import { useEthersProvider, useEthersSigner } from "../utils/wagmi-utils";
+import { EAS, Offchain, SchemaEncoder, SchemaRegistry } from "@ethereum-attestation-service/eas-sdk";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
 import Slider from "react-slick";
@@ -21,6 +23,7 @@ type Character = {
   is_ghost: boolean;
   equipped_items: [unknown];
   media?: string;
+  UID?: string;
 };
 
 const Home: NextPage = () => {
@@ -36,6 +39,19 @@ const Home: NextPage = () => {
   // Renderer
   //
   //
+
+  const provider = useEthersProvider();
+  const signer = useEthersSigner();
+
+  const EASContractAddress = "0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587"; // Sepolia v0.26
+
+  // Initialize the sdk with the address of the EAS Schema contract address
+  const eas = new EAS(EASContractAddress);
+
+  // Gets a default provider (in production use something else like infura/alchemy)
+  eas.connect(provider);
+
+  // Initialize the sdk with the Provider
 
   const account = useAccount();
 
@@ -121,6 +137,49 @@ const Home: NextPage = () => {
       toast.error("error posting dead players to db");
       console.log(e.message);
     }
+  };
+
+  const fecthAttestation = async () => {
+    const offchain = await eas.getOffchain();
+    const uid = "0x633a741c3514c35e4fea835f5a1e4f4e6eb4b049e73c381080e7bd2923158571";
+
+    // Initialize SchemaEncoder with the schema string
+    const schemaEncoder = new SchemaEncoder(
+      "address Owner,uint32 PlayerId,string Name,string Race,string Class,string Level,string[] EquippedItems",
+    );
+
+    if (!player) return console.log("No player available.");
+    const encodedData = schemaEncoder.encodeData([
+      { name: "Owner", value: address ? address : "0x0000000000000000", type: "address" },
+      { name: "PlayerId", value: player.id, type: "uint32" },
+      { name: "Name", value: player.name, type: "string" },
+      { name: "Race", value: player.race, type: "string" },
+      { name: "Class", value: player.class, type: "string" },
+      { name: "Level", value: player.level, type: "string" },
+      { name: "EquippedItems", value: player.equipped_items, type: "string[]" },
+    ]);
+
+    if (!signer) {
+      console.log("No signer available.");
+      return;
+    }
+
+    const offchainAttestation = await offchain.signOffchainAttestation(
+      {
+        version: 1,
+        recipient: address ? address : "0x0000000000000000",
+        expirationTime: BigInt(0),
+        time: BigInt(123),
+        revocable: true,
+        refUID: "0x0000000",
+        // Be aware that if your schema is not revocable, this MUST be false
+        schema: uid,
+        data: encodedData,
+      },
+      signer,
+    );
+
+    console.log("New attestation UID:", offchainAttestation);
   };
 
   const fetchCharacter = async () => {
@@ -224,6 +283,7 @@ const Home: NextPage = () => {
       setPlayer(updatedPlayer);
       if (updatedPlayer) {
         postDb(updatedPlayer);
+        fecthAttestation();
       } else {
         console.log("Player not set.");
       }
