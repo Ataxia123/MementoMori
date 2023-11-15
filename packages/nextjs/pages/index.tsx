@@ -171,7 +171,7 @@ const Home: NextPage = () => {
         expirationTime: BigInt(0),
         time: BigInt(123),
         revocable: true,
-        refUID: "0x0000000",
+        refUID: "0x0000000000000000000000000000000000000000000000000000000000000000",
         // Be aware that if your schema is not revocable, this MUST be false
         schema: uid,
         data: encodedData,
