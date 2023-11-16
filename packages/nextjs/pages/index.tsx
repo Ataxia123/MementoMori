@@ -178,8 +178,8 @@ const Home: NextPage = () => {
       },
       signer,
     );
-
-    console.log("New attestation UID:", offchainAttestation);
+    const encoded = encodeURI(offchainAttestation.toString());
+    console.log("New attestation UID:", offchainAttestation, encoded);
   };
 
   const fetchCharacter = async () => {
@@ -282,6 +282,7 @@ const Home: NextPage = () => {
       const updatedPlayer = dead[dindex];
       setPlayer(updatedPlayer);
       if (updatedPlayer) {
+        fecthAttestation();
         postDb(updatedPlayer);
       } else {
         console.log("Player not set.");
