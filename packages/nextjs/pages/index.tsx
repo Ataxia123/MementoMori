@@ -178,8 +178,8 @@ const Home: NextPage = () => {
       },
       signer,
     );
-    encodeURI(JSON.stringify(offchainAttestation));
-    console.log("New attestation UID:", offchainAttestation);
+    const encoded = encodeURI(JSON.stringify(offchainAttestation));
+    console.log("New attestation UID:", offchainAttestation, encoded);
   };
 
   const fetchCharacter = async () => {
