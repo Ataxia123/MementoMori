@@ -138,7 +138,18 @@ const Home: NextPage = () => {
       console.log(e.message);
     }
   };
+  const download = (filename: string, text: string) => {
+    const element = document.createElement("a");
+    element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+    element.setAttribute("download", filename);
 
+    element.style.display = "none";
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  };
   const fecthAttestation = async () => {
     const offchain = await eas.getOffchain();
     const uid = "0x633a741c3514c35e4fea835f5a1e4f4e6eb4b049e73c381080e7bd2923158571";
@@ -178,8 +189,8 @@ const Home: NextPage = () => {
       },
       signer,
     );
-    const encoded = encodeURI(offchainAttestation.toString());
-    console.log("New attestation UID:", offchainAttestation, encoded);
+    download("assets.txt", JSON.stringify(offchainAttestation));
+    console.log("New attestation UID:", offchainAttestation);
   };
 
   const fetchCharacter = async () => {
