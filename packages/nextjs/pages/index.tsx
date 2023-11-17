@@ -297,7 +297,7 @@ const Home: NextPage = () => {
   };
 
   const playerSelector = (index: number) => {
-    fetchCharMedia(index + 1).then(() => {
+    fetchCharMedia(index).then(() => {
       fecthAttestation().then(() => {
         if (!player) return;
         player.Attestation = attestation;
@@ -569,25 +569,23 @@ const Home: NextPage = () => {
                         <br />
                       </>
                     ) : (
-                      <>
-                        <div className="card mr-3 mt-4">
-                          <div className="font-mono text-xl">
-                            In Memoriam to: <br /> {deadCharacter.name}
-                          </div>
-                          <div>
-                            <br />
-
-                            <button
-                              className="border-2 border-white text-center rounded-md p-2"
-                              onClick={() => playerSelector(index)}
-                            >
-                              Memento Mori
-                            </button>
-                            <br />
-                          </div>
-                          <MyComponent index={index} />
+                      <div key={index} className="card mr-3 mt-4">
+                        <div className="font-mono text-xl">
+                          In Memoriam to: <br /> {deadCharacter.name}
                         </div>
-                      </>
+                        <div>
+                          <br />
+
+                          <button
+                            className="border-2 border-white text-center rounded-md p-2"
+                            onClick={() => playerSelector(index)}
+                          >
+                            Memento Mori
+                          </button>
+                          <br />
+                        </div>
+                        <MyComponent index={index} />
+                      </div>
                     )}
                   </div>
                 ))}
