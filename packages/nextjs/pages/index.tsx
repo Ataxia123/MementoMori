@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import React from "react";
 import Image from "next/image";
 import { useEthersProvider, useEthersSigner } from "../utils/wagmi-utils";
-import { EAS, Offchain, SchemaEncoder, SchemaRegistry } from "@ethereum-attestation-service/eas-sdk";
+import {
+  EAS,
+  Offchain,
+  SchemaEncoder,
+  SchemaRegistry,
+  SignedOffchainAttestation,
+} from "@ethereum-attestation-service/eas-sdk";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
 import Slider from "react-slick";
@@ -23,7 +29,7 @@ type Character = {
   is_ghost: boolean;
   equipped_items: [unknown];
   media?: string;
-  UID?: string;
+  Attestation?: SignedOffchainAttestation;
 };
 
 const Home: NextPage = () => {
@@ -36,6 +42,7 @@ const Home: NextPage = () => {
   const [mmToggle, setMmToggle] = useState<boolean>(true);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
+  const [offchain, setOffchain] = useState<SignedOffchainAttestation | undefined>(undefined);
   // Renderer
   //
   //
@@ -178,8 +185,8 @@ const Home: NextPage = () => {
       },
       signer,
     );
-    const encoded = encodeURI(JSON.stringify(offchainAttestation));
-    console.log("New attestation UID:", offchainAttestation, encoded);
+    setOffchain(offchainAttestation);
+    console.log("New attestation UID:", offchain);
   };
 
   const fetchCharacter = async () => {
@@ -268,6 +275,7 @@ const Home: NextPage = () => {
       const data = await response.json();
 
       const dindex = dead.findIndex(x => x.id === data.character.id);
+      await fecthAttestation();
       if (dindex === -1) {
         console.log("Character not found in dead array.");
         return;
@@ -276,14 +284,15 @@ const Home: NextPage = () => {
       setDead(prevState => {
         const newState = [...prevState];
         newState[dindex].equipped_items = data.equipped_items;
+        newState[dindex].Attestation = offchain;
         return newState;
       });
 
       const updatedPlayer = dead[dindex];
       setPlayer(updatedPlayer);
       if (updatedPlayer) {
-        await fecthAttestation();
         postDb(updatedPlayer);
+        toast.success("Success! Attestation UID: " + offchain?.uid);
       } else {
         console.log("Player not set.");
       }
