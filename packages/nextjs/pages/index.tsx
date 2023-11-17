@@ -286,14 +286,14 @@ const Home: NextPage = () => {
       }
       setDead(prevState => {
         const newState = [...prevState];
-        newState[dindex].equipped_items = data.equipped_items;
+        newState[index].equipped_items = data.equipped_items;
         return newState;
       });
-      setPlayer(dead[index]);
     } catch (e: any) {
       toast.error("Error getting equipment: " + e.message);
       console.log(e);
     }
+    setPlayer(dead[index]);
   };
 
   const playerSelector = (index: number) => {
@@ -315,9 +315,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (user === null) return;
     fetchCharacter();
-  }, [user]);
-
-  useEffect(() => {
     console.log(players, "players");
 
     players?.map((character: any) => {
@@ -327,7 +324,7 @@ const Home: NextPage = () => {
     });
 
     console.log("dead", dead, "alive", alive);
-  }, [players]);
+  }, [user]);
 
   const settings = {
     dots: true,
