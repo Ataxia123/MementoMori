@@ -297,7 +297,7 @@ const Home: NextPage = () => {
   };
 
   const playerSelector = (index: number) => {
-    fetchCharMedia(index).then(() => {
+    fetchCharMedia(index + 1).then(() => {
       fecthAttestation().then(() => {
         if (!player) return;
         player.Attestation = attestation;
