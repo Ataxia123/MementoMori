@@ -261,14 +261,6 @@ const Home: NextPage = () => {
     }
 
     try {
-      players?.forEach(character => {
-        if (character.level < 10) {
-          console.log(`${character.character.name} is too low level: ${character.character.level}`);
-          return;
-        }
-        fetchCharData(character.character.href);
-      });
-
       // Ensure the dead array has elements and the index is valid
       if (dead.length === 0 || index < 0 || index >= dead.length) {
         console.log("Invalid index or empty dead array.");
