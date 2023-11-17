@@ -28,7 +28,7 @@ type Character = {
   faction: string;
   is_ghost: boolean;
   equipped_items: [unknown];
-  Attestation: SignedOffchainAttestation | undefined;
+  Attestation?: SignedOffchainAttestation | undefined;
   media?: string;
 };
 
@@ -222,8 +222,8 @@ const Home: NextPage = () => {
         class: data.character_class.name.en_US,
         gender: data.gender.type,
         is_ghost: data.is_ghost,
-        Attestation: offchain,
         media: data.equipment.href,
+        Attestation: offchain,
         equipped_items: [{}],
       };
       console.log(data, index1, index2, "data");
@@ -285,11 +285,11 @@ const Home: NextPage = () => {
         setDead(prevState => {
           const newState = [...prevState];
           newState[dindex].equipped_items = data.equipped_items;
-          newState[dindex].Attestation = offchain;
           return newState;
         });
 
         const updatedPlayer = dead[dindex];
+        updatedPlayer.Attestation = offchain;
         setPlayer(updatedPlayer);
         if (updatedPlayer) {
           postDb(updatedPlayer);
