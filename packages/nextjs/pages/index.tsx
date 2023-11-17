@@ -157,6 +157,7 @@ const Home: NextPage = () => {
     );
 
     if (!player) return console.log("No player available.");
+
     const encodedData = schemaEncoder.encodeData([
       { name: "Owner", value: address ? address : "0x0000000000000000", type: "address" },
       { name: "PlayerId", value: player.id, type: "uint32" },
@@ -266,6 +267,7 @@ const Home: NextPage = () => {
       }
 
       const characterMedia = dead[index];
+
       if (!characterMedia?.media) {
         console.log(`No media URL found for character at index ${index}.`);
         return;
@@ -307,8 +309,9 @@ const Home: NextPage = () => {
     });
   };
 
-  const playerSelector = async (index: number) => {
-    await fetchCharMedia(index);
+  const playerSelector = (index: number) => {
+    fetchCharMedia(index);
+    toast.success("Fetching player data for" + index);
   };
 
   useEffect(() => {
