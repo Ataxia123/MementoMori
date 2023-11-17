@@ -275,27 +275,28 @@ const Home: NextPage = () => {
       const data = await response.json();
 
       const dindex = dead.findIndex(x => x.id === data.character.id);
-      await fecthAttestation();
+
       if (dindex === -1) {
         console.log("Character not found in dead array.");
         return;
       }
+      await fecthAttestation().then(() => {
+        setDead(prevState => {
+          const newState = [...prevState];
+          newState[dindex].equipped_items = data.equipped_items;
+          newState[dindex].Attestation = offchain;
+          return newState;
+        });
 
-      setDead(prevState => {
-        const newState = [...prevState];
-        newState[dindex].equipped_items = data.equipped_items;
-        newState[dindex].Attestation = offchain;
-        return newState;
+        const updatedPlayer = dead[dindex];
+        setPlayer(updatedPlayer);
+        if (updatedPlayer) {
+          postDb(updatedPlayer);
+          toast.success("Success! Attestation UID: " + offchain?.uid);
+        } else {
+          console.log("Player not set.");
+        }
       });
-
-      const updatedPlayer = dead[dindex];
-      setPlayer(updatedPlayer);
-      if (updatedPlayer) {
-        postDb(updatedPlayer);
-        toast.success("Success! Attestation UID: " + offchain?.uid);
-      } else {
-        console.log("Player not set.");
-      }
     } catch (e: any) {
       toast.error("Error getting equipment: " + e.message);
       console.log(e);
