@@ -292,6 +292,7 @@ const Home: NextPage = () => {
         setPlayer(updatedPlayer);
         if (updatedPlayer) {
           postDb(updatedPlayer);
+          console.log(updatedPlayer, "updatedPlayer");
           toast.success("Success! Attestation UID: " + offchain?.uid);
         } else {
           console.log("Player not set.");
