@@ -291,13 +291,11 @@ const Home: NextPage = () => {
       toast.error("Error getting equipment: " + e.message);
       console.log(e);
     }
+    const updatedPlayer = dead[dindex];
+    setPlayer(updatedPlayer);
 
     await fecthAttestation().then(() => {
-      const updatedPlayer = dead[dindex];
-
       updatedPlayer.Attestation = attestation;
-
-      setPlayer(updatedPlayer);
 
       if (updatedPlayer) {
         postDb(updatedPlayer);
