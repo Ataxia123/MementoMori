@@ -289,6 +289,7 @@ const Home: NextPage = () => {
         newState[dindex].equipped_items = data.equipped_items;
         return newState;
       });
+      setPlayer(dead[index]);
     } catch (e: any) {
       toast.error("Error getting equipment: " + e.message);
       console.log(e);
@@ -297,11 +298,9 @@ const Home: NextPage = () => {
 
   const playerSelector = (index: number) => {
     fetchCharMedia(index).then(() => {
-      const updatedPlayer = dead[index];
       fecthAttestation().then(() => {
-        updatedPlayer.Attestation = attestation;
-        setPlayer(updatedPlayer);
         if (!player) return;
+        player.Attestation = attestation;
         postDb(player);
       });
     });
