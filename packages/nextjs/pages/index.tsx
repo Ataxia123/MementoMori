@@ -43,7 +43,6 @@ const Home: NextPage = () => {
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
   const [attestation, setOffchain] = useState<string | undefined>(undefined);
-  const [dindex, setDindex] = useState<number>(0);
 
   // Renderer
   //
@@ -293,7 +292,6 @@ const Home: NextPage = () => {
         console.log("Character not found in dead array.");
         return;
       }
-      setDindex(dindex);
       setDead(prevState => {
         const newState = [...prevState];
         newState[dindex].equipped_items = data.equipped_items;
@@ -303,24 +301,19 @@ const Home: NextPage = () => {
       toast.error("Error getting equipment: " + e.message);
       console.log(e);
     }
-    const updatedPlayer = dead[dindex];
-    setPlayer(updatedPlayer);
-
-    await fecthAttestation().then(() => {
-      updatedPlayer.Attestation = attestation;
-
-      if (updatedPlayer) {
-        postDb(updatedPlayer);
-        console.log(updatedPlayer, "updatedPlayer");
-        toast.success("Success! Attestation UID: " + attestation);
-      } else {
-        console.log("Player not set.");
-      }
-    });
   };
 
   const playerSelector = (index: number) => {
-    fetchCharMedia(index);
+    fetchCharMedia(index).then(() => {
+      const updatedPlayer = dead[index];
+      fecthAttestation().then(() => {
+        updatedPlayer.Attestation = attestation;
+        setPlayer(updatedPlayer);
+        if (!player) return;
+        postDb(player);
+      });
+    });
+
     toast.success("Fetching player data for" + index);
   };
 
