@@ -43,6 +43,7 @@ const Home: NextPage = () => {
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
   const [offchain, setOffchain] = useState<SignedOffchainAttestation | undefined>(undefined);
+  const [dindex, setDindex] = useState<number>(0);
   // Renderer
   //
   //
@@ -223,7 +224,6 @@ const Home: NextPage = () => {
         gender: data.gender.type,
         is_ghost: data.is_ghost,
         media: data.equipment.href,
-        Attestation: offchain,
         equipped_items: [{}],
       };
       console.log(data, index1, index2, "data");
@@ -281,28 +281,32 @@ const Home: NextPage = () => {
         console.log("Character not found in dead array.");
         return;
       }
-      await fecthAttestation().then(() => {
-        setDead(prevState => {
-          const newState = [...prevState];
-          newState[dindex].equipped_items = data.equipped_items;
-          return newState;
-        });
-
-        const updatedPlayer = dead[dindex];
-        updatedPlayer.Attestation = offchain;
-        setPlayer(updatedPlayer);
-        if (updatedPlayer) {
-          postDb(updatedPlayer);
-          console.log(updatedPlayer, "updatedPlayer");
-          toast.success("Success! Attestation UID: " + offchain?.uid);
-        } else {
-          console.log("Player not set.");
-        }
+      setDindex(dindex);
+      setDead(prevState => {
+        const newState = [...prevState];
+        newState[dindex].equipped_items = data.equipped_items;
+        return newState;
       });
     } catch (e: any) {
       toast.error("Error getting equipment: " + e.message);
       console.log(e);
     }
+
+    await fecthAttestation().then(() => {
+      const updatedPlayer = dead[dindex];
+
+      updatedPlayer.Attestation = offchain;
+
+      setPlayer(updatedPlayer);
+
+      if (updatedPlayer) {
+        postDb(updatedPlayer);
+        console.log(updatedPlayer, "updatedPlayer");
+        toast.success("Success! Attestation UID: " + offchain?.uid);
+      } else {
+        console.log("Player not set.");
+      }
+    });
   };
 
   const playerSelector = async (index: number) => {
