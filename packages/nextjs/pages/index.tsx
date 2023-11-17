@@ -28,8 +28,8 @@ type Character = {
   faction: string;
   is_ghost: boolean;
   equipped_items: [unknown];
+  Attestation: SignedOffchainAttestation | undefined;
   media?: string;
-  Attestation?: SignedOffchainAttestation;
 };
 
 const Home: NextPage = () => {
@@ -222,6 +222,7 @@ const Home: NextPage = () => {
         class: data.character_class.name.en_US,
         gender: data.gender.type,
         is_ghost: data.is_ghost,
+        Attestation: offchain,
         media: data.equipment.href,
         equipped_items: [{}],
       };
