@@ -44,11 +44,13 @@ const Home: NextPage = () => {
   const [tutoggle, setTutoggle] = useState<boolean>(true);
   const [attestation, setOffchain] = useState<string | undefined>(undefined);
   const [dindex, setDindex] = useState<number>(0);
+
   // Renderer
   //
   //
 
   const provider = useEthersProvider();
+
   const signer = useEthersSigner();
 
   const EASContractAddress = "0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587"; //
@@ -60,10 +62,10 @@ const Home: NextPage = () => {
   eas.connect(provider);
 
   // Initialize the sdk with the Provider
-
   const account = useAccount();
 
   const address = account?.address;
+
   // LOGIN METHODS
   let popup: Window | null = null;
 
@@ -149,6 +151,8 @@ const Home: NextPage = () => {
 
   const fecthAttestation = async () => {
     const offchain = await eas.getOffchain();
+
+    //
     const uid = "0x633a741c3514c35e4fea835f5a1e4f4e6eb4b049e73c381080e7bd2923158571";
 
     // Initialize SchemaEncoder with the schema string
@@ -187,9 +191,12 @@ const Home: NextPage = () => {
       },
       signer,
     );
-    const updatedData = JSON.stringify(offchainAttestation, (_key, value) => {
-      typeof value === "bigint" ? (value = value.toString()) : value;
-    });
+
+    const updatedData = JSON.stringify(
+      offchainAttestation,
+      (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
+    );
+
     setOffchain(updatedData);
     console.log("New attestation UID:", attestation);
   };
