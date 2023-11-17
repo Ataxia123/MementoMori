@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   const [mmToggle, setMmToggle] = useState<boolean>(true);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
-  const [offchain, setOffchain] = useState<SignedOffchainAttestation | undefined>(undefined);
+  const [attestation, setOffchain] = useState<SignedOffchainAttestation | undefined>(undefined);
   const [dindex, setDindex] = useState<number>(0);
   // Renderer
   //
@@ -187,7 +187,7 @@ const Home: NextPage = () => {
       signer,
     );
     setOffchain(offchainAttestation);
-    console.log("New attestation UID:", offchain);
+    console.log("New attestation UID:", attestation);
   };
 
   const fetchCharacter = async () => {
@@ -295,14 +295,14 @@ const Home: NextPage = () => {
     await fecthAttestation().then(() => {
       const updatedPlayer = dead[dindex];
 
-      updatedPlayer.Attestation = offchain;
+      updatedPlayer.Attestation = attestation;
 
       setPlayer(updatedPlayer);
 
       if (updatedPlayer) {
         postDb(updatedPlayer);
         console.log(updatedPlayer, "updatedPlayer");
-        toast.success("Success! Attestation UID: " + offchain?.uid);
+        toast.success("Success! Attestation UID: " + attestation?.uid);
       } else {
         console.log("Player not set.");
       }
