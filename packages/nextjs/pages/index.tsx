@@ -180,7 +180,7 @@ const Home: NextPage = () => {
     const offchainAttestation = await offchain.signOffchainAttestation(
       {
         version: 1,
-        recipient: "0x0000000000000000000000000000000000000000",
+        recipient: address ? address : "0x0000000000000000",
         expirationTime: BigInt(0),
         time: BigInt(123),
         revocable: true,
