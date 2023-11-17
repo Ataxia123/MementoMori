@@ -28,7 +28,7 @@ type Character = {
   faction: string;
   is_ghost: boolean;
   equipped_items: [unknown];
-  Attestation?: SignedOffchainAttestation | undefined;
+  Attestation?: string | undefined;
   media?: string;
 };
 
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   const [mmToggle, setMmToggle] = useState<boolean>(true);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
-  const [attestation, setOffchain] = useState<SignedOffchainAttestation | undefined>(undefined);
+  const [attestation, setOffchain] = useState<string | undefined>(undefined);
   const [dindex, setDindex] = useState<number>(0);
   // Renderer
   //
@@ -187,7 +187,10 @@ const Home: NextPage = () => {
       },
       signer,
     );
-    setOffchain(offchainAttestation);
+    const updatedData = JSON.stringify(offchainAttestation, (_key, value) => {
+      typeof value === "bigint" ? (value = value.toString()) : value;
+    });
+    setOffchain(updatedData);
     console.log("New attestation UID:", attestation);
   };
 
@@ -302,7 +305,7 @@ const Home: NextPage = () => {
       if (updatedPlayer) {
         postDb(updatedPlayer);
         console.log(updatedPlayer, "updatedPlayer");
-        toast.success("Success! Attestation UID: " + attestation?.uid);
+        toast.success("Success! Attestation UID: " + attestation);
       } else {
         console.log("Player not set.");
       }
