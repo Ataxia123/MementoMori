@@ -566,7 +566,7 @@ const Home: NextPage = () => {
                         <br />
                       </>
                     ) : (
-                      <div key={index} className="card mr-3 mt-4">
+                      <div className="card mr-3 mt-4">
                         <div className="font-mono text-xl">
                           In Memoriam to: <br /> {deadCharacter.name}
                         </div>
@@ -575,7 +575,7 @@ const Home: NextPage = () => {
 
                           <button
                             className="border-2 border-white text-center rounded-md p-2"
-                            onClick={() => playerSelector(index)}
+                            onClick={() => playerSelector(index + 1)}
                           >
                             Memento Mori
                           </button>
