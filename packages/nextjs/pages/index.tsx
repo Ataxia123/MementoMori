@@ -313,6 +313,7 @@ const Home: NextPage = () => {
     try {
       // Finished state update before assigning player
       await fetchCharMedia(index);
+
       const player = dead[index];
 
       // Fetch Attestation
@@ -326,8 +327,6 @@ const Home: NextPage = () => {
   };
 
   const playerSelector = async (index: number) => {
-    setPlayer(dead[index]);
-
     const playerData = await fetchCharMediaAndAttestation(index);
 
     if (!playerData) return;
