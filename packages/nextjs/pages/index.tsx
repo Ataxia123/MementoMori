@@ -319,14 +319,7 @@ const Home: NextPage = () => {
 
   const playerSelector = async (index: number) => {
     const playerData = await fetchCharMediaAndAttestation(index);
-
     if (!playerData) return;
-
-    playerData.Attestation = attestation;
-
-    // Update player state here
-
-    // then post to the database
     await postDb(playerData);
 
     toast.success("Fetching player data for" + index);
