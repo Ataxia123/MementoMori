@@ -346,12 +346,15 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    if (!user) return;
+    fetchDb();
+  }, []);
+
+  useEffect(() => {
+    if (user === null) return;
     fetchCharacter();
     console.log(players, "players");
 
     players?.map((character: any) => {
-      if (!user) return; // To ensure user status remains logged in during the processing
       if (character.level < 10)
         return console.log(character.character.name, "too low level", character.character.level);
       fetchCharData(character.character.href);
