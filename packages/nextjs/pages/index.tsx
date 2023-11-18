@@ -159,16 +159,16 @@ const Home: NextPage = () => {
       const schemaEncoder = new SchemaEncoder(
         "address Owner,uint32 PlayerId,string Name,string Race,string Class,string Level,string[] EquippedItems",
       );
-      if (!player) return console.log("No player available.");
+      if (!dead[index]) return console.log("No player available at." + index);
 
       const encodedData = schemaEncoder.encodeData([
         { name: "Owner", value: address ? address : "0x0000000000000000", type: "address" },
-        { name: "PlayerId", value: player.id, type: "uint32" },
-        { name: "Name", value: player.name, type: "string" },
-        { name: "Race", value: player.race, type: "string" },
-        { name: "Class", value: player.class, type: "string" },
-        { name: "Level", value: player.level, type: "string" },
-        { name: "EquippedItems", value: player.equipped_items, type: "string[]" },
+        { name: "PlayerId", value: dead[index].id, type: "uint32" },
+        { name: "Name", value: dead[index].name, type: "string" },
+        { name: "Race", value: dead[index].race, type: "string" },
+        { name: "Class", value: dead[index].class, type: "string" },
+        { name: "Level", value: dead[index].level, type: "string" },
+        { name: "EquippedItems", value: dead[index].equipped_items, type: "string[]" },
       ]);
 
       if (!signer) {
@@ -348,7 +348,6 @@ const Home: NextPage = () => {
         return console.log(character.character.name, "too low level", character.character.level);
       fetchCharData(character.character.href);
     });
-    setPlayer(dead[0]);
     console.log("dead", dead, "alive", alive);
   }, [players]);
 
