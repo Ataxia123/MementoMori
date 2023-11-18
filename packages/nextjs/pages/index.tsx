@@ -196,8 +196,8 @@ const Home: NextPage = () => {
         (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
       );
 
-      setOffchain(updatedData);
-      console.log("New attestation UID:", attestation);
+      dead[index].Attestation = updatedData;
+      console.log(updatedData, "updatedData");
     });
   };
 
