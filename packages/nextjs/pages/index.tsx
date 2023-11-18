@@ -359,7 +359,7 @@ const Home: NextPage = () => {
     });
 
     console.log("dead", dead, "alive", alive);
-  }, [player]);
+  }, [players]);
 
   const settings = {
     dots: true,
