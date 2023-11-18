@@ -254,47 +254,50 @@ const Home: NextPage = () => {
     }
   };
 
-  const fetchCharMedia = async (index: number) => {
+  const fetchCharMedia = async (index: number): Promise<void> => {
     if (!user?.token) {
       console.log("No token available.");
       return;
     }
+    return new Promise(async (resolve, reject) => {
+      try {
+        // Ensure the dead array has elements and the index is valid
+        if (dead.length === 0 || index < 0 || index >= dead.length) {
+          console.log("Invalid index or empty dead array.");
+          return;
+        }
 
-    try {
-      // Ensure the dead array has elements and the index is valid
-      if (dead.length === 0 || index < 0 || index >= dead.length) {
-        console.log("Invalid index or empty dead array.");
-        return;
+        const characterMedia = dead[index];
+
+        if (!characterMedia?.media) {
+          console.log(`No media URL found for character at index ${index}.`);
+          return;
+        }
+
+        const url = `${characterMedia.media}&access_token=${user.token}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const dindex = dead.findIndex(x => x.id === data.character.id);
+
+        if (dindex === -1) {
+          console.log("Character not found in dead array.");
+          reject(); // reject the promise if not found
+          return;
+        }
+        setDead(prevState => {
+          const newState = [...prevState];
+          newState[index].equipped_items = data.equipped_items;
+          return newState;
+        });
+        resolve(); // resolve the promise after successfully updating state
+      } catch (e: any) {
+        toast.error("Error getting equipment: " + e.message);
+        console.log(e);
+        reject(e); // reject the promise in case of error
       }
-
-      const characterMedia = dead[index];
-
-      if (!characterMedia?.media) {
-        console.log(`No media URL found for character at index ${index}.`);
-        return;
-      }
-
-      const url = `${characterMedia.media}&access_token=${user.token}`;
-      const response = await fetch(url);
-      const data = await response.json();
-
-      const dindex = dead.findIndex(x => x.id === data.character.id);
-
-      if (dindex === -1) {
-        console.log("Character not found in dead array.");
-        return;
-      }
-      setDead(prevState => {
-        const newState = [...prevState];
-        newState[index].equipped_items = data.equipped_items;
-        return newState;
-      });
-    } catch (e: any) {
-      toast.error("Error getting equipment: " + e.message);
-      console.log(e);
-    }
-  };
-  /*
+    });
+  }; /*
     const playerSelector = async (index: number) => {
       await fetchCharMedia(index);
       await fecthAttestation();
@@ -308,20 +311,17 @@ const Home: NextPage = () => {
 
   const fetchCharMediaAndAttestation = async (index: number): Promise<Character | null> => {
     try {
-      let player = null;
-
-      // other codes here
-      fetchCharMedia(index);
-      // Instead of setting player state here
-      player = dead[index];
+      // Finished state update before assigning player
+      await fetchCharMedia(index);
+      const player = dead[index];
 
       // Fetch Attestation
-      await fecthAttestation(); // Make sure Attestation is being updated properly.
+      await fecthAttestation();
 
       return player;
     } catch (e: any) {
       console.error(e);
-      return null; // This ensures we're returning null in case of an error.
+      return null;
     }
   };
 
