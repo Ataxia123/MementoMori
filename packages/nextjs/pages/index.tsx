@@ -296,14 +296,12 @@ const Home: NextPage = () => {
     setPlayer(dead[index]);
   };
 
-  const playerSelector = (index: number) => {
-    fetchCharMedia(index).then(() => {
-      fecthAttestation().then(() => {
-        if (!player) return;
-        player.Attestation = attestation;
-        postDb(player);
-      });
-    });
+  const playerSelector = async (index: number) => {
+    await fetchCharMedia(index);
+    await fecthAttestation();
+    if (!player) return;
+    player.Attestation = attestation;
+    await postDb(player);
 
     toast.success("Fetching player data for" + index);
   };
@@ -575,7 +573,7 @@ const Home: NextPage = () => {
 
                           <button
                             className="border-2 border-white text-center rounded-md p-2"
-                            onClick={() => playerSelector(index + 1)}
+                            onClick={() => playerSelector(index)}
                           >
                             Memento Mori
                           </button>
