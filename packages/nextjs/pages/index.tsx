@@ -293,15 +293,50 @@ const Home: NextPage = () => {
       toast.error("Error getting equipment: " + e.message);
       console.log(e);
     }
-    setPlayer(dead[index]);
+  };
+  /*
+    const playerSelector = async (index: number) => {
+      await fetchCharMedia(index);
+      await fecthAttestation();
+      if (!player) return;
+      player.Attestation = attestation;
+      await postDb(player);
+  
+      toast.success("Fetching player data for" + index);
+    };
+  */
+
+  const fetchCharMediaAndAttestation = async (index: number): Promise<Character | null> => {
+    try {
+      let player = null;
+
+      // other codes here
+      fetchCharMedia(index);
+      // Instead of setting player state here
+      player = dead[index];
+
+      // Fetch Attestation
+      await fecthAttestation(); // Make sure Attestation is being updated properly.
+
+      return player;
+    } catch (e: any) {
+      console.error(e);
+      return null; // This ensures we're returning null in case of an error.
+    }
   };
 
   const playerSelector = async (index: number) => {
-    await fetchCharMedia(index);
-    await fecthAttestation();
-    if (!player) return;
-    player.Attestation = attestation;
-    await postDb(player);
+    const playerData = await fetchCharMediaAndAttestation(index);
+
+    if (!playerData) return;
+
+    playerData.Attestation = attestation;
+
+    // Update player state here
+    setPlayer(playerData);
+
+    // then post to the database
+    await postDb(playerData);
 
     toast.success("Fetching player data for" + index);
   };
@@ -311,19 +346,19 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    if (user === null) return;
+    if (!user) return;
     fetchCharacter();
     console.log(players, "players");
-  }, [user]);
-  useEffect(() => {
+
     players?.map((character: any) => {
+      if (!user) return; // To ensure user status remains logged in during the processing
       if (character.level < 10)
         return console.log(character.character.name, "too low level", character.character.level);
       fetchCharData(character.character.href);
     });
 
     console.log("dead", dead, "alive", alive);
-  }, [players]);
+  }, [user]);
 
   const settings = {
     dots: true,
