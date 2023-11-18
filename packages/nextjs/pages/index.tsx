@@ -304,12 +304,10 @@ const Home: NextPage = () => {
   const fetchCharMediaAndAttestation = async (index: number): Promise<Character | null> => {
     try {
       // Finished state update before assigning player
-
-      const player = dead[index];
-
       // Fetch Attestation
       await fecthAttestation(index);
-
+      const player = dead[index];
+      console.log(player, "player");
       return player;
     } catch (e: any) {
       console.error(e);
