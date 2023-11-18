@@ -313,7 +313,6 @@ const Home: NextPage = () => {
     try {
       // Finished state update before assigning player
       await fetchCharMedia(index);
-
       const player = dead[index];
 
       // Fetch Attestation
@@ -332,6 +331,9 @@ const Home: NextPage = () => {
     if (!playerData) return;
 
     playerData.Attestation = attestation;
+
+    // Update player state here
+    setPlayer(playerData);
 
     // then post to the database
     await postDb(playerData);
