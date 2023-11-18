@@ -357,7 +357,7 @@ const Home: NextPage = () => {
         return console.log(character.character.name, "too low level", character.character.level);
       fetchCharData(character.character.href);
     });
-
+    setPlayer(dead[0]);
     console.log("dead", dead, "alive", alive);
   }, [players]);
 
