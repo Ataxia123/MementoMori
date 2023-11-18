@@ -291,6 +291,7 @@ const Home: NextPage = () => {
           newState[index].equipped_items = data.equipped_items;
           return newState;
         });
+        setPlayer(dead[index]);
         resolve(); // resolve the promise after successfully updating state
       } catch (e: any) {
         toast.error("Error getting equipment: " + e.message);
@@ -324,7 +325,6 @@ const Home: NextPage = () => {
     playerData.Attestation = attestation;
 
     // Update player state here
-    setPlayer(playerData);
 
     // then post to the database
     await postDb(playerData);
