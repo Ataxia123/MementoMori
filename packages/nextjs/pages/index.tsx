@@ -314,7 +314,8 @@ const Home: NextPage = () => {
     if (user === null) return;
     fetchCharacter();
     console.log(players, "players");
-
+  }, [user]);
+  useEffect(() => {
     players?.map((character: any) => {
       if (character.level < 10)
         return console.log(character.character.name, "too low level", character.character.level);
@@ -322,7 +323,7 @@ const Home: NextPage = () => {
     });
 
     console.log("dead", dead, "alive", alive);
-  }, [user, players]);
+  }, [players]);
 
   const settings = {
     dots: true,
