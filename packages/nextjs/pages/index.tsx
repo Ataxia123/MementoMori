@@ -453,18 +453,28 @@ const Home: NextPage = () => {
         {rings.map((ring, ringIndex) => (
           <div key={ringIndex} className={`ring ring-${ringIndex}`}>
             {ring.map((character: Character) => (
-              <div key={character.id} className="character mt-0 -translate-y-1/2  whitespace-nowrap h-full w-max">
-                <span className={playerColor(character) + "animate-marquee"} onClick={() => console.log(character.id)}>
-                  {character.name} <br />
-                  <span className="text-black">Level {character.level}</span>
-                  {character.race} {character.class}
-                </span>
-                <span className={playerColor(character) + "animate-marquee2"} onClick={() => console.log(character.id)}>
-                  {character.name} <br />
-                  <span className="text-black">Level {character.level}</span>
-                  {character.race} {character.class}
-                </span>
-              </div>
+              <>
+                <div
+                  key={character.id}
+                  className="character mt-0 -translate-y-1/2 aniname-marquee2 whitespace-nowrap h-full w-max"
+                >
+                  <span className={playerColor(character)} onClick={() => console.log(character.id)}>
+                    {character.name} <br />
+                    <span className="text-black">Level {character.level}</span>
+                    {character.race} {character.class}
+                  </span>
+                </div>
+                <div
+                  key={character.id}
+                  className="character mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap h-full w-max"
+                >
+                  <span className={playerColor(character)} onClick={() => console.log(character.id)}>
+                    {character.name} <br />
+                    <span className="text-black">Level {character.level}</span>
+                    {character.race} {character.class}
+                  </span>
+                </div>
+              </>
             ))}
           </div>
         ))}
