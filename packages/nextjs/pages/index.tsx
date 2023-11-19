@@ -438,7 +438,7 @@ const Home: NextPage = () => {
     const shuffledDatabase = shuffle(players);
 
     // Define the number of rings and distribute the characters among them
-    const numberOfRings = 5; // Adjust this number as needed
+    const numberOfRings = 10; // Adjust this number as needed
     const charactersPerRing = Math.ceil(shuffledDatabase.length / numberOfRings);
     const rings = [];
 
