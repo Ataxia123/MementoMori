@@ -514,6 +514,7 @@ const Home: NextPage = () => {
               opacity: "0.25",
               position: "absolute",
               scale: "1.05",
+              pointerEvents: "none",
             }}
           />
         </div>
