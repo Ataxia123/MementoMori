@@ -509,7 +509,7 @@ const Home: NextPage = () => {
             object-fit="cover"
             style={{
               animation: "pulse 1s infinite alternate",
-              opacity: "0.65",
+              opacity: "0.35",
               position: "absolute",
               zIndex: 1,
               scale: "1.05",
