@@ -76,6 +76,7 @@ p {
   justify-content: center;
   align-items: center;
   transform-style: preserve-3d;
+  color: black;
 }
 
 .character {
@@ -88,7 +89,7 @@ p {
 }
 
 /* Example of how to style the last ring */
-.ring-10 {
+.ring-20 {
   transform: rotateX(-60deg); /* Adjust the angle as needed */
 }
 
