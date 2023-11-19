@@ -67,3 +67,28 @@ p {
   border-radius: 10px;
 }
 
+.sphere-container {
+  perspective: 500px;
+}
+
+.ring {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+.character {
+  /* Apply styles for individual characters */
+}
+
+/* Example of how to style the first ring */
+.ring-0 {
+  transform: rotateX(60deg); /* Adjust the angle as needed */
+}
+
+/* Example of how to style the last ring */
+.ring-4 {
+  transform: rotateX(-60deg); /* Adjust the angle as needed */
+}
+
