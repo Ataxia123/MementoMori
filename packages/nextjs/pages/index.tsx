@@ -437,20 +437,30 @@ const Home: NextPage = () => {
     // Shuffle the database array before rendering
     const shuffledDatabase = shuffle(players);
 
+    // Define the number of rings and distribute the characters among them
+    const numberOfRings = 5; // Adjust this number as needed
+    const charactersPerRing = Math.ceil(shuffledDatabase.length / numberOfRings);
+    const rings = [];
+
+    for (let i = 0; i < numberOfRings; i++) {
+      const start = i * charactersPerRing;
+      const end = start + charactersPerRing;
+      rings.push(shuffledDatabase.slice(start, end));
+    }
+
     return (
-      <div className="mt-24 h-full relative flex overflow-hidden font-mono z-50">
-        {shuffledDatabase?.map((character: Character, index: number) => (
-          <div
-            key={character.id}
-            className="mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap text-black h-full w-max"
-          >
-            <div className="text-2xl drop-shadow-lg shadow-inherit">
-              <span className={playerColor(character)} onClick={() => console.log(index, "index")}>
-                {character?.name} <br />
-                <span className="text-black"> Level {character?.level} </span>
-                {character?.race} {character?.class}
-              </span>
-            </div>
+      <div className="sphere-container">
+        {rings.map((ring, ringIndex) => (
+          <div key={ringIndex} className={`ring ring-${ringIndex}`}>
+            {ring.map((character: Character) => (
+              <div key={character.id} className="character">
+                <span className={playerColor(character)} onClick={() => console.log(character.id)}>
+                  {character.name} <br />
+                  <span className="text-black">Level {character.level}</span>
+                  {character.race} {character.class}
+                </span>
+              </div>
+            ))}
           </div>
         ))}
       </div>
@@ -491,18 +501,6 @@ const Home: NextPage = () => {
           />
           {/* this is the text in the background */}
           <CharacterDisplay players={database} />
-          <br />
-          <CharacterDisplay players={database} />
-          <br />
-
-          <CharacterDisplay players={database} />
-          <br />
-
-          <CharacterDisplay players={database} />
-          <br />
-
-          <CharacterDisplay players={database} />
-          <br />
         </div>
       </div>
       {mmToggle == true ? (
