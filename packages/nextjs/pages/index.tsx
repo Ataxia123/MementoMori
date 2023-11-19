@@ -410,6 +410,47 @@ const Home: NextPage = () => {
 
     return <div ref={componentRef}>Press F to pay Respects</div>;
   }
+  // Fisher-Yates (Knuth) shuffle algorithm
+  function shuffle(array: Character[]) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+  }
+
+  const CharacterDisplay = ({ players }: any) => {
+    // Shuffle the database array before rendering
+    const shuffledDatabase = shuffle([...players]);
+
+    return (
+      <div className="mt-24 h-full relative flex overflow-hidden font-mono z-50">
+        {shuffledDatabase?.map((character: Character, index: number) => (
+          <div
+            key={index} // Assign the index as the key
+            className="mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap text-black h-full w-max"
+          >
+            <div className="text-2xl drop-shadow-lg shadow-inherit">
+              <span className={playerColor(character)} onClick={() => console.log(index, "index")}>
+                {character?.name} <br />
+                <span className="text-black"> Level {character?.level} </span>
+                {character?.race} {character?.class}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
   return (
     <>
       <div className="fixed w-full h-full">
@@ -444,26 +485,7 @@ const Home: NextPage = () => {
             }}
           />
           {/* this is the text in the background */}
-          <div className="mt-24 h-full relative flex overflow-hidden font-mono z-50">
-            {database?.map((character: any, index: number) => (
-              <>
-                <div className="mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap text-black h-full w-max ">
-                  {" "}
-                  <div
-                    key={database.length - Math.floor(Math.random() * database.length)}
-                    className="text-2xl  drop-shadow-lg shadow-inherit"
-                  >
-                    <span className={playerColor(character)} onClick={() => console.log(index, "index")}>
-                      {" "}
-                      {character?.name} <br />
-                      <span className="text-black"> Level {character?.level} </span>
-                      {character?.race} {character.class}
-                    </span>
-                  </div>
-                </div>
-              </>
-            ))}
-          </div>
+          <CharacterDisplay />
         </div>
       </div>
       {mmToggle == true ? (
