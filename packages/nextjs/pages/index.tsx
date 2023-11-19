@@ -449,13 +449,13 @@ const Home: NextPage = () => {
     }
 
     return (
-      <div className="sphere-container">
+      <div className="sphere-container z-10">
         {rings.map((ring, ringIndex) => (
           <div key={ringIndex} className={`ring ring-${ringIndex}`}>
             {ring.map((character: Character) => (
               <div
                 key={character.id}
-                className="character mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap h-full w-max z-10"
+                className="character mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap h-full w-max"
               >
                 <span className={playerColor(character)} onClick={() => console.log(character.id)}>
                   {character.name} <br />
