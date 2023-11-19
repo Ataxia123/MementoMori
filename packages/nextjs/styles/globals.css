@@ -88,7 +88,7 @@ p {
 }
 
 /* Example of how to style the last ring */
-.ring-4 {
+.ring-10 {
   transform: rotateX(-60deg); /* Adjust the angle as needed */
 }
 
