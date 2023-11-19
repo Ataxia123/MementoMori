@@ -464,16 +464,6 @@ const Home: NextPage = () => {
                     {character.race} {character.class}
                   </span>
                 </div>
-                <div
-                  key={character.id}
-                  className="character mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap h-full w-max"
-                >
-                  <span className={playerColor(character)} onClick={() => console.log(character.id)}>
-                    {character.name} <br />
-                    <span className="text-black">Level {character.level}</span>
-                    {character.race} {character.class}
-                  </span>
-                </div>
               </>
             ))}
           </div>
@@ -509,7 +499,7 @@ const Home: NextPage = () => {
             object-fit="cover"
             style={{
               animation: "pulse 1s infinite alternate",
-              opacity: "0.35",
+              opacity: "0.15",
               position: "absolute",
               zIndex: 1,
               scale: "1.05",
