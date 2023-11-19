@@ -632,6 +632,32 @@ const Home: NextPage = () => {
       ) : (
         <div></div>
       )}
+      <div className="fixed right-0 bottom-0 mb-20 mr-20">
+        {players && players.length > 0 ? (
+          <Slider {...settings}>
+            {players.map((character, index) => (
+              <div key={index} className="p-4">
+                <div className="card mr-3 mt-4">
+                  <div className="font-mono text-xl">{character.character.name}</div>
+                  <div>
+                    <br />
+
+                    <button
+                      className="border-2 border-white text-center rounded-md p-2"
+                      onClick={() => console.log("clicked")}
+                    >
+                      Pay Respects
+                    </button>
+                    <br />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        ) : (
+          <></>
+        )}
+      </div>
       {/*login logo pulse portion and ? thing*/}
       <div className="card fixed right-20 top-2/3 mt-24 pr-2 z-50 font-mono">
         {!address ? (
