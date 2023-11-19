@@ -428,7 +428,8 @@ const Home: NextPage = () => {
     return array;
   }
 
-  const CharacterDisplay = ({ players }: any) => {
+  const CharacterDisplay = (props: any) => {
+    const { players } = props;
     // Shuffle the database array before rendering
     const shuffledDatabase = shuffle([...players]);
 
@@ -485,7 +486,7 @@ const Home: NextPage = () => {
             }}
           />
           {/* this is the text in the background */}
-          <CharacterDisplay />
+          <CharacterDisplay players={players} />
         </div>
       </div>
       {mmToggle == true ? (
