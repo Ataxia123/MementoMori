@@ -492,6 +492,7 @@ const Home: NextPage = () => {
           }}
         >
           <CharacterDisplay players={database} />
+          <CharacterDisplay players={database} />
           <Image
             src="/mmoriball2.png"
             fill
