@@ -62,7 +62,7 @@ p {
 }
 
 .content-container {
-  background-color: rgba(255, 255, 255, 0.9); /* adjust as needed */
+  background-color: rgba(255, 255, 255, 1); /* adjust as needed */
   padding: 20px;
   border-radius: 10px;
 }
