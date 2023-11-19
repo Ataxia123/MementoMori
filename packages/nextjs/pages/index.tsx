@@ -411,7 +411,7 @@ const Home: NextPage = () => {
   }
   // Fisher-Yates (Knuth) shuffle algorithm
   function shuffle(array: Character[]) {
-    if (!players || !Array.isArray(array)) {
+    if (!database || !Array.isArray(array)) {
       // Handle the case where the input is not an array
       console.error("shuffle function received a non-array input:", array);
       return [];
