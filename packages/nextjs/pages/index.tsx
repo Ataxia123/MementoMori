@@ -413,33 +413,6 @@ const Home: NextPage = () => {
   return (
     <>
       <div className="fixed w-full h-full">
-        <>
-          {players && players.length > 0 ? (
-            <Slider {...settings}>
-              {players.map((character, index) => (
-                <div key={index} className="p-4">
-                  <div className="card mr-3 mt-4">
-                    <div className="font-mono text-xl">{character.character.name}</div>
-                    <div>
-                      <br />
-
-                      <button
-                        className="border-2 border-white text-center rounded-md p-2"
-                        onClick={() => console.log("clicked")}
-                      >
-                        Pay Respects
-                      </button>
-                      <br />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </Slider>
-          ) : (
-            <></>
-          )}
-        </>
-
         <Image
           src="/mmoriball3.png"
           fill
@@ -477,71 +450,13 @@ const Home: NextPage = () => {
                 <div className="mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap text-black h-full w-max ">
                   {" "}
                   <div
-                    key={Math.floor(Math.random() * database.length)}
+                    key={database.length - Math.floor(Math.random() * database.length)}
                     className="text-2xl  drop-shadow-lg shadow-inherit"
                   >
                     <span className={playerColor(character)}>
                       {" "}
                       {character?.name} <br />
                       <span className="text-black"> Level {character?.level} </span>
-                      {character?.race} {character.class}
-                    </span>
-                  </div>
-                </div>
-                <div className="mt-4  animate-marquee whitespace-nowrap text-black h-full w-max ">
-                  {" "}
-                  <div key={Math.floor(Math.random() * database.length)} className="text-3xl">
-                    <span className={playerColor(character)}>
-                      {" "}
-                      {character?.name} <br />
-                      <span className="text-black"> Lvl {character?.level} </span>
-                      {character?.race} {character.class}
-                    </span>
-                  </div>
-                </div>
-                <div className="mt-12 animate-marquee whitespace-nowrap text-black h-full w-max ">
-                  {" "}
-                  <div key={Math.floor(Math.random() * database.length)} className="text-3xl">
-                    <span className={playerColor(character)}>
-                      {" "}
-                      {character?.name} <br />
-                      <span className="text-black"> Lvl {character?.level} </span>
-                      {character?.race} {character.class}
-                    </span>
-
-                    <br />
-                  </div>
-                </div>
-                <div className="mt-16 -translate-y-1/2 animate-marquee whitespace-nowrap text-black h-full w-max ">
-                  {" "}
-                  <div key={Math.floor(Math.random() * database.length)} className="text-xl">
-                    <span className={playerColor(character)}>
-                      {" "}
-                      {character?.name} <br />
-                      <span className="text-black"> Lvl {character?.level} </span>
-                      {character?.race} {character.class}
-                    </span>
-                    <br />
-                  </div>
-                </div>
-                <div className="mt-24 animate-marquee whitespace-nowrap text-black h-full w-max ">
-                  {" "}
-                  <div key={Math.floor(Math.random() * database.length)} className="text-l">
-                    <span className={playerColor(character)}>
-                      {" "}
-                      {character?.name} <br />
-                      <span className="text-black"> Lvl {character?.level} </span>
-                      {character?.race} {character.class}
-                    </span>
-                  </div>
-                </div>
-                <div className=" animate-marquee whitespace-nowrap text-black h-full w-max ">
-                  {" "}
-                  <div key={Math.floor(Math.random() * database.length)} className="text-l">
-                    <span className={playerColor(character)}>
-                      {" "}
-                      {character?.name} <br />
-                      <span className="text-black"> Lvl {character?.level} </span>
                       {character?.race} {character.class}
                     </span>
                   </div>
