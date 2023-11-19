@@ -441,7 +441,7 @@ const Home: NextPage = () => {
       <div className="mt-24 h-full relative flex overflow-hidden font-mono z-50">
         {shuffledDatabase?.map((character: Character, index: number) => (
           <div
-            key={index} // Assign the index as the key
+            key={character.id}
             className="mt-0 -translate-y-1/2 animate-marquee whitespace-nowrap text-black h-full w-max"
           >
             <div className="text-2xl drop-shadow-lg shadow-inherit">
