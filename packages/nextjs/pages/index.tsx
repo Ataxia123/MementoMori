@@ -484,6 +484,7 @@ const Home: NextPage = () => {
   return (
     <>
       <div className="fixed w-full h-full">
+        <CharacterDisplay players={database} />
         <Image
           src="/mmoriball3.png"
           fill
@@ -515,7 +516,6 @@ const Home: NextPage = () => {
             }}
           />
           {/* this is the text in the background */}
-          <CharacterDisplay players={database} />
         </div>
       </div>
       {mmToggle == true ? (
