@@ -456,7 +456,7 @@ const Home: NextPage = () => {
               <>
                 <div
                   key={character.id}
-                  className="character mt-0 -translate-y-1/2 aniname-marquee2 whitespace-nowrap h-full w-max"
+                  className="character mt-0 -translate-y-1/2 aninate-marquee2 whitespace-nowrap h-full w-max"
                 >
                   <span className={playerColor(character)} onClick={() => console.log(character.id)}>
                     {character.name} <br />
