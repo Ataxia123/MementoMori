@@ -453,7 +453,7 @@ const Home: NextPage = () => {
                     key={database.length - Math.floor(Math.random() * database.length)}
                     className="text-2xl  drop-shadow-lg shadow-inherit"
                   >
-                    <span className={playerColor(character)}>
+                    <span className={playerColor(character)} onClick={() => console.log(index, "index")}>
                       {" "}
                       {character?.name} <br />
                       <span className="text-black"> Level {character?.level} </span>
