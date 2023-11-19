@@ -460,8 +460,6 @@ const Home: NextPage = () => {
                 >
                   <span className={playerColor(character)} onClick={() => console.log(character.id)}>
                     {character.name} <br />
-                    <span className="text-black">Level {character.level}</span>
-                    {character.race} {character.class}
                   </span>
                 </div>
               </>
