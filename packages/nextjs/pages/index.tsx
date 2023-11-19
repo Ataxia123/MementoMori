@@ -484,7 +484,6 @@ const Home: NextPage = () => {
   return (
     <>
       <div className="fixed w-full h-full">
-        <CharacterDisplay players={database} />
         <Image
           src="/mmoriball3.png"
           fill
@@ -502,6 +501,7 @@ const Home: NextPage = () => {
             backgroundPosition: "center",
           }}
         >
+          <CharacterDisplay players={database} />
           <Image
             src="/mmoriball2.png"
             fill
@@ -509,13 +509,12 @@ const Home: NextPage = () => {
             object-fit="cover"
             style={{
               animation: "pulse 1s infinite alternate",
-              opacity: "0.65",
+              opacity: "1",
               position: "absolute",
               zIndex: 1,
-              scale: "1.05",
+              scale: "0.65",
             }}
           />
-          {/* this is the text in the background */}
         </div>
       </div>
       {mmToggle == true ? (
