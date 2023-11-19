@@ -500,7 +500,7 @@ const Home: NextPage = () => {
             object-fit="cover"
             style={{
               animation: "pulse 1s infinite alternate",
-              opacity: "0.25",
+              opacity: "0.75",
               position: "absolute",
               scale: "1.05",
             }}
