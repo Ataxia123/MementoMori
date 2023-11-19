@@ -413,6 +413,33 @@ const Home: NextPage = () => {
   return (
     <>
       <div className="fixed w-full h-full">
+        <>
+          {players && players.length > 0 ? (
+            <Slider {...settings}>
+              {players.map((character, index) => (
+                <div key={index} className="p-4">
+                  <div className="card mr-3 mt-4">
+                    <div className="font-mono text-xl">{character.character.name}</div>
+                    <div>
+                      <br />
+
+                      <button
+                        className="border-2 border-white text-center rounded-md p-2"
+                        onClick={() => console.log("clicked")}
+                      >
+                        Pay Respects
+                      </button>
+                      <br />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          ) : (
+            <></>
+          )}
+        </>
+
         <Image
           src="/mmoriball3.png"
           fill
@@ -430,32 +457,6 @@ const Home: NextPage = () => {
             backgroundPosition: "center",
           }}
         >
-          <>
-            {players && players.length > 0 ? (
-              <Slider {...settings}>
-                {players.map((character, index) => (
-                  <div key={index} className="p-4">
-                    <div className="card mr-3 mt-4">
-                      <div className="font-mono text-xl">{character.character.name}</div>
-                      <div>
-                        <br />
-
-                        <button
-                          className="border-2 border-white text-center rounded-md p-2"
-                          onClick={() => console.log("clicked")}
-                        >
-                          Pay Respects
-                        </button>
-                        <br />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </Slider>
-            ) : (
-              <></>
-            )}
-          </>
           <Image
             src="/mmoriball2.png"
             fill
