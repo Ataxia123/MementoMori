@@ -33,8 +33,8 @@ module.exports = {
       },
 
       animation: {
-        marquee: 'marquee 306s linear infinite',
-        marquee2: 'marquee2 306s linear infinite',
+        marquee: 'marquee 36s linear infinite',
+        marquee2: 'marquee2 36s linear infinite',
         bounce: 'bounce 30s ease-in-out infinite',
       },
       keyframes: {
@@ -51,10 +51,10 @@ module.exports = {
         },
         marquee: {
           '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-15000%)' },
+          '100%': { transform: 'translateX(-150%)' },
         },
         marquee2: {
-          '0%': { transform: 'translateX(-15000%)' },
+          '0%': { transform: 'translateX(-150%)' },
           '100%': { transform: 'translateX(100%)' },
         },
         backgroundImage: {
