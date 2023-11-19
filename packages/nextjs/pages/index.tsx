@@ -491,6 +491,10 @@ const Home: NextPage = () => {
           />
           {/* this is the text in the background */}
           <CharacterDisplay players={database} />
+          <CharacterDisplay players={database} />
+          <CharacterDisplay players={database} />
+          <CharacterDisplay players={database} />
+          <CharacterDisplay players={database} />
         </div>
       </div>
       {mmToggle == true ? (
