@@ -449,7 +449,7 @@ const Home: NextPage = () => {
     }
 
     return (
-      <div className="sphere-container z-10">
+      <div className="sphere-container z-100">
         {rings.map((ring, ringIndex) => (
           <div key={ringIndex} className={`ring ring-${ringIndex}`}>
             {ring.map((character: Character) => (
@@ -499,9 +499,8 @@ const Home: NextPage = () => {
             object-fit="cover"
             style={{
               animation: "pulse 1s infinite alternate",
-              opacity: "0.15",
+              opacity: "0.25",
               position: "absolute",
-              zIndex: 1,
               scale: "1.05",
             }}
           />
