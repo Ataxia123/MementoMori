@@ -435,7 +435,7 @@ const Home: NextPage = () => {
   const CharacterDisplay = (props: any) => {
     const { players } = props;
     // Shuffle the database array before rendering
-    const shuffledDatabase = shuffle([...players]);
+    const shuffledDatabase = shuffle(players);
 
     return (
       <div className="mt-24 h-full relative flex overflow-hidden font-mono z-50">
