@@ -500,7 +500,20 @@ const Home: NextPage = () => {
             object-fit="cover"
             style={{
               animation: "pulse 1s infinite alternate",
+              zIndex: -1,
               opacity: "0.75",
+              position: "absolute",
+              scale: "1.05",
+            }}
+          />
+          <Image
+            src="/mmoriball2.png"
+            fill
+            alt="mmoriball"
+            object-fit="cover"
+            style={{
+              animation: "pulse 1s infinite alternate",
+              opacity: "0.25",
               position: "absolute",
               scale: "1.05",
             }}
