@@ -9,6 +9,7 @@ import {
   SchemaRegistry,
   SignedOffchainAttestation,
 } from "@ethereum-attestation-service/eas-sdk";
+import { clear } from "console";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
 import Slider from "react-slick";
@@ -157,6 +158,7 @@ const Home: NextPage = () => {
 
     // Initialize SchemaEncoder with the schema string
     const schemaEncoder = new SchemaEncoder("uint32 moriRef,string prayer");
+    console.log(respected, "respected");
     const encodedData = schemaEncoder.encodeData([
       { name: "moriRef", value: respected.id, type: "uint32" },
       { name: "prayer", value: prayer, type: "string" },
@@ -733,11 +735,10 @@ const Home: NextPage = () => {
             <br />
 
             <button className="border-2 border-white text-center rounded-md p-2" onClick={() => console.log("clicked")}>
-              Memento Mori
+              <MyComponent index={1} />
             </button>
             <br />
           </div>
-          <MyComponent index={1} />
         </div>
         <form>
           <label className={"bg-transparent text-black"}>
