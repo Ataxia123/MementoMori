@@ -184,7 +184,12 @@ const Home: NextPage = () => {
       signer,
     );
 
-    const postRespects = async (players: SignedOffchainAttestation) => {
+    const updatedData = JSON.stringify(
+      offchainAttestation,
+      (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
+    );
+
+    const postRespects = async (players: string) => {
       try {
         const response = await fetch("https://backend.nerddao.xyz/api/attest", {
           method: "POST",
@@ -193,7 +198,7 @@ const Home: NextPage = () => {
             "Content-Type": "application/json",
           },
 
-          body: JSON.stringify(players, (key, value) => (typeof value === "bigint" ? value.toString() : value)),
+          body: players,
         });
 
         const data = await response.json();
@@ -203,7 +208,7 @@ const Home: NextPage = () => {
         console.log(e.message);
       }
     };
-    await postRespects(offchainAttestation);
+    await postRespects(updatedData);
   };
 
   const fecthAttestation = async (index: number) => {
