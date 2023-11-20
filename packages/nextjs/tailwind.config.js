@@ -31,6 +31,9 @@ module.exports = {
           "0 0px 65px rgba(255, 255,255, 0.2)"
         ]
       },
+      ring: {
+        ringColor: 'rgb(231 234 240 / 5%)w',
+      },
 
       animation: {
         marquee: 'marquee 36s linear infinite',
