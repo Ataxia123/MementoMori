@@ -214,7 +214,7 @@ const Home: NextPage = () => {
 
     const f = { playerId: respected.id, attestation: updatedData };
 
-    postRespects(f);
+    await postRespects(f);
     return updatedData;
   };
 
