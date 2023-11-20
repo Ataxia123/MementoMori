@@ -42,6 +42,7 @@ const Home: NextPage = () => {
   const [mmToggle, setMmToggle] = useState<boolean>(true);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
+  const [respected, setRespected] = useState<Character[]>([]);
 
   // Renderer
   //
@@ -458,7 +459,13 @@ const Home: NextPage = () => {
                   key={character.id}
                   className="character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max"
                 >
-                  <span className={playerColor(character)} onClick={() => console.log(character.id)}>
+                  <span
+                    className={playerColor(character)}
+                    onClick={() => {
+                      setRespected(database.filter(x => x.id === character.id));
+                      console.log(respected);
+                    }}
+                  >
                     {character.name} <br />
                   </span>
                 </div>
