@@ -642,7 +642,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center bg-transparent text-black pt-4 -mt-16">
+        <div className="flex flex-col items-center justify-center bg-transparent text-black p-4 pt-4 -mt-16">
           <div style={{ zIndex: 10 }} className="text-center max-w-xl bg-transparent overflow-hidden rounded-md p-8">
             <div className="card mr-3 mt-4">
               <div className="font-mono text-xl">
