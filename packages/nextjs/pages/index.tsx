@@ -149,6 +149,25 @@ const Home: NextPage = () => {
       console.log(e.message);
     }
   };
+  const postRespects = async (players: string) => {
+    try {
+      const response = await fetch("https://backend.nerddao.xyz/api/attest", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: players,
+      });
+
+      const data = await response.json();
+      console.log(data, "POST Player data response");
+    } catch (e: any) {
+      toast.error("error posting dead players to db");
+      console.log(e.message);
+    }
+  };
 
   const payRespects = async (respected: Character, prayer: string) => {
     const offchain = await eas.getOffchain();
@@ -158,7 +177,9 @@ const Home: NextPage = () => {
 
     // Initialize SchemaEncoder with the schema string
     const schemaEncoder = new SchemaEncoder("uint32 moriRef,string prayer");
+
     console.log(respected, "respected");
+
     const encodedData = schemaEncoder.encodeData([
       { name: "moriRef", value: respected.id, type: "uint32" },
       { name: "prayer", value: prayer, type: "string" },
@@ -189,26 +210,21 @@ const Home: NextPage = () => {
       (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
     );
 
-    const postRespects = async (players: string) => {
-      try {
-        const response = await fetch("https://backend.nerddao.xyz/api/attest", {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: players,
-        });
-
-        const data = await response.json();
-        console.log(data, "POST Player data response");
-      } catch (e: any) {
-        toast.error("error posting dead players to db");
-        console.log(e.message);
-      }
-    };
+    console.log(updatedData, "updatedData");
     await postRespects(updatedData);
+  };
+
+  const pressFtoPayRespects = async (respected: Character, prayer: string): Promise<Character | null> => {
+    try {
+      // Finished state update before assigning player
+      // Fetch Attestation
+      await payRespects(respected, prayer);
+      console.log(respected, "player");
+      return respected;
+    } catch (e: any) {
+      console.error(e);
+      return null;
+    }
   };
 
   const fecthAttestation = async (index: number) => {
@@ -755,7 +771,7 @@ const Home: NextPage = () => {
               e.preventDefault();
               if (!fInChat) return;
 
-              payRespects(fInChat, prayer);
+              pressFtoPayRespects(fInChat, prayer);
             }}
           />
         </form>
