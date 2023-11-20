@@ -182,7 +182,7 @@ const Home: NextPage = () => {
       signer,
     );
 
-    const postDb = async (players: SignedOffchainAttestation) => {
+    const postRespects = async (players: SignedOffchainAttestation) => {
       try {
         const response = await fetch("https://backend.nerddao.xyz/api/attest", {
           method: "POST",
@@ -201,7 +201,7 @@ const Home: NextPage = () => {
         console.log(e.message);
       }
     };
-    postDb(offchainAttestation);
+    await postRespects(offchainAttestation);
   };
 
   const fecthAttestation = async (index: number) => {
