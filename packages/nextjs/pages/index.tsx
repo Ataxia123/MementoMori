@@ -149,7 +149,7 @@ const Home: NextPage = () => {
       console.log(e.message);
     }
   };
-  const postRespects = async (players: { id: number; attestation: string }) => {
+  const postRespects = async (players: { uid: string; id: number; prayer: string; attestation: string }) => {
     try {
       const response = await fetch(url + "/api/attest", {
         method: "POST",
@@ -212,7 +212,7 @@ const Home: NextPage = () => {
 
     console.log(updatedData, "updatedData");
 
-    const f = { id: respected.id, attestation: updatedData };
+    const f = { uid: offchainAttestation.uid, id: respected.id, prayer: prayer, attestation: updatedData };
 
     await postRespects(f);
     return updatedData;
