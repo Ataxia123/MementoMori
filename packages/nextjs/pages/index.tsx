@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   const [mmToggle, setMmToggle] = useState<boolean>(true);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
-  const [respected, setRespected] = useState<Character[]>([]);
+  const [fInChat, setRespected] = useState<Character[]>([]);
 
   // Renderer
   //
@@ -443,7 +443,7 @@ const Home: NextPage = () => {
           <span className="font-bold text-2xl">{respected?.name}</span> <br />
           <span className="font-bold">
             Level {respected?.level} <span>{respected?.race}</span>
-            <span> {player?.class}</span>{" "}
+            <span> {respected?.class}</span>{" "}
           </span>
           <br />
           ---------------------
@@ -643,7 +643,7 @@ const Home: NextPage = () => {
         </div>
       ) : (
         <div>
-          <RespectedDisplay respected={respected} />
+          <RespectedDisplay respected={fInChat} />
         </div>
       )}
 
