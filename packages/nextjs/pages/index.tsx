@@ -740,7 +740,7 @@ const Home: NextPage = () => {
           <MyComponent index={1} />
         </div>
         <form>
-          <label>
+          <label className={"bg-transparent"}>
             <input type="text" value={prayer} onChange={e => setPrayer(e.target.value)} />
           </label>
           <input
