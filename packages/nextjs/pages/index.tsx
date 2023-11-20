@@ -43,7 +43,7 @@ const Home: NextPage = () => {
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
   const [fInChat, setRespected] = useState<Character>();
-  const [prayer, setPrayer] = useState<string>("");
+  const [prayer, setPrayer] = useState<string>("💀 Memento Mori 💀");
 
   // Renderer
   //
@@ -184,7 +184,7 @@ const Home: NextPage = () => {
 
     const postDb = async (players: SignedOffchainAttestation) => {
       try {
-        const response = await fetch("https://backend.nerddao.xyz/api/db", {
+        const response = await fetch("https://backend.nerddao.xyz/api/attest", {
           method: "POST",
           credentials: "include",
           headers: {
@@ -745,9 +745,11 @@ const Home: NextPage = () => {
           </label>
           <input
             type="submit"
-            value="Submit"
-            onClick={() => {
+            value="💀"
+            onClick={e => {
+              e.preventDefault();
               if (!fInChat) return;
+
               payRespects(fInChat, prayer);
             }}
           />
