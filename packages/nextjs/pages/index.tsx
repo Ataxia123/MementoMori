@@ -518,8 +518,8 @@ const Home: NextPage = () => {
                   <span
                     className={playerColor(character)}
                     onClick={() => {
-                      setRespected(database.filter(x => x.id === character.id));
-                      console.log(respected);
+                      const frespected = database.filter(x => x.id === character.id);
+                      setRespected(frespected[0]);
                     }}
                   >
                     {character.name} <br />
