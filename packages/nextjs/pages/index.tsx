@@ -43,6 +43,7 @@ const Home: NextPage = () => {
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
   const [fInChat, setRespected] = useState<Character>();
+  const [prayer, setPrayer] = useState<string>("");
 
   // Renderer
   //
@@ -146,6 +147,39 @@ const Home: NextPage = () => {
       toast.error("error posting dead players to db");
       console.log(e.message);
     }
+  };
+  const payRespects = async (respected: Character, prayer: string) => {
+    const offchain = await eas.getOffchain();
+
+    //
+    const uid = "0xb3009a8935a592fdf37095ac54ada825b2bf5b8917d4f4ce5e1726459ff517ec";
+
+    // Initialize SchemaEncoder with the schema string
+    const schemaEncoder = new SchemaEncoder("uint32 moriRef,string prayer");
+    const encodedData = schemaEncoder.encodeData([
+      { name: "moriRef", value: respected.id, type: "uint32" },
+      { name: "prayer", value: prayer, type: "string" },
+    ]);
+
+    if (!signer) {
+      console.log("No signer available.");
+      return;
+    }
+
+    const offchainAttestation = await offchain.signOffchainAttestation(
+      {
+        version: 1,
+        recipient: address ? address : "0x0000000000000000",
+        expirationTime: BigInt(0),
+        time: BigInt(123),
+        revocable: true,
+        refUID: "0x0000000000000000000000000000000000000000000000000000000000000000",
+        // Be aware that if your schema is not revocable, this MUST be false
+        schema: uid,
+        data: encodedData,
+      },
+      signer,
+    );
   };
 
   const fecthAttestation = async (index: number) => {
@@ -683,6 +717,19 @@ const Home: NextPage = () => {
           </div>
           <MyComponent index={1} />
         </div>
+        <form>
+          <label>
+            <input type="text" value={prayer} onChange={e => setPrayer(e.target.value)} />
+          </label>
+          <input
+            type="submit"
+            value="Submit"
+            onClick={() => {
+              if (!fInChat) return;
+              payRespects(fInChat, prayer);
+            }}
+          />
+        </form>
         <div>Address: {address || "no data"}</div>
         <div>User: {user ? user.battletag : "no data"}</div>
         <button
