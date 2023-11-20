@@ -149,7 +149,7 @@ const Home: NextPage = () => {
       console.log(e.message);
     }
   };
-  const postRespects = async (players: string) => {
+  const postRespects = async (players: { playerId: number; attestation: string }) => {
     try {
       const response = await fetch("https://backend.nerddao.xyz/api/attest", {
         method: "POST",
@@ -158,7 +158,7 @@ const Home: NextPage = () => {
           "Content-Type": "application/json",
         },
 
-        body: players,
+        body: JSON.stringify(players),
       });
 
       const data = await response.json();
@@ -209,8 +209,13 @@ const Home: NextPage = () => {
       offchainAttestation,
       (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
     );
-    return updatedData;
+
     console.log(updatedData, "updatedData");
+
+    const f = { playerId: respected.id, attestation: updatedData };
+
+    postRespects(f);
+    return updatedData;
   };
 
   const pressFtoPayRespects = async (respected: Character, prayer: string): Promise<string | undefined> => {
@@ -220,7 +225,6 @@ const Home: NextPage = () => {
       const udata = await payRespects(respected, prayer);
       console.log(udata, "player");
 
-      postRespects(udata ? udata : "no data");
       return udata;
     } catch (e: any) {
       console.error(e);
