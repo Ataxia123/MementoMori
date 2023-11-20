@@ -642,7 +642,10 @@ const Home: NextPage = () => {
           </div>
         </div>
       ) : (
-        <div>
+        <div
+          style={{ zIndex: 10 }}
+          className="flex flex-col items-center justify-center bg-transparent text-black pt-4 mt-16 text-center max-w-xl bg-transparent overflow-hidden rounded-md p-8"
+        >
           <RespectedDisplay respected={fInChat} />
         </div>
       )}
