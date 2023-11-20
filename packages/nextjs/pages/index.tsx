@@ -148,6 +148,7 @@ const Home: NextPage = () => {
       console.log(e.message);
     }
   };
+
   const payRespects = async (respected: Character, prayer: string) => {
     const offchain = await eas.getOffchain();
 
@@ -180,6 +181,27 @@ const Home: NextPage = () => {
       },
       signer,
     );
+
+    const postDb = async (players: SignedOffchainAttestation) => {
+      try {
+        const response = await fetch("https://backend.nerddao.xyz/api/db", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(players, (key, value) => (typeof value === "bigint" ? value.toString() : value)),
+        });
+
+        const data = await response.json();
+        console.log(data, "POST Player data response");
+      } catch (e: any) {
+        toast.error("error posting dead players to db");
+        console.log(e.message);
+      }
+    };
+    postDb(offchainAttestation);
   };
 
   const fecthAttestation = async (index: number) => {
