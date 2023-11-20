@@ -451,7 +451,7 @@ const Home: NextPage = () => {
     return (
       <div className="sphere-container z-100">
         {rings.map((ring, ringIndex) => (
-          <div key={ringIndex} className={`ring ring-color: rgb(218 221 226 / 5%); ring-${ringIndex}`}>
+          <div key={ringIndex} className={`ring ring-${ringIndex}`}>
             {ring.map((character: Character) => (
               <>
                 <div
