@@ -45,7 +45,7 @@ const Home: NextPage = () => {
   const [tutoggle, setTutoggle] = useState<boolean>(true);
   const [fInChat, setRespected] = useState<Character>();
   const [prayer, setPrayer] = useState<string>("💀 Memento Mori 💀");
-
+  const [isPayingRespects, setIsPayingRespects] = useState<boolean>(false);
   // Renderer
   //
   //
@@ -424,6 +424,18 @@ const Home: NextPage = () => {
     });
   }, [players]);
 
+  useEffect(() => {
+    if (isPayingRespects == true && fInChat) {
+      try {
+        pressFtoPayRespects(fInChat, prayer);
+      } catch (e: any) {
+        console.error(e);
+      }
+
+      setIsPayingRespects(false);
+    }
+  }, [isPayingRespects]);
+
   const settings = {
     dots: true,
     infinite: false,
@@ -456,7 +468,7 @@ const Home: NextPage = () => {
   };
 
   function FsInChat(props: any) {
-    const { fInChat, prayer } = props;
+    const { fInChat } = props;
     const componentRef = useRef(null); // Reference to the component
 
     useEffect(() => {
@@ -474,7 +486,7 @@ const Home: NextPage = () => {
 
       const handleKeyPress = (event: any) => {
         if (event.key === "F" || event.key === "f") {
-          pressFtoPayRespects(fInChat, prayer);
+          setIsPayingRespects(true);
         }
       };
 
@@ -768,7 +780,7 @@ const Home: NextPage = () => {
           <label className={"bg-transparent text-black"}>
             <input type="text" value={prayer} onChange={e => setPrayer(e.target.value)} />
           </label>
-          <FsInChat fInCHat={fInChat} prayer={prayer} />
+
           <input
             value="RIP"
             onClick={e => {
@@ -777,6 +789,7 @@ const Home: NextPage = () => {
               pressFtoPayRespects(fInChat, prayer);
             }}
           />
+          <FsInChat />
         </form>
         <div>Address: {address || "no data"}</div>
         <div>User: {user ? user.battletag : "no data"}</div>
