@@ -644,23 +644,6 @@ const Home: NextPage = () => {
       ) : (
         <div className="flex flex-col items-center justify-center bg-transparent text-black p-4 pt-4 -mt-16">
           <div style={{ zIndex: 10 }} className="text-center max-w-xl bg-transparent overflow-hidden rounded-md p-8">
-            <div className="card mr-3 mt-4">
-              <div className="font-mono text-xl">
-                In Memoriam to: <br /> {fInChat?.name}
-              </div>
-              <div>
-                <br />
-
-                <button
-                  className="border-2 border-white text-center rounded-md p-2"
-                  onClick={() => console.log("clicked")}
-                >
-                  Memento Mori
-                </button>
-                <br />
-              </div>
-              <MyComponent index={1} />
-            </div>
             <RespectedDisplay respected={fInChat} />
           </div>
         </div>
@@ -686,7 +669,20 @@ const Home: NextPage = () => {
             )}
           </>
         )}
+        <div className="card mr-3 mt-4">
+          <div className="font-mono text-xl">
+            In Memoriam to: <br /> {fInChat?.name}
+          </div>
+          <div>
+            <br />
 
+            <button className="border-2 border-white text-center rounded-md p-2" onClick={() => console.log("clicked")}>
+              Memento Mori
+            </button>
+            <br />
+          </div>
+          <MyComponent index={1} />
+        </div>
         <div>Address: {address || "no data"}</div>
         <div>User: {user ? user.battletag : "no data"}</div>
         <button
