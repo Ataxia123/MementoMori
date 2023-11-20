@@ -591,53 +591,7 @@ const Home: NextPage = () => {
                   <div key={index} className="p-4">
                     {deadCharacter?.name == player?.name ? (
                       <>
-                        <div className="border-2 border-gray-500 card mt-4 ml-10 mr-10 text-center text-white font-mono text-xl">
-                          <br />
-                          <span className="font-bold text-2xl">{player?.name}</span> <br />
-                          <span className="font-bold">
-                            Level {player?.level} <span>{player?.race}</span>
-                            <span> {player?.class}</span>{" "}
-                          </span>
-                          <br />
-                          ---------------------
-                          <br />
-                          <span className="text-lg text-left">
-                            {player?.equipped_items?.map((item: any) => (
-                              <div key={item.slot.type}>
-                                {item.quality.type == "POOR" ? (
-                                  <span className="text-gray-500"> {item.name.en_US}</span>
-                                ) : (
-                                  <>
-                                    {item.quality.type == "COMMON" ? (
-                                      <span className="text-white"> {item.name.en_US}</span>
-                                    ) : (
-                                      <>
-                                        {item.quality.type == "UNCOMMON" ? (
-                                          <span className="text-green-500"> {item.name.en_US}</span>
-                                        ) : (
-                                          <>
-                                            {item.quality.type == "RARE" ? (
-                                              <span className="text-blue-500"> {item.name.en_US}</span>
-                                            ) : (
-                                              <>
-                                                {item.quality.type == "EPIC" ? (
-                                                  <span className="text-purple-500"> {item.name.en_US}</span>
-                                                ) : (
-                                                  <span className="text-orange-500"> {item.name.en_US}</span>
-                                                )}
-                                              </>
-                                            )}
-                                          </>
-                                        )}
-                                      </>
-                                    )}
-                                  </>
-                                )}
-                              </div>
-                            ))}
-                          </span>
-                        </div>
-                        <br />
+                        <RespectedDisplay respected={player} />
                       </>
                     ) : (
                       <div className="card mr-3 mt-4">
