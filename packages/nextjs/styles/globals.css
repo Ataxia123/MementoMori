@@ -76,7 +76,7 @@ p {
   justify-content: center;
   align-items: center;
   transform-style: preserve-3d;
-
+  color: rgb(231 234 240 / 5%);
 }
 
 .character {

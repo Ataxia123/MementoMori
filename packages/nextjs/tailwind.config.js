@@ -32,7 +32,7 @@ module.exports = {
         ]
       },
       ring: {
-        ringColor: 'rgb(231 234 240 / 5%)w',
+        ringColor: 'rgb(231 234 240 / 5%)',
       },
 
       animation: {
