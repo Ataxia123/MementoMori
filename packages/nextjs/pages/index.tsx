@@ -488,7 +488,7 @@ const Home: NextPage = () => {
         }
         document.removeEventListener("keydown", handleKeyPress);
       };
-    }, []);
+    }, [fInChat]);
 
     return <div ref={componentRef}>Press F to pay Respects</div>;
   }
