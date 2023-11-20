@@ -224,7 +224,7 @@ const Home: NextPage = () => {
       // Fetch Attestation
       const udata = await payRespects(respected, prayer);
       console.log(udata, "player");
-
+      toast.success("Fs on chain for" + respected.name);
       return udata;
     } catch (e: any) {
       console.error(e);
@@ -404,7 +404,7 @@ const Home: NextPage = () => {
     if (!playerData) return;
     await postDb(playerData);
 
-    toast.success("Fetching player data for" + index);
+    toast.success("Memento Mori" + playerData.name);
   };
 
   useEffect(() => {
@@ -414,7 +414,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (user === null) return;
     fetchCharacter();
-    console.log(players, "players");
   }, [user]);
 
   useEffect(() => {
@@ -423,7 +422,6 @@ const Home: NextPage = () => {
         return console.log(character.character.name, "too low level", character.character.level);
       fetchCharData(character.character.href);
     });
-    console.log("dead", dead, "alive", alive);
   }, [players]);
 
   const settings = {
@@ -457,8 +455,8 @@ const Home: NextPage = () => {
     }
   };
 
-  function MyComponent(props: any) {
-    const { index } = props;
+  function FsInChat(props: any) {
+    const { fInChat, prayer } = props;
     const componentRef = useRef(null); // Reference to the component
 
     useEffect(() => {
@@ -476,7 +474,7 @@ const Home: NextPage = () => {
 
       const handleKeyPress = (event: any) => {
         if (event.key === "F" || event.key === "f") {
-          playerSelector(index);
+          pressFtoPayRespects(fInChat, prayer);
         }
       };
 
@@ -490,7 +488,7 @@ const Home: NextPage = () => {
         }
         document.removeEventListener("keydown", handleKeyPress);
       };
-    }, [index]);
+    }, []);
 
     return <div ref={componentRef}>Press F to pay Respects</div>;
   }
@@ -693,7 +691,6 @@ const Home: NextPage = () => {
                           </button>
                           <br />
                         </div>
-                        <MyComponent index={index} />
                       </div>
                     )}
                   </div>
@@ -760,9 +757,10 @@ const Home: NextPage = () => {
           <div>
             <br />
 
-            <button className="border-2 border-white text-center rounded-md p-2" onClick={() => console.log("clicked")}>
-              <MyComponent index={1} />
-            </button>
+            <button
+              className="border-2 border-white text-center rounded-md p-2"
+              onClick={() => console.log("clicked")}
+            ></button>
             <br />
           </div>
         </div>
@@ -770,12 +768,12 @@ const Home: NextPage = () => {
           <label className={"bg-transparent text-black"}>
             <input type="text" value={prayer} onChange={e => setPrayer(e.target.value)} />
           </label>
+          <FsInChat fInCHat={fInChat} prayer={prayer} />
           <input
-            value="Pay Respects 💀"
+            value="RIP"
             onClick={e => {
               e.preventDefault();
               if (!fInChat) return;
-
               pressFtoPayRespects(fInChat, prayer);
             }}
           />
