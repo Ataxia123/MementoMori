@@ -55,7 +55,7 @@ const Home: NextPage = () => {
   const signer = useEthersSigner();
 
   const EASContractAddress = "0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587"; //
-
+  const url = process.env.NEXT_PUBLIC_WEBSITE || "http://localhost:3000";
   // Initialize the sdk with the address of the EAS Schema contract address
   const eas = new EAS(EASContractAddress);
 
@@ -72,7 +72,7 @@ const Home: NextPage = () => {
 
   const login = () => {
     popup = window.open(
-      "https://backend.nerddao.xyz/oauth/battlenet",
+      url + "/oauth/battlenet",
       "targetWindow",
       `toolbar=no,
        location=no,
@@ -87,7 +87,7 @@ const Home: NextPage = () => {
     window.addEventListener(
       "message",
       event => {
-        if (event.origin !== "https://backend.nerddao.xyz") return;
+        if (event.origin !== url) return;
         console.log("event", event);
 
         if (event.data) {
@@ -101,7 +101,7 @@ const Home: NextPage = () => {
 
   const logout = async () => {
     try {
-      const response = await fetch("https://backend.nerddao.xyz/oauth/logout", {
+      const response = await fetch(url + "/oauth/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -120,7 +120,7 @@ const Home: NextPage = () => {
 
   const fetchDb = async () => {
     try {
-      const response = await fetch("https://backend.nerddao.xyz/api/database"); // assume the same host
+      const response = await fetch(url + "/api/database"); // assume the same host
       const data = await response.json();
       console.log(data, "Player data from DB");
       setDatabase(data.players);
@@ -132,7 +132,7 @@ const Home: NextPage = () => {
 
   const postDb = async (players: Character) => {
     try {
-      const response = await fetch("https://backend.nerddao.xyz/api/db", {
+      const response = await fetch(url + "/api/db", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -151,7 +151,7 @@ const Home: NextPage = () => {
   };
   const postRespects = async (players: { playerId: number; attestation: string }) => {
     try {
-      const response = await fetch("https://backend.nerddao.xyz/api/attest", {
+      const response = await fetch(url + "/api/attest", {
         method: "POST",
         credentials: "include",
         headers: {
