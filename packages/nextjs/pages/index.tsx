@@ -650,7 +650,7 @@ const Home: NextPage = () => {
       )}
 
       {/*login logo pulse portion and ? thing*/}
-      <div className="card fixed right-20 top-2/3 mt-24 pr-2 z-50 font-mono">
+      <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
         {!address ? (
           <RainbowKitCustomConnectButton />
         ) : (
