@@ -209,21 +209,22 @@ const Home: NextPage = () => {
       offchainAttestation,
       (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
     );
-
+    return updatedData;
     console.log(updatedData, "updatedData");
-    await postRespects(updatedData);
   };
 
-  const pressFtoPayRespects = async (respected: Character, prayer: string): Promise<Character | null> => {
+  const pressFtoPayRespects = async (respected: Character, prayer: string): Promise<string | undefined> => {
     try {
       // Finished state update before assigning player
       // Fetch Attestation
-      await payRespects(respected, prayer);
-      console.log(respected, "player");
-      return respected;
+      const udata = await payRespects(respected, prayer);
+      console.log(udata, "player");
+
+      postRespects(udata ? udata : "no data");
+      return udata;
     } catch (e: any) {
       console.error(e);
-      return null;
+      return undefined;
     }
   };
 
