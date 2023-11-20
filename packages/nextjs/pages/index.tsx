@@ -729,7 +729,7 @@ const Home: NextPage = () => {
         )}
         <div className="card mr-3 mt-4">
           <div className="font-mono text-xl">
-            In Memoriam to: <br /> {fInChat?.name}
+            In Memoriam of: <br /> {fInChat?.name}
           </div>
           <div>
             <br />
@@ -745,7 +745,7 @@ const Home: NextPage = () => {
             <input type="text" value={prayer} onChange={e => setPrayer(e.target.value)} />
           </label>
           <input
-            value="💀"
+            value="Pay Respects 💀"
             onClick={e => {
               e.preventDefault();
               if (!fInChat) return;
