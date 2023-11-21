@@ -227,7 +227,7 @@ const Home: NextPage = () => {
       // Fetch Attestation
       const udata = await payRespects(respected, prayer);
       console.log(udata, "player");
-      toast.success("Fs on chain for" + respected.name);
+      toast.success("Fs on chain for " + respected.name);
       return udata;
     } catch (e: any) {
       console.error(e);
@@ -618,13 +618,65 @@ const Home: NextPage = () => {
       </>
     );
   };
+  const AttestationCount = (props: any) => {
+    const { id } = props;
+    if (!respected) return 0;
+    const f = respected.filter(x => x.id === id);
+    const count = f.length;
+    // const sorted = f.sort((a, b) => attestationCount(b.id) - attestationCount(a.id));
+
+    return (
+      <Slider {...settings}>
+        count: {count}
+        {f?.map((respected, index) => (
+          <div key={index} className="p-4">
+            <ul>
+              IN MEMORIAM: {respected.name}
+              <li></li>
+              <li className="overflow-Y-scroll">prayer: {respected.prayer}</li>
+              <li className="overflow-hidden">From: {respected.Attestation.message.recipient}</li>
+            </ul>
+          </div>
+        ))}
+      </Slider>
+    );
+  };
 
   const MoriDisplay = () => {
+    if (!respected) return <></>;
+    const respectedShuffle = shuffle(respected);
+    const findDatabase = (id: number) => {
+      const f = database.filter(x => x.id === id);
+      return f[0];
+    };
+
+    const MostRespectedLeaderBoard = () => {
+      return <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">MOST RESPECTED 💀</div>;
+    };
+
     return (
       <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
         FALLEN HEROES: {database?.length}
         <br />
         RESPECTS PAID: {respected?.length}
+        <br />
+        MOST RESPECTED 💀
+        {fInChat ? (
+          <AttestationCount id={fInChat.id} />
+        ) : (
+          <Slider {...settings}>
+            {respectedShuffle?.map((respected, index) => (
+              <div key={index} className="p-4">
+                <ul>
+                  IN MEMORIAM: {findDatabase(respected.id)?.name}
+                  <li></li>
+                  <li className="overflow-Y-scroll">prayer: {respected.prayer}</li>
+                  <li className="overflow-hidden">From: {respected.Attestation.message.recipient}</li>
+                </ul>
+              </div>
+            ))}
+          </Slider>
+        )}
       </div>
     );
   };
