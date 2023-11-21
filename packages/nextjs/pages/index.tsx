@@ -618,10 +618,16 @@ const Home: NextPage = () => {
       </>
     );
   };
-  const AttestationCount = (props: any) => {
-    const { id } = props;
+
+  const findDatabase = (id: number) => {
+    const f = database.filter(x => x.id === id);
+    console.log(f[0], "f");
+    return f[0];
+  };
+
+  const AttestationCount = () => {
     if (!respected) return <>No Respected</>;
-    const f = respected.filter(x => x.id === id);
+    const f = respected.filter(x => x.hero === fInChat?.id);
     const count = f.length;
     // const sorted = f.sort((a, b) => attestationCount(b.id) - attestationCount(a.id));
 
@@ -631,8 +637,7 @@ const Home: NextPage = () => {
         {f?.map((respected, index) => (
           <div key={index} className="p-4">
             <ul>
-              IN MEMORIAM: {respected.name}
-              <li></li>
+              <li>IN MEMORIAN: {findDatabase(respected.hero)?.name}</li>
               <li className="overflow-Y-scroll">prayer: {respected.prayer}</li>
               <li className="overflow-hidden">From: {respected.Attestation.message.recipient}</li>
             </ul>
@@ -645,12 +650,6 @@ const Home: NextPage = () => {
   const MoriDisplay = () => {
     if (!respected) return <></>;
     const respectedShuffle = shuffle(respected);
-    const findDatabase = (id: number) => {
-      const f = database.filter(x => x.id === id);
-      console.log(f[0], "f");
-      return f[0];
-    };
-
     const MostRespectedLeaderBoard = () => {
       return <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">MOST RESPECTED 💀</div>;
     };
@@ -660,8 +659,7 @@ const Home: NextPage = () => {
         {respectedShuffle?.map((respected, index) => (
           <div key={index} className="p-4">
             <ul>
-              IN MEMORIAM: {findDatabase(respected.hero)?.name}
-              <li></li>
+              <li>IN MEMORIAN: {findDatabase(respected.hero)?.name}</li>
               <li className="overflow-Y-scroll">prayer: {respected.prayer}</li>
               <li className="overflow-hidden">From: {respected.Attestation.message.recipient}</li>
             </ul>
@@ -848,7 +846,7 @@ const Home: NextPage = () => {
         RESPECTS PAID: {respected?.length}
         <br />
         MOST RESPECTED 💀
-        <>{fInChat ? <AttestationCount id={fInChat.id} /> : <MoriDisplay />}</>
+        <>{fInChat ? <AttestationCount /> : <MoriDisplay />}</>
       </div>
 
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
