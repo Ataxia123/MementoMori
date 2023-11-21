@@ -571,6 +571,7 @@ const Home: NextPage = () => {
           ---------------------
           <br />
           <span className="text-lg text-left">
+            respected.equipped_items ? (
             {respected?.equipped_items?.map((item: any) => (
               <div key={item.slot.type}>
                 {item.quality.type == "POOR" ? (
@@ -604,6 +605,7 @@ const Home: NextPage = () => {
                 )}
               </div>
             ))}
+            ): (<>No items found</>)
           </span>
         </div>
         <br />
