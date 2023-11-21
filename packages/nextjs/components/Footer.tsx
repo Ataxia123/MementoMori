@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { hardhat } from "viem/chains";
@@ -31,6 +31,14 @@ export const Footer = () => {
       setIsPlaying(!isPlaying);
     }
   };
+
+  useEffect(() => {
+    // Setting the initial volume to 50%
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = 0.25;
+    }
+  }, []);
 
   return (
     <>
