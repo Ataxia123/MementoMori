@@ -17,38 +17,6 @@ import { getTargetNetwork } from "~~/utils/scaffold-eth";
 export const Footer = () => {
   const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrencyPrice);
   const isLocalNetwork = getTargetNetwork().id === hardhat.id;
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const toggleSound = () => {
-    const audio = audioRef.current;
-    if (audio) {
-      if (isPlaying) {
-        audio.pause();
-      } else {
-        audio.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-
-    return (
-      <>
-        SOUND OFF
-        <audio ref={audioRef} style={{ display: "none" }} loop>
-          <source src="/firesound.mp4" type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
-      </>
-    );
-  };
-
-  useEffect(() => {
-    // Setting the initial volume to 50%
-    const audio = audioRef.current;
-    if (audio) {
-      audio.volume = 0.05;
-    }
-  }, []);
 
   return (
     <>
@@ -90,8 +58,6 @@ export const Footer = () => {
               width={800}
               height={1000}
               className="fixed pointer-events-none brightness-50 right-1/3 -mr-16 top-0 bottom-10 z-1 opacity-20"
-              onClick={toggleSound}
-              style={{ pointerEvents: "auto" }}
             />
           </div>
         </div>
