@@ -558,6 +558,8 @@ const Home: NextPage = () => {
   const RespectedDisplay = (props: any) => {
     const { respected } = props;
 
+    if (!respected.equipped_items) return <></>;
+
     return (
       <>
         <div className="border-2 border-gray-500 card mt-4 ml-10 mr-10 text-center text-white font-mono text-xl">
@@ -571,7 +573,6 @@ const Home: NextPage = () => {
           ---------------------
           <br />
           <span className="text-lg text-left">
-            respected.equipped_items ? (
             {respected?.equipped_items?.map((item: any) => (
               <div key={item.slot.type}>
                 {item.quality.type == "POOR" ? (
@@ -605,7 +606,6 @@ const Home: NextPage = () => {
                 )}
               </div>
             ))}
-            ): (<>No items found</>)
           </span>
         </div>
         <br />
@@ -637,7 +637,7 @@ const Home: NextPage = () => {
               <>
                 <div
                   key={character.id}
-                  className="character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max hover:text-bold"
+                  className="character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max"
                 >
                   <button
                     className={playerColor(character)}
