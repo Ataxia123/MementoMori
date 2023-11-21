@@ -490,7 +490,7 @@ const Home: NextPage = () => {
     }
 
     // Add a class for the backdrop glow effect
-    classString += "backdrop-filter backdrop-blur-sm text-opacity-100 z-100  hover:brightness-200-font-bold ";
+    classString += "backdrop-filter backdrop-blur-lg text-opacity-100 z-100  hover:brightness-200 ";
 
     return classString;
   };
@@ -635,9 +635,9 @@ const Home: NextPage = () => {
               <>
                 <div
                   key={character.id}
-                  className="character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max"
+                  className="character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max hover:text-bold"
                 >
-                  <span
+                  <button
                     className={playerColor(character)}
                     onClick={() => {
                       const frespected = database.filter(x => x.id === character.id);
@@ -645,7 +645,7 @@ const Home: NextPage = () => {
                     }}
                   >
                     {character.name} <br />
-                  </span>
+                  </button>
                 </div>
               </>
             ))}
