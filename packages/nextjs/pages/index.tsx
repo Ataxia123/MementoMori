@@ -449,25 +449,50 @@ const Home: NextPage = () => {
   // Once the popup is closed
   //
   const playerColor = (character: Character) => {
+    let classString = "text-black "; // Default text color set to black
+
+    // Determine the text color based on the character's class
     if (character.class == "Druid") {
-      return "text-orange-500";
+      classString += "bg-yellow-500/50 ";
     } else if (character.class == "Priest") {
-      return "text-gray-500";
+      classString += "bg-yellow-500/50 ";
     } else if (character.class == "Warlock") {
-      return "text-purple-500";
+      classString += "bg-yellow-500/50 ";
     } else if (character.class == "Warrior") {
-      return "text-brown-500";
+      classString += "bg-yellow-500/50 ";
     } else if (character.class == "Paladin") {
-      return "text-pink-500";
+      classString += "bg-yellow-500/50 ";
     } else if (character.class == "Rogue") {
-      return "text-yellow-500";
+      classString += "bg-yellow-500/50 ";
     } else if (character.class == "Mage") {
-      return "text-blue-50";
+      classString += "bg-yellow-500/50 ";
     } else if (character.class == "Shaman") {
-      return "text-blue-500";
+      classString += "bg-yellow-500/50 ";
     } else {
-      return "text-green-500";
+      classString += "bg-yellow-500/50 ";
     }
+
+    // Determine the font size based on the character's level
+    if (character.level < 10) {
+      classString += "text-xs ";
+    } else if (character.level >= 10 && character.level < 20) {
+      classString += "text-sm ";
+    } else if (character.level >= 20 && character.level < 30) {
+      classString += "text-base ";
+    } else if (character.level >= 30 && character.level < 40) {
+      classString += "text-lg ";
+    } else if (character.level >= 40 && character.level < 50) {
+      classString += "text-xl ";
+    } else if (character.level >= 50 && character.level < 60) {
+      classString += "text-2xl ";
+    } else if (character.level >= 60) {
+      classString += "text-3xl ";
+    }
+
+    // Add a class for the backdrop glow effect
+    classString += "backdrop-filter backdrop-blur-sm ";
+
+    return classString;
   };
 
   function FsInChat(props: any) {
@@ -613,7 +638,7 @@ const Home: NextPage = () => {
                   className="character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max"
                 >
                   <span
-                    className={playerColor(character)}
+                    className={"drop-shadow-2x " + playerColor(character)}
                     onClick={() => {
                       const frespected = database.filter(x => x.id === character.id);
                       setFinChat(frespected[0]);
