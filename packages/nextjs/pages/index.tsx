@@ -449,7 +449,7 @@ const Home: NextPage = () => {
   // Once the popup is closed
   //
   const playerColor = (character: Character) => {
-    let classString = "font-mono text-black font-bold "; // Default text color set to black
+    let classString = "font-mono text-black "; // Default text color set to black
 
     // Determine the text color based on the character's class
     if (character.class == "Druid") {
@@ -457,7 +457,7 @@ const Home: NextPage = () => {
     } else if (character.class == "Priest") {
       classString += "bg-white/50 ";
     } else if (character.class == "Warlock") {
-      classString += "bg-purple-650/50 ";
+      classString += "bg-purple-600/50 ";
     } else if (character.class == "Warrior") {
       classString += "bg-orange-900/50 ";
     } else if (character.class == "Paladin") {
@@ -490,7 +490,8 @@ const Home: NextPage = () => {
     }
 
     // Add a class for the backdrop glow effect
-    classString += "drop-shadow-lg backdrop-filter backdrop-blur-sm text-opacity-100 z-100 ";
+    classString +=
+      "drop-shadow-lg backdrop-filter backdrop-blur-sm text-opacity-100 z-100  hover:brightness-200 font-bold ";
 
     return classString;
   };
@@ -635,7 +636,7 @@ const Home: NextPage = () => {
               <>
                 <div
                   key={character.id}
-                  className=" hover:brightness-200 character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max"
+                  className="character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max"
                 >
                   <span
                     className={playerColor(character)}
