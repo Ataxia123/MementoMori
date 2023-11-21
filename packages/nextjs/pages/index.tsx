@@ -832,7 +832,13 @@ const Home: NextPage = () => {
           mmToggle ? setMmToggle(false) : setMmToggle(true);
         }}
       >
-        <span className="absolute right-5" onClick={() => setHidden(!hidden)}>
+        <span
+          className="absolute right-5"
+          onClick={e => {
+            e.stopPropagation();
+            setHidden(!hidden);
+          }}
+        >
           {"| X |"}{" "}
         </span>
         <Image src="/logo.png" alt="Logo" fill />
@@ -849,7 +855,13 @@ const Home: NextPage = () => {
         </div>
       ) : (
         <div className="fixed z-50 bg-black border-2  border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20">
-          <span className="absolute right-5" onClick={() => setInfoToggle(!infoToggle)}>
+          <span
+            className="absolute right-5"
+            onClick={e => {
+              e.stopPropagation();
+              setInfoToggle(!infoToggle);
+            }}
+          >
             {"| X |"}{" "}
           </span>
           <span className="font-bold justify-center pl-96" onClick={() => setTutoggle(!tutoggle)}>
