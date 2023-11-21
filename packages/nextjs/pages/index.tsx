@@ -635,7 +635,7 @@ const Home: NextPage = () => {
               <>
                 <div
                   key={character.id}
-                  className="opacity-1 brightness-200 character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max"
+                  className="opacity-1 brightness-150 hover:brightness-200 character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max"
                 >
                   <span
                     className={playerColor(character)}
