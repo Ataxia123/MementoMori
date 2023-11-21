@@ -676,6 +676,7 @@ const Home: NextPage = () => {
             }}
           />
         </div>
+        <div className="fixed z-150 border-gray-500 font-mono text-red p-4 w-40 h-40"></div>
       </div>
       {hidden == true ? (
         <></>
@@ -816,6 +817,15 @@ const Home: NextPage = () => {
         </form>
         <div>Address: {address || "no data"}</div>
         <div>User: {user ? user.battletag : "no data"}</div>
+        <span
+          className="text-red-500 hover:text-blue-500"
+          onClick={e => {
+            e.stopPropagation();
+            setHidden(!hidden);
+          }}
+        >
+          {"| HIDE UI |"}{" "}
+        </span>
         <button
           onClick={() => {
             logout();
@@ -832,15 +842,6 @@ const Home: NextPage = () => {
           mmToggle ? setMmToggle(false) : setMmToggle(true);
         }}
       >
-        <span
-          className="absolute right-5"
-          onClick={e => {
-            e.stopPropagation();
-            setHidden(!hidden);
-          }}
-        >
-          {"| X |"}{" "}
-        </span>
         <Image src="/logo.png" alt="Logo" fill />
       </div>
 
