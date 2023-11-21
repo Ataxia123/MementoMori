@@ -656,29 +656,18 @@ const Home: NextPage = () => {
     };
 
     return (
-      <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
-        FALLEN HEROES: {database?.length}
-        <br />
-        RESPECTS PAID: {respected?.length}
-        <br />
-        MOST RESPECTED 💀
-        {fInChat ? (
-          <AttestationCount id={fInChat.id} />
-        ) : (
-          <Slider {...settings}>
-            {respectedShuffle?.map((respected, index) => (
-              <div key={index} className="p-4">
-                <ul>
-                  IN MEMORIAM: {findDatabase(respected.hero)?.name}
-                  <li></li>
-                  <li className="overflow-Y-scroll">prayer: {respected.prayer}</li>
-                  <li className="overflow-hidden">From: {respected.Attestation.message.recipient}</li>
-                </ul>
-              </div>
-            ))}
-          </Slider>
-        )}
-      </div>
+      <Slider {...settings}>
+        {respectedShuffle?.map((respected, index) => (
+          <div key={index} className="p-4">
+            <ul>
+              IN MEMORIAM: {findDatabase(respected.hero)?.name}
+              <li></li>
+              <li className="overflow-Y-scroll">prayer: {respected.prayer}</li>
+              <li className="overflow-hidden">From: {respected.Attestation.message.recipient}</li>
+            </ul>
+          </div>
+        ))}
+      </Slider>
     );
   };
 
@@ -856,7 +845,14 @@ const Home: NextPage = () => {
       )}
 
       {/*login logo pulse portion and ? thing*/}
-      <MoriDisplay />
+      <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
+        FALLEN HEROES: {database?.length}
+        <br />
+        RESPECTS PAID: {respected?.length}
+        <br />
+        MOST RESPECTED 💀
+        {fInChat ? <AttestationCount id={fInChat.id} /> : <MoriDisplay />}
+      </div>
 
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
         {!address ? (
