@@ -659,9 +659,13 @@ const Home: NextPage = () => {
         {respectedShuffle?.map((respected, index) => (
           <div key={index} className="p-4">
             <ul>
-              <li>IN MEMORIAN: {findDatabase(respected.hero)?.name}</li>
-              <li className="overflow-Y-scroll">prayer: {respected.prayer}</li>
-              <li className="overflow-hidden">From: {respected.Attestation.message.recipient}</li>
+              IN MEMORIAN: <br />
+              <li className="font-mono-bold text-xl">{findDatabase(respected.hero)?.name}</li>
+              <li className="overflow-Y-scroll">
+                Prayer: <br />
+                {respected.prayer}
+              </li>
+              <li className="overflow-hidden">Signed: {respected.Attestation.message.recipient}</li>
             </ul>
           </div>
         ))}
