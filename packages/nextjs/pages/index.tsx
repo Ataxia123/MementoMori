@@ -533,8 +533,8 @@ const Home: NextPage = () => {
     return <div ref={componentRef}>Press F to pay Respects</div>;
   }
   // Fisher-Yates (Knuth) shuffle algorithm
-  function shuffle(array: Character[]) {
-    if (!database || !Array.isArray(array)) {
+  function shuffle(array: any[]) {
+    if (!Array.isArray(array)) {
       // Handle the case where the input is not an array
       console.error("shuffle function received a non-array input:", array);
       return [];
@@ -561,20 +561,20 @@ const Home: NextPage = () => {
     return (
       <>
         <div className="border-2 border-gray-500 card mt-4 ml-10 mr-10 text-center text-white font-mono text-xl">
-          <br />
-          <span className="font-bold text-2xl">{respected?.name}</span> <br />
-          <span className="font-bold">
-            Level {respected?.level} <span>{respected?.race}</span>
-            <span> {respected?.class}</span>{" "}
-          </span>
-          <br />
-          ---------------------
-          <br />
           <>
-            {!respected || respected.equipped_items.length > 0 ? (
-              <div>Missing Data</div>
+            {!respected || respected.equipped_items.length == 0 ? (
+              <div>{respected?.name} is Missing Data</div>
             ) : (
               <div>
+                <br />
+                <span className="font-bold text-2xl">{respected?.name}</span> <br />
+                <span className="font-bold">
+                  Level {respected?.level} <span>{respected?.race}</span>
+                  <span> {respected?.class}</span>{" "}
+                </span>
+                <br />
+                ---------------------
+                <br />
                 {respected?.equipped_items?.map((item: any) => (
                   <div key={item.slot.type}>
                     {item.quality.type == "POOR" ? (
@@ -615,6 +615,10 @@ const Home: NextPage = () => {
         <br />
       </>
     );
+  };
+
+  const MoriDisplay = (props: any) => {
+    const { respected } = props;
   };
 
   const CharacterDisplay = (props: any) => {
