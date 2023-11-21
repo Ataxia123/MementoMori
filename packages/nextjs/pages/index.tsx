@@ -617,8 +617,14 @@ const Home: NextPage = () => {
     );
   };
 
-  const MoriDisplay = (props: any) => {
-    const { respected } = props;
+  const MoriDisplay = () => {
+    return (
+      <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
+        FALLEN HEROES: {database?.length}
+        <br />
+        RESPECTS PAID: {respected?.length}
+      </div>
+    );
   };
 
   const CharacterDisplay = (props: any) => {
@@ -795,11 +801,8 @@ const Home: NextPage = () => {
       )}
 
       {/*login logo pulse portion and ? thing*/}
-      <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
-        FALLEN HEROES: {database?.length}
-        <br />
-        RESPECTS PAID: {respected?.length}
-      </div>
+      <MoriDisplay />
+
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
         {!address ? (
           <RainbowKitCustomConnectButton />
