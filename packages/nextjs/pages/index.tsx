@@ -638,7 +638,7 @@ const Home: NextPage = () => {
                   className="character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max"
                 >
                   <span
-                    className={"drop-shadow-2x " + playerColor(character)}
+                    className={playerColor(character)}
                     onClick={() => {
                       const frespected = database.filter(x => x.id === character.id);
                       setFinChat(frespected[0]);
