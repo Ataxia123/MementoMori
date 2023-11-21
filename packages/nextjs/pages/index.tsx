@@ -564,7 +564,7 @@ const Home: NextPage = () => {
           <>
             {" "}
             💀 Memento Mori 💀
-            {!respected || respected.equipped_items.lenght <= 1 ? (
+            {!respected || respected.equipped_items.length <= 1 ? (
               <div>{respected?.name} </div>
             ) : (
               <div>
