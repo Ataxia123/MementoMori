@@ -490,8 +490,7 @@ const Home: NextPage = () => {
     }
 
     // Add a class for the backdrop glow effect
-    classString +=
-      "drop-shadow-lg backdrop-filter backdrop-blur-sm text-opacity-100 z-100  hover:brightness-200 font-bold ";
+    classString += "backdrop-filter backdrop-blur-sm text-opacity-100 z-100  hover:brightness-200 font-bold ";
 
     return classString;
   };
