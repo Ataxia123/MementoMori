@@ -449,7 +449,7 @@ const Home: NextPage = () => {
   // Once the popup is closed
   //
   const playerColor = (character: Character) => {
-    let classString = "text-black font-bold "; // Default text color set to black
+    let classString = "font-mono text-black font-bold "; // Default text color set to black
 
     // Determine the text color based on the character's class
     if (character.class == "Druid") {
