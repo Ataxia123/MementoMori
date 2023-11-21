@@ -455,7 +455,7 @@ const Home: NextPage = () => {
     if (character.class == "Druid") {
       classString += "bg-orange-500/70 ";
     } else if (character.class == "Priest") {
-      classString += "bg-white-500/70 ";
+      classString += "bg-white/70 ";
     } else if (character.class == "Warlock") {
       classString += "bg-purple-500/70 ";
     } else if (character.class == "Warrior") {
@@ -628,7 +628,7 @@ const Home: NextPage = () => {
     }
 
     return (
-      <div className="sphere-container z-100">
+      <div className="sphere-container z-25">
         {rings.map((ring, ringIndex) => (
           <div key={ringIndex} className={`ring ring-${ringIndex}`}>
             {ring.map((character: Character) => (
@@ -656,7 +656,7 @@ const Home: NextPage = () => {
   };
   return (
     <>
-      <div className="fixed w-full h-full z-10">
+      <div className="fixed w-full h-full">
         <Image
           src="/mmoriball3.png"
           fill
@@ -683,7 +683,7 @@ const Home: NextPage = () => {
             object-fit="cover"
             style={{
               animation: "pulse 1s infinite alternate",
-              opacity: "0.65",
+              opacity: "0.75",
               position: "absolute",
               scale: "1.05",
               pointerEvents: "none",
@@ -703,7 +703,6 @@ const Home: NextPage = () => {
             }}
           />
         </div>
-        <div className="fixed z-150 border-gray-500 font-mono text-red p-4 w-40 h-40"></div>
       </div>
       {hidden == true ? (
         <></>
