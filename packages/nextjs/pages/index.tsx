@@ -562,7 +562,7 @@ const Home: NextPage = () => {
       <>
         <div className="border-2 border-gray-500 card mt-4 ml-10 mr-10 text-center text-white font-mono text-xl">
           <>
-            {!respected || respected.equipped_items.length == 0 ? (
+            {!respected || respected.equipped_items[0].slot.type ? (
               <div>{respected?.name} is Missing Data</div>
             ) : (
               <div>
