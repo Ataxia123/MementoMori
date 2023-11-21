@@ -46,6 +46,7 @@ const Home: NextPage = () => {
   const [fInChat, setRespected] = useState<Character>();
   const [prayer, setPrayer] = useState<string>("💀 Memento Mori 💀");
   const [isPayingRespects, setIsPayingRespects] = useState<boolean>(false);
+  const [hidden, setHidden] = useState<boolean>(false);
   // Renderer
   //
   //
@@ -676,70 +677,89 @@ const Home: NextPage = () => {
           />
         </div>
       </div>
-      {mmToggle == true ? (
-        <div className="flex flex-col items-center justify-center bg-transparent text-black pt-4 -mt-16">
-          <div style={{ zIndex: 10 }} className="text-center max-w-xl bg-transparent overflow-hidden rounded-md p-8">
-            {dead && dead.length > 0 ? (
-              <Slider {...settings}>
-                {dead.map((deadCharacter, index) => (
-                  <div key={index} className="p-4">
-                    {deadCharacter?.name == player?.name ? (
-                      <>
-                        <RespectedDisplay respected={player} />
-                      </>
-                    ) : (
-                      <div className="card mr-3 mt-4">
-                        <div className="font-mono text-xl">
-                          In Memoriam to: <br /> {deadCharacter.name}
-                        </div>
-                        <div>
-                          <br />
+      {hidden == true ? (
+        <>
+          <span className="absolute right-5" onClick={() => setHidden(!hidden)}>
+            {"| X |"}{" "}
+          </span>
+        </>
+      ) : (
+        <>
+          <span className="absolute right-5" onClick={() => setHidden(!hidden)}>
+            {"| X |"}{" "}
+          </span>
+          {mmToggle == true ? (
+            <div className="flex flex-col items-center justify-center bg-transparent text-black pt-4 -mt-16">
+              <div
+                style={{ zIndex: 10 }}
+                className="text-center max-w-xl bg-transparent overflow-hidden rounded-md p-8"
+              >
+                {dead && dead.length > 0 ? (
+                  <Slider {...settings}>
+                    {dead.map((deadCharacter, index) => (
+                      <div key={index} className="p-4">
+                        {deadCharacter?.name == player?.name ? (
+                          <>
+                            <RespectedDisplay respected={player} />
+                          </>
+                        ) : (
+                          <div className="card mr-3 mt-4">
+                            <div className="font-mono text-xl">
+                              In Memoriam to: <br /> {deadCharacter.name}
+                            </div>
+                            <div>
+                              <br />
 
-                          <button
-                            className="border-2 border-white text-center rounded-md p-2"
-                            onClick={() => playerSelector(index)}
-                          >
-                            Memento Mori
-                          </button>
-                          <br />
-                        </div>
+                              <button
+                                className="border-2 border-white text-center rounded-md p-2"
+                                onClick={() => playerSelector(index)}
+                              >
+                                Memento Mori
+                              </button>
+                              <br />
+                            </div>
+                          </div>
+                        )}
                       </div>
+                    ))}
+                  </Slider>
+                ) : (
+                  <div className="card mt-60 pr-2 z-50 font-mono">
+                    {!address ? (
+                      <RainbowKitCustomConnectButton />
+                    ) : (
+                      <>
+                        {!user ? (
+                          <button
+                            className="border-2 border-black rounded-md"
+                            onClick={() => {
+                              login();
+                            }}
+                          >
+                            LOGIN WITH BNET
+                          </button>
+                        ) : (
+                          <div>Logged in as {user.battletag}</div>
+                        )}
+                      </>
                     )}
                   </div>
-                ))}
-              </Slider>
-            ) : (
-              <div className="card mt-60 pr-2 z-50 font-mono">
-                {!address ? (
-                  <RainbowKitCustomConnectButton />
-                ) : (
-                  <>
-                    {!user ? (
-                      <button
-                        className="border-2 border-black rounded-md"
-                        onClick={() => {
-                          login();
-                        }}
-                      >
-                        LOGIN WITH BNET
-                      </button>
-                    ) : (
-                      <div>Logged in as {user.battletag}</div>
-                    )}
-                  </>
                 )}
-              </div>
-            )}
 
-            <br />
-          </div>
-        </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center bg-transparent text-black p-4 pt-4 -mt-16">
-          <div style={{ zIndex: 10 }} className="text-center max-w-xl bg-transparent overflow-hidden rounded-md p-8">
-            <RespectedDisplay respected={fInChat} />
-          </div>
-        </div>
+                <br />
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center bg-transparent text-black p-4 pt-4 -mt-16">
+              <div
+                style={{ zIndex: 10 }}
+                className="text-center max-w-xl bg-transparent overflow-hidden rounded-md p-8"
+              >
+                <RespectedDisplay respected={fInChat} />
+              </div>
+            </div>
+          )}{" "}
+        </>
       )}
 
       {/*login logo pulse portion and ? thing*/}
@@ -778,7 +798,14 @@ const Home: NextPage = () => {
         </div>
         <form>
           <label className={"bg-transparent text-black"}>
-            <input type="text" value={prayer} onChange={e => setPrayer(e.target.value)} />
+            <input
+              type="text"
+              value={prayer}
+              onChange={e => {
+                e.stopPropagation();
+                setPrayer(e.target.value);
+              }}
+            />
           </label>
 
           <input
