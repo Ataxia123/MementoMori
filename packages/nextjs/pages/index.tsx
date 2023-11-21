@@ -490,7 +490,7 @@ const Home: NextPage = () => {
     }
 
     // Add a class for the backdrop glow effect
-    classString += "backdrop-filter backdrop-blur-sm";
+    classString += "backdrop-filter backdrop-blur-xl ";
 
     return classString;
   };
