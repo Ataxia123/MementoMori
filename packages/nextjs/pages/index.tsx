@@ -43,10 +43,11 @@ const Home: NextPage = () => {
   const [mmToggle, setMmToggle] = useState<boolean>(false);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
-  const [fInChat, setRespected] = useState<Character>();
+  const [fInChat, setFinChat] = useState<Character>();
   const [prayer, setPrayer] = useState<string>("💀 Memento Mori 💀");
   const [isPayingRespects, setIsPayingRespects] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
+  const [respected, setRespected] = useState<any[]>();
   // Renderer
   //
   //
@@ -125,6 +126,7 @@ const Home: NextPage = () => {
       const data = await response.json();
       console.log(data, "Player data from DB");
       setDatabase(data.players);
+      setRespected(data.respects);
     } catch (e: any) {
       toast.error("error posting dead players to db");
       console.log(e.message);
@@ -614,7 +616,7 @@ const Home: NextPage = () => {
                     className={playerColor(character)}
                     onClick={() => {
                       const frespected = database.filter(x => x.id === character.id);
-                      setRespected(frespected[0]);
+                      setFinChat(frespected[0]);
                     }}
                   >
                     {character.name} <br />
@@ -629,7 +631,7 @@ const Home: NextPage = () => {
   };
   return (
     <>
-      <div className="fixed w-full h-full">
+      <div className="fixed w-full h-full z-10">
         <Image
           src="/mmoriball3.png"
           fill
@@ -637,7 +639,7 @@ const Home: NextPage = () => {
           className="-mt-12 transform -translate-y-1/6 scale-75 scale-y-125 scale-x-90"
         />
         <div
-          className="overflow-hidden rounded-full fixed h-1/2 w-1/4 top-2 left-1/2 transform scale-150 -translate-x-1/2 translate-y-1/3 z-10 shadow-xl shadow-black"
+          className="fixed overflow-hidden rounded-full fixed h-1/2 w-1/4 top-2 left-1/2 transform scale-150 -translate-x-1/2 translate-y-1/3 shadow-xl shadow-black"
           style={{
             opacity: "1",
             scale: "1",
@@ -656,10 +658,10 @@ const Home: NextPage = () => {
             object-fit="cover"
             style={{
               animation: "pulse 1s infinite alternate",
-              zIndex: -1,
-              opacity: "0.75",
+              opacity: "0.15",
               position: "absolute",
               scale: "1.05",
+              pointerEvents: "none",
             }}
           />
           <Image
@@ -760,6 +762,11 @@ const Home: NextPage = () => {
       )}
 
       {/*login logo pulse portion and ? thing*/}
+      <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
+        FALLEN HEROES: {players?.length}
+        <br />
+        RESPECTS PAID: {respected?.length}
+      </div>
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
         {!address ? (
           <RainbowKitCustomConnectButton />

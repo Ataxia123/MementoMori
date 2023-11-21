@@ -50,6 +50,13 @@ export const Footer = () => {
                 style={{ pointerEvents: "none", objectFit: "cover", overflow: "visible" }}
               />
             </div>
+            <Image
+              src="/mmoriflame.gif"
+              alt="Logo"
+              width={800}
+              height={1000}
+              className="fixed pointer-events-none right-1/3 -mr-16 top-0 bottom-10 z-1 opacity-10"
+            />
           </div>
         </div>
 
