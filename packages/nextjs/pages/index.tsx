@@ -846,7 +846,7 @@ const Home: NextPage = () => {
         RESPECTS PAID: {respected?.length}
         <br />
         MOST RESPECTED 💀
-        <>{fInChat ? <AttestationCount /> : <MoriDisplay />}</>
+        <MoriDisplay />
       </div>
 
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
