@@ -18,11 +18,17 @@ export const Footer = () => {
   const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrencyPrice);
   const isLocalNetwork = getTargetNetwork().id === hardhat.id;
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const playSound = () => {
+  const toggleSound = () => {
     const audio = audioRef.current;
-    if (audio && audio.paused) {
-      audio.play();
+    if (audio) {
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      setIsPlaying(!isPlaying);
     }
   };
 
@@ -59,19 +65,21 @@ export const Footer = () => {
                 style={{ pointerEvents: "none", objectFit: "cover", overflow: "visible" }}
               />
             </div>
-            {/* Hidden Soundtrack Player */}
-            <audio ref={audioRef} style={{ display: "none" }}>
-              <source src="/firesound.mp4" type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
+
             <Image
               src="/mmoriflame.gif"
               alt="Logo"
               width={800}
               height={1000}
               className="fixed pointer-events-none brightness-50 right-1/3 -mr-16 top-0 bottom-10 z-1 opacity-20"
-              onClick={playSound}
+              onClick={toggleSound}
+              style={{ pointerEvents: "auto" }}
             />
+            {/* Hidden Looping Soundtrack Player */}
+            <audio ref={audioRef} style={{ display: "none" }} loop>
+              <source src="/firesound.mp4" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
           </div>
         </div>
 
