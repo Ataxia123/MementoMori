@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { hardhat } from "viem/chains";
@@ -13,9 +13,18 @@ import { getTargetNetwork } from "~~/utils/scaffold-eth";
 /**
  * Site footer
  */
+
 export const Footer = () => {
   const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrencyPrice);
   const isLocalNetwork = getTargetNetwork().id === hardhat.id;
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const playSound = () => {
+    const audio = audioRef.current;
+    if (audio && audio.paused) {
+      audio.play();
+    }
+  };
 
   return (
     <>
@@ -50,12 +59,18 @@ export const Footer = () => {
                 style={{ pointerEvents: "none", objectFit: "cover", overflow: "visible" }}
               />
             </div>
+            {/* Hidden Soundtrack Player */}
+            <audio ref={audioRef} style={{ display: "none" }}>
+              <source src="/firesound.mp4" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
             <Image
               src="/mmoriflame.gif"
               alt="Logo"
               width={800}
               height={1000}
               className="fixed pointer-events-none brightness-50 right-1/3 -mr-16 top-0 bottom-10 z-1 opacity-20"
+              onClick={playSound}
             />
           </div>
         </div>
