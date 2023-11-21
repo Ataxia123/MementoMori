@@ -453,23 +453,23 @@ const Home: NextPage = () => {
 
     // Determine the text color based on the character's class
     if (character.class == "Druid") {
-      classString += "bg-yellow-500/50 ";
+      classString += "bg-orange-500/50 ";
     } else if (character.class == "Priest") {
-      classString += "bg-yellow-500/50 ";
+      classString += "bg-white-500/50 ";
     } else if (character.class == "Warlock") {
-      classString += "bg-yellow-500/50 ";
+      classString += "bg-purple-500/50 ";
     } else if (character.class == "Warrior") {
-      classString += "bg-yellow-500/50 ";
+      classString += "bg-orange-900/50 ";
     } else if (character.class == "Paladin") {
-      classString += "bg-yellow-500/50 ";
+      classString += "bg-pink-500/50 ";
     } else if (character.class == "Rogue") {
       classString += "bg-yellow-500/50 ";
     } else if (character.class == "Mage") {
-      classString += "bg-yellow-500/50 ";
+      classString += "bg-blue-50/50 ";
     } else if (character.class == "Shaman") {
-      classString += "bg-yellow-500/50 ";
+      classString += "bg-blue-500/50 ";
     } else {
-      classString += "bg-yellow-500/50 ";
+      classString += "bg-green-500/50 ";
     }
 
     // Determine the font size based on the character's level
