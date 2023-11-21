@@ -847,6 +847,15 @@ const Home: NextPage = () => {
         <br />
         MOST RESPECTED 💀
         <MoriDisplay />
+        <button
+          className="text-red-500 hover:text-blue-500"
+          onClick={e => {
+            e.stopPropagation();
+            setHidden(!hidden);
+          }}
+        >
+          {"| HIDE UI |"}{" "}
+        </button>
       </div>
 
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
@@ -897,15 +906,6 @@ const Home: NextPage = () => {
           <span>Address: {address?.slice(address.length - 5) || "no data"}</span> <br />
           <span>User: {user ? user.battletag : "no data"}</span>
           <br />
-          <button
-            className="text-red-500 hover:text-blue-500"
-            onClick={e => {
-              e.stopPropagation();
-              setHidden(!hidden);
-            }}
-          >
-            {"| HIDE UI |"}{" "}
-          </button>
           <br />
           {!user ? (
             <button
