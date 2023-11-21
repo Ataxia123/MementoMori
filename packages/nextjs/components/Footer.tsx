@@ -55,7 +55,7 @@ export const Footer = () => {
               alt="Logo"
               width={800}
               height={1000}
-              className="fixed pointer-events-none right-1/3 -mr-16 top-0 bottom-10 z-1 opacity-20"
+              className="fixed pointer-events-none brightness-50 right-1/3 -mr-16 top-0 bottom-10 z-1 opacity-20"
             />
           </div>
         </div>

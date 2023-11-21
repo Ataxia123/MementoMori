@@ -449,7 +449,7 @@ const Home: NextPage = () => {
   // Once the popup is closed
   //
   const playerColor = (character: Character) => {
-    let classString = "text-black "; // Default text color set to black
+    let classString = "text-black font-black"; // Default text color set to black
 
     // Determine the text color based on the character's class
     if (character.class == "Druid") {
@@ -490,7 +490,7 @@ const Home: NextPage = () => {
     }
 
     // Add a class for the backdrop glow effect
-    classString += "backdrop-filter backdrop-blur-sm backdrop-brightness-200";
+    classString += "backdrop-filter backdrop-blur-xl";
 
     return classString;
   };
