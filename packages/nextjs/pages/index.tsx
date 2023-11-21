@@ -669,7 +669,7 @@ const Home: NextPage = () => {
             {respectedShuffle?.map((respected, index) => (
               <div key={index} className="p-4">
                 <ul>
-                  IN MEMORIAM: {findDatabase(respected.id)?.name}
+                  IN MEMORIAM: {findDatabase(respected.hero)?.name}
                   <li></li>
                   <li className="overflow-Y-scroll">prayer: {respected.prayer}</li>
                   <li className="overflow-hidden">From: {respected.Attestation.message.recipient}</li>
