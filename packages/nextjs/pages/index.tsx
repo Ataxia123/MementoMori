@@ -628,7 +628,7 @@ const Home: NextPage = () => {
     }
 
     return (
-      <div className="sphere-container z-25">
+      <div className="sphere-container">
         {rings.map((ring, ringIndex) => (
           <div key={ringIndex} className={`ring ring-${ringIndex}`}>
             {ring.map((character: Character) => (
@@ -674,8 +674,6 @@ const Home: NextPage = () => {
             backgroundPosition: "center",
           }}
         >
-          <CharacterDisplay players={database} />
-
           <Image
             src="/mmoriball2.png"
             fill
@@ -689,6 +687,7 @@ const Home: NextPage = () => {
               pointerEvents: "none",
             }}
           />
+          <CharacterDisplay players={database} />
           <Image
             src="/mmoriball2.png"
             fill
