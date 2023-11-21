@@ -767,9 +767,6 @@ const Home: NextPage = () => {
         <></>
       ) : (
         <>
-          <span className="absolute right-5" onClick={() => setHidden(!hidden)}>
-            {"| X |"}{" "}
-          </span>
           {mmToggle == true ? (
             <div className="flex flex-col items-center justify-center bg-transparent text-black pt-4 -mt-16">
               <div
@@ -787,7 +784,7 @@ const Home: NextPage = () => {
                         ) : (
                           <div className="card mr-3 mt-4">
                             <div className="font-mono text-xl">
-                              In Memoriam to: <br /> {deadCharacter.name}
+                              In Memorian of: <br /> {deadCharacter.name}
                             </div>
                             <div>
                               <br />
@@ -851,7 +848,7 @@ const Home: NextPage = () => {
         RESPECTS PAID: {respected?.length}
         <br />
         MOST RESPECTED 💀
-        {fInChat ? <AttestationCount id={fInChat.id} /> : <MoriDisplay />}
+        <>{fInChat ? <AttestationCount id={fInChat.id} /> : <MoriDisplay />}</>
       </div>
 
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
@@ -865,7 +862,7 @@ const Home: NextPage = () => {
                 <>SELECT A HERO</>
               ) : (
                 <div className="font-mono text-xl">
-                  In Memoriam of: <br /> <span className="font-bold">{fInChat?.name}</span>
+                  In Memorian of: <br /> <span className="font-bold">{fInChat?.name}</span>
                   <div>
                     <br />
                     <form>
