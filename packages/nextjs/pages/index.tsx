@@ -558,7 +558,7 @@ const Home: NextPage = () => {
   const RespectedDisplay = (props: any) => {
     const { respected } = props;
 
-    if (!respected.equipped_items) return <></>;
+    if (respected && !respected.equipped_items) return <></>;
 
     return (
       <>
