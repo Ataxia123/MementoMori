@@ -658,7 +658,7 @@ const Home: NextPage = () => {
             object-fit="cover"
             style={{
               animation: "pulse 1s infinite alternate",
-              opacity: "0.15",
+              opacity: "0.65",
               position: "absolute",
               scale: "1.05",
               pointerEvents: "none",
