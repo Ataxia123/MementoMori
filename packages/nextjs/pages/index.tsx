@@ -885,7 +885,13 @@ const Home: NextPage = () => {
             setHidden(!hidden);
           }}
         >
-          <ToggleSound />
+          <button onClick={() => ToggleSound()}>
+            SOUND OFF
+            <audio ref={audioRef} style={{ display: "none" }} loop>
+              <source src="/firesound.mp4" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </button>
           {"| HIDE UI |"}{" "}
         </button>
       </div>
