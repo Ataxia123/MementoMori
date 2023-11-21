@@ -852,7 +852,7 @@ const Home: NextPage = () => {
       </div>
 
       {infoToggle == true ? (
-        <div className="fixed z-50 border-gray-500 font-mono p-4 w-40 h-40 left-96 mr-60 top-96">
+        <div className="fixed z-50 border-gray-500 right-12 mr-12 mt-10 bottom-4/5 scale-50">
           <div
             className="animate-bounce absolute right-20 -left-6 h-80 w-60 scale-x-110 scale-y-110"
             onClick={() => setInfoToggle(!infoToggle)}
