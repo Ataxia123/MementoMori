@@ -620,7 +620,7 @@ const Home: NextPage = () => {
   };
   const AttestationCount = (props: any) => {
     const { id } = props;
-    if (!respected) return 0;
+    if (!respected) return <>No Respected</>;
     const f = respected.filter(x => x.id === id);
     const count = f.length;
     // const sorted = f.sort((a, b) => attestationCount(b.id) - attestationCount(a.id));
