@@ -571,7 +571,7 @@ const Home: NextPage = () => {
           ---------------------
           <br />
           <>
-            {!respected || respected.equipped_items.length() > 0 ? (
+            {!respected || respected.equipped_items.length > 0 ? (
               <div>Missing Data</div>
             ) : (
               <div>
