@@ -678,11 +678,7 @@ const Home: NextPage = () => {
         </div>
       </div>
       {hidden == true ? (
-        <>
-          <span className="absolute right-5" onClick={() => setHidden(!hidden)}>
-            {"| X |"}{" "}
-          </span>
-        </>
+        <></>
       ) : (
         <>
           <span className="absolute right-5" onClick={() => setHidden(!hidden)}>
@@ -836,6 +832,9 @@ const Home: NextPage = () => {
           mmToggle ? setMmToggle(false) : setMmToggle(true);
         }}
       >
+        <span className="absolute right-5" onClick={() => setHidden(!hidden)}>
+          {"| X |"}{" "}
+        </span>
         <Image src="/logo.png" alt="Logo" fill />
       </div>
 
