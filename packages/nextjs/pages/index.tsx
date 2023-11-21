@@ -771,7 +771,7 @@ const Home: NextPage = () => {
                 <>SELECT A HERO</>
               ) : (
                 <div className="font-mono text-xl">
-                  In Memoriam of: <br /> {fInChat?.name}
+                  In Memoriam of: <br /> <span className="text-bold">{fInChat?.name}</span>
                   <div>
                     <br />
                     <form>
