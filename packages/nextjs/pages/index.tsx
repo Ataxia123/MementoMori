@@ -48,9 +48,30 @@ const Home: NextPage = () => {
   const [isPayingRespects, setIsPayingRespects] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
   const [respected, setRespected] = useState<any[]>();
-  // Renderer
-  //
-  //
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const ToggleSound = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+
+    return (
+      <>
+        SOUND OFF
+        <audio ref={audioRef} style={{ display: "none" }} loop>
+          <source src="/firesound.mp4" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+      </>
+    );
+  };
 
   const provider = useEthersProvider();
 
@@ -412,6 +433,11 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     fetchDb();
+    // Setting the initial volume to 50%
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = 0.05;
+    }
   }, []);
 
   useEffect(() => {
@@ -859,6 +885,7 @@ const Home: NextPage = () => {
             setHidden(!hidden);
           }}
         >
+          <ToggleSound />
           {"| HIDE UI |"}{" "}
         </button>
       </div>

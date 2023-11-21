@@ -30,13 +30,23 @@ export const Footer = () => {
       }
       setIsPlaying(!isPlaying);
     }
+
+    return (
+      <>
+        SOUND OFF
+        <audio ref={audioRef} style={{ display: "none" }} loop>
+          <source src="/firesound.mp4" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+      </>
+    );
   };
 
   useEffect(() => {
     // Setting the initial volume to 50%
     const audio = audioRef.current;
     if (audio) {
-      audio.volume = 0.25;
+      audio.volume = 0.05;
     }
   }, []);
 
@@ -83,11 +93,6 @@ export const Footer = () => {
               onClick={toggleSound}
               style={{ pointerEvents: "auto" }}
             />
-            {/* Hidden Looping Soundtrack Player */}
-            <audio ref={audioRef} style={{ display: "none" }} loop>
-              <source src="/firesound.mp4" type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
           </div>
         </div>
 
