@@ -765,75 +765,81 @@ const Home: NextPage = () => {
           <RainbowKitCustomConnectButton />
         ) : (
           <>
-            {!user ? (
-              <button
-                className="border-2 border-black rounded-md"
-                onClick={() => {
-                  login();
-                }}
-              >
-                LOGIN WITH BNET
-              </button>
-            ) : (
-              <div>Logged in as {user.battletag}</div>
-            )}
+            💀 Memento Mori 💀
+            <div className="card mr-3 mt-4">
+              {!fInChat ? (
+                <>SELECT A HERO</>
+              ) : (
+                <div className="font-mono text-xl">
+                  In Memoriam of: <br /> {fInChat?.name}
+                  <div>
+                    <br />
+                    <form>
+                      <label className={"text-black"}>
+                        <input
+                          type="text"
+                          value={prayer}
+                          onChange={e => {
+                            e.stopPropagation();
+                            setPrayer(e.target.value);
+                          }}
+                        />
+                      </label>
+                      <br />
+                      <br />
+                      <button
+                        className="border-2 border-white text-center rounded-md p-2"
+                        onClick={e => {
+                          e.preventDefault();
+                          if (!fInChat) return;
+                          pressFtoPayRespects(fInChat, prayer);
+                        }}
+                      >
+                        <FsInChat />
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              )}
+            </div>
           </>
         )}
-        <div className="card mr-3 mt-4">
-          <div className="font-mono text-xl">
-            In Memoriam of: <br /> {fInChat?.name}
-          </div>
-          <div>
-            <br />
-
-            <button
-              className="border-2 border-white text-center rounded-md p-2"
-              onClick={() => console.log("clicked")}
-            ></button>
-            <br />
-          </div>
-        </div>
-        <form>
-          <label className={"bg-transparent text-black"}>
-            <input
-              type="text"
-              value={prayer}
-              onChange={e => {
-                e.stopPropagation();
-                setPrayer(e.target.value);
-              }}
-            />
-          </label>
-
-          <input
-            value="RIP"
+        <div className="ml-20 p-6 justify-items-center">
+          <span>Address: {address?.slice(address.length - 5) || "no data"}</span> <br />
+          <span>User: {user ? user.battletag : "no data"}</span>
+          <br />
+          <button
+            className="text-red-500 hover:text-blue-500"
             onClick={e => {
-              e.preventDefault();
-              if (!fInChat) return;
-              pressFtoPayRespects(fInChat, prayer);
+              e.stopPropagation();
+              setHidden(!hidden);
             }}
-          />
-          <FsInChat />
-        </form>
-        <div>Address: {address || "no data"}</div>
-        <div>User: {user ? user.battletag : "no data"}</div>
-        <span
-          className="text-red-500 hover:text-blue-500"
-          onClick={e => {
-            e.stopPropagation();
-            setHidden(!hidden);
-          }}
-        >
-          {"| HIDE UI |"}{" "}
-        </span>
-        <button
-          onClick={() => {
-            logout();
-            toast.success("Successfully logged out");
-          }}
-        >
-          Logout
-        </button>
+          >
+            {"| HIDE UI |"}{" "}
+          </button>
+          <br />
+          {!user ? (
+            <button
+              className="border-2 border-black rounded-md"
+              onClick={() => {
+                login();
+              }}
+            >
+              LOGIN WITH BNET
+            </button>
+          ) : (
+            <div>
+              <button
+                onClick={() => {
+                  logout();
+                  toast.success("Successfully logged out");
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       <div
