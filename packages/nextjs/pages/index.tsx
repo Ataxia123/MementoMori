@@ -647,6 +647,7 @@ const Home: NextPage = () => {
     const respectedShuffle = shuffle(respected);
     const findDatabase = (id: number) => {
       const f = database.filter(x => x.id === id);
+      console.log(f[0], "f");
       return f[0];
     };
 
