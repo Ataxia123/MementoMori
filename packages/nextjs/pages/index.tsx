@@ -788,7 +788,7 @@ const Home: NextPage = () => {
 
       {/*login logo pulse portion and ? thing*/}
       <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
-        FALLEN HEROES: {players?.length}
+        FALLEN HEROES: {database?.length}
         <br />
         RESPECTS PAID: {respected?.length}
       </div>
