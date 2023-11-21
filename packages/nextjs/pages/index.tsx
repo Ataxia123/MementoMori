@@ -851,6 +851,7 @@ const Home: NextPage = () => {
         <br />
         MOST RESPECTED 💀
         <MoriDisplay />
+        <br />
         <button
           className="text-red-500 hover:text-blue-500"
           onClick={e => {
