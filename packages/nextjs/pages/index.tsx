@@ -980,7 +980,7 @@ const Home: NextPage = () => {
       </div>
 
       <div
-        className="fixed top-2/3 left-1/2 w-1/4 h-1/3 z-50 transform -translate-x-1/2 scale-105 hover:scale-110"
+        className="fixed -mt-10 top-2/3 left-1/2 w-1/4 h-1/3 z-50 transform -translate-x-1/2 scale-100 hover:scale-105"
         onClick={() => {
           mmToggle ? setMmToggle(false) : setMmToggle(true);
         }}
