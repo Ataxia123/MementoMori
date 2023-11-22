@@ -999,7 +999,7 @@ const Home: NextPage = () => {
         </div>
       ) : (
         <div className="fixed z-50 bg-black border-2  border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20">
-          {"| X |"} 💀 Memento Mori 💀
+          💀 Memento Mori 💀
           <br />
           <br />
           {tutoggle == true ? (
