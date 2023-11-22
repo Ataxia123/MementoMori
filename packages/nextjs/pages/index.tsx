@@ -998,19 +998,18 @@ const Home: NextPage = () => {
           </div>
         </div>
       ) : (
-        <div
-          className="fixed z-50 bg-black border-2  border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20"
-          onClick={e => {
-            e.stopPropagation();
-            playSpaceshipOn();
-            setTutoggle(!tutoggle);
-          }}
-        >
+        <div className="fixed z-50 bg-black border-2  border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20">
           {"| X |"} 💀 Memento Mori 💀
           <br />
           <br />
           {tutoggle == true ? (
-            <>
+            <div
+              onClick={e => {
+                e.stopPropagation();
+                playSpaceshipOn();
+                setTutoggle(!tutoggle);
+              }}
+            >
               Once upon a time, in a distant digital universe, countless adventurers thrived. They faced endless battles
               and overcame numerous dangers until they each met their inevitable end. <br /> <br />
               Just like in our reality, death is irreversible. However, the actions of these heroes leave lasting marks
@@ -1055,7 +1054,7 @@ const Home: NextPage = () => {
               <br />
               Made with {"<3"} by At0x.eth and the NERDS
               <br />
-            </>
+            </div>
           ) : (
             <div
               className="p-40 text-center"
