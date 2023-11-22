@@ -57,7 +57,7 @@ const Home: NextPage = () => {
   const [soundsLoaded, setSoundsLoaded] = useState<boolean>(false);
 
   const loadSounds = useCallback(async () => {
-    const spaceshipOn = await audioController?.loadSound("/firesound.mp4");
+    const spaceshipOn = await audioController?.loadSound("/firesound.wav");
 
     if (spaceshipOn) {
       audioController?.playSound(spaceshipOn, true, 0.02);
