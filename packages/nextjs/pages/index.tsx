@@ -16,6 +16,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { useAccount } from "wagmi";
+import AudioController from "~~/components/AudioController";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 
 type Character = {
@@ -49,10 +50,29 @@ const Home: NextPage = () => {
   const [hidden, setHidden] = useState<boolean>(false);
   const [respected, setRespected] = useState<any[]>();
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const audio = audioRef.current;
 
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = 0.25;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch(error => {
+            console.log("Auto-play was prevented");
+            setIsPlaying(false);
+          });
+      }
+    }
+  }, []);
+
   const ToggleSound = () => {
+    const audio = audioRef.current;
     if (audio) {
       if (isPlaying) {
         audio.pause();
@@ -984,6 +1004,7 @@ const Home: NextPage = () => {
             onClick={e => {
               e.stopPropagation();
               setInfoToggle(!infoToggle);
+              ToggleSound();
             }}
           >
             {"| X |"}{" "}
