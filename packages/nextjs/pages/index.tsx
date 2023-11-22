@@ -92,6 +92,12 @@ const Home: NextPage = () => {
     }
   }, [sounds.spaceshipOn]);
 
+  function playSpaceshipOn() {
+    if (sounds.spaceshipOn) {
+      audioController?.playSound(sounds.spaceshipOn, true, 0.02);
+    }
+  }
+
   const EASContractAddress = "0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587"; //
   const url = process.env.NEXT_PUBLIC_WEBSITE || "http://localhost:3000";
   // Initialize the sdk with the address of the EAS Schema contract address
@@ -448,6 +454,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     fetchDb();
+    playSpaceshipOn();
     // Setting the initial volume to 50%
   }, []);
 
