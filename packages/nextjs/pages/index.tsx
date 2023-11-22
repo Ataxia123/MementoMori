@@ -769,7 +769,7 @@ const Home: NextPage = () => {
           className="-mt-12 transform -translate-y-1/6 scale-75 scale-y-125 scale-x-90"
         />
         <div
-          className="fixed overflow-hidden rounded-full fixed h-1/2 w-1/4 top-2 left-1/2 transform scale-150 -translate-x-1/2 translate-y-1/3 shadow-xl shadow-black"
+          className="fixed overflow-hidden rounded-full fixed h-1/2 w-1/4 top-2 left-1/2 transform transform scale-150 -translate-x-1/2 translate-y-1/3 shadow-xl shadow-black"
           style={{
             opacity: "1",
             scale: "1",
@@ -1021,38 +1021,6 @@ const Home: NextPage = () => {
               time of death and stores it for use throughout the Metaverse. Stats, images, and other functionality are
               intentionally omitted for others to interpret. Feel free to use MementoMori in any way you want.
               <br />
-              <br />
-              Connect with us: <br />
-              <span className="text-blue-500">
-                {" "}
-                <a href="https://discord.gg/yGuUY8ZsFr" target="_blank" rel="noreferrer">
-                  Discord
-                </a>
-              </span>
-              <br />
-              <span className="text-blue-500">
-                {" "}
-                <a href="https://t.me/+N_-pUunbjHw3Y2Vh" target="_blank" rel="noreferrer">
-                  Telegram
-                </a>
-              </span>
-              <br />
-              <span className="text-blue-500">
-                {" "}
-                <a href="https://twitter.com/MMoriOnChain" target="_blank" rel="noreferrer">
-                  Twitter
-                </a>
-              </span>
-              <br />
-              <span className="text-blue-500">
-                {" "}
-                <a href="https://github.com/Ataxia123/MementoMori" target="_blank" rel="noreferrer">
-                  Github
-                </a>
-              </span>
-              <br />
-              <br />
-              Made with {"<3"} by At0x.eth and the NERDS
               <br />
             </div>
           ) : (

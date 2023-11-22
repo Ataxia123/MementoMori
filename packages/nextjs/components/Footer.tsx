@@ -1,105 +1,48 @@
-import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { hardhat } from "viem/chains";
-import { CurrencyDollarIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { HeartIcon } from "@heroicons/react/24/outline";
-import { SwitchTheme } from "~~/components/SwitchTheme";
-import { BuidlGuidlLogo } from "~~/components/assets/BuidlGuidlLogo";
-import { Faucet } from "~~/components/scaffold-eth";
-import { useGlobalState } from "~~/services/store/store";
-import { getTargetNetwork } from "~~/utils/scaffold-eth";
-
-/**
- * Site footer
- */
 
 export const Footer = () => {
-  const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrencyPrice);
-  const isLocalNetwork = getTargetNetwork().id === hardhat.id;
-
   return (
-    <>
-      <div className="min-h-0 py-5 px-1 mb-11 lg:mb-0 bg-transparent">
-        <div>
-          <div className="fixed flex justify-between items-center w-full z-10 p-4 bottom-0 left-0 pointer-events-none">
-            <div className="flex flex-col md:flex-row gap-2 pointer-events-auto">
-              {nativeCurrencyPrice > 0 && (
-                <div>
-                  <div className="btn btn-primary btn-sm font-normal normal-case gap-1 cursor-auto">
-                    <CurrencyDollarIcon className="h-4 w-4" />
-                    <span>{nativeCurrencyPrice}</span>
-                  </div>
-                </div>
-              )}
-              {isLocalNetwork && (
-                <>
-                  <Faucet />
-                  <Link href="/blockexplorer" passHref className="btn btn-primary btn-sm font-normal normal-case gap-1">
-                    <MagnifyingGlassIcon className="h-4 w-4" />
-                    <span>Block Explorer</span>
-                  </Link>
-                </>
-              )}
-            </div>
-            <SwitchTheme className={`pointer-events-auto ${isLocalNetwork ? "self-end md:self-auto" : ""}`} />
-            <div className="pointer-events-none fixed top-1/4  left-0 w-full h-1/2 z-50">
-              <Image
-                src="/femock33.png"
-                fill
-                alt="footer"
-                style={{ pointerEvents: "none", objectFit: "cover", overflow: "visible" }}
-              />
-            </div>
+    <div className="fixed flex items-center w-full h-1/4 z-10 p-4 bottom-1/3 left-0 pointer-events-none">
+      <Image
+        src="/femock33.png"
+        fill
+        alt="footer"
+        style={{ pointerEvents: "none", objectFit: "cover", overflow: "visible" }}
+      />
 
-            <Image
-              src="/mmoriflame.gif"
-              alt="Logo"
-              width={800}
-              height={1000}
-              className="fixed pointer-events-none brightness-50 right-1/3 -mr-16 top-0 bottom-10 z-1 opacity-20"
-            />
-          </div>
-        </div>
-
-        <div className="w-full">
-          <ul className="menu menu-horizontal w-full">
-            <div className="flex justify-center items-center gap-2 text-sm w-full">
-              <div className="text-center">
-                <a href="https://github.com/scaffold-eth/se-2" target="_blank" rel="noreferrer" className="link">
-                  Fork me
-                </a>
-              </div>
-              <span>·</span>
-              <div className="flex justify-center items-center gap-2">
-                <p className="m-0 text-center">
-                  Built with <HeartIcon className="inline-block h-4 w-4" /> at
-                </p>
-                <a
-                  className="flex justify-center items-center gap-1"
-                  href="https://buidlguidl.com/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <BuidlGuidlLogo className="w-3 h-5 pb-1" />
-                  <span className="link">BuidlGuidl</span>
-                </a>
-              </div>
-              <span>·</span>
-              <div className="text-center">
-                <a
-                  href="https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="link"
-                >
-                  Support
-                </a>
-              </div>
-            </div>
-          </ul>
-        </div>
+      <div className="fixed items-center justify-center w-full h-1 z-200 left-0 -bottom-10  text-center text-white pointer-events-auto">
+        Connect with us:
+        <span className="text-blue-500">
+          {" "}
+          <a href="https://discord.gg/yGuUY8ZsFr" target="_blank" rel="noreferrer">
+            Discord
+          </a>
+        </span>
+        <span className="text-blue-500">
+          {" "}
+          <a href="https://t.me/+N_-pUunbjHw3Y2Vh" target="_blank" rel="noreferrer">
+            Telegram
+          </a>
+        </span>
+        <span className="text-blue-500">
+          {" "}
+          <a href="https://twitter.com/MMoriOnChain" target="_blank" rel="noreferrer">
+            Twitter
+          </a>
+        </span>
+        <span className="text-blue-500">
+          {" "}
+          <a href="https://github.com/Ataxia123/MementoMori" target="_blank" rel="noreferrer">
+            Github
+          </a>
+        </span>
+        Made with {"<3"} by At0x.eth and the NERDS
+        <br />
       </div>
-    </>
+
+      <div className=" pointer-events-none fixed overflow-hidden rounded-full fixed h-2/3 w-1/3 top-1/4 -mt-40 right-1/3 scale-125 shadow-xl shadow-black">
+        <Image src="/mmoriflame.gif" alt="Logo" fill className="  brightness-50 opacity-25" />
+      </div>
+    </div>
   );
 };
