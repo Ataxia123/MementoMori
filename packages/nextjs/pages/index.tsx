@@ -50,9 +50,9 @@ const Home: NextPage = () => {
   const [respected, setRespected] = useState<any[]>();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const audio = audioRef.current;
 
   const ToggleSound = () => {
-    const audio = audioRef.current;
     if (audio) {
       if (isPlaying) {
         audio.pause();
@@ -61,16 +61,6 @@ const Home: NextPage = () => {
       }
       setIsPlaying(!isPlaying);
     }
-
-    return (
-      <>
-        SOUND OFF
-        <audio ref={audioRef} style={{ display: "none" }} loop>
-          <source src="/firesound.mp4" type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
-      </>
-    );
   };
 
   const provider = useEthersProvider();
