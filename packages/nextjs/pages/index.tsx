@@ -998,8 +998,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       ) : (
-        <div className="fixed z-50 bg-black border-2  border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20">
-          💀 Memento Mori 💀
+        <div className="fixed z-50 bg-black border-2 text-center border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20">
           <br />
           <br />
           {tutoggle == true ? (
@@ -1013,21 +1012,31 @@ const Home: NextPage = () => {
               Once upon a time, in a distant digital universe, countless adventurers thrived. They faced endless battles
               and overcame numerous dangers until they each met their inevitable end. <br /> <br />
               Just like in our reality, death is irreversible. However, the actions of these heroes leave lasting marks
-              that resonate beyond their lifespan and reverberate throughout the Multiverse.
+              that resonate beyond their lifespan and reverberate throughout the Multiverse. Ancient magicians harnessed
+              the power of the secret flame to create...
               <br />
               <br />
-              <span className="font-bold">💀 Memento Mori 💀</span> is an onChain memorial to fallen hardcore
-              adventurers which records their unique journey through their gear, their name, race and level at their
-              time of death and stores it for use throughout the Metaverse. Stats, images, and other functionality are
-              intentionally omitted for others to interpret. Feel free to use MementoMori in any way you want.
+              <span className="font-bold">💀 Memento Mori 💀</span> <br />
+              <br />
+              An onChain memorial to fallen hardcore adventurers which records their unique journey through their gear,
+              their name, race and level at their time of death and stores it for use throughout the Metaverse. Stats,
+              images, and other functionality are intentionally omitted for others to interpret. Feel free to use
+              MementoMori in any way you want.
               <br />
               <br />
+              Pay <span className="text-red-500">respects</span> to the fallen heroes by signing their attestation and
+              leaving a prayer. <br />
+              <br />
+              <br />
+              <div className="font-bold text-center">💀 Fs on Chain 💀</div>
             </div>
           ) : (
             <div
-              className="p-40 text-center"
+              className="p-40 
+        text - center"
               onClick={() => {
                 setInfoToggle(!infoToggle);
+                setTutoggle(!tutoggle);
               }}
             >
               <span className="font-bold">
