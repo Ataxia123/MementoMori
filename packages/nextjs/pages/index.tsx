@@ -893,8 +893,6 @@ const Home: NextPage = () => {
         RESPECTS PAID: {respected?.length}
         <br />
         MOST RESPECTED 💀
-        <MoriDisplay />
-        <br />
         <button
           className="text-red-500 hover:text-blue-500"
           onClick={e => {
@@ -904,6 +902,8 @@ const Home: NextPage = () => {
         >
           {"| HIDE UI |"}{" "}
         </button>
+        <br />
+        <MoriDisplay />
       </div>
 
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
