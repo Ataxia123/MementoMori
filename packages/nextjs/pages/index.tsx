@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import React from "react";
 import Image from "next/image";
 import { useEthersProvider, useEthersSigner } from "../utils/wagmi-utils";
@@ -9,7 +9,6 @@ import {
   SchemaRegistry,
   SignedOffchainAttestation,
 } from "@ethereum-attestation-service/eas-sdk";
-import { clear } from "console";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
 import Slider from "react-slick";
@@ -34,6 +33,10 @@ type Character = {
   media?: string;
 };
 
+type Sounds = {
+  spaceshipOn?: AudioBuffer | null;
+};
+
 const Home: NextPage = () => {
   const [user, setUser] = useState<any>(null);
   const [players, setPlayers] = useState<any[]>();
@@ -49,39 +52,40 @@ const Home: NextPage = () => {
   const [isPayingRespects, setIsPayingRespects] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
   const [respected, setRespected] = useState<any[]>();
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audio = audioRef.current;
+  const [sounds, setSounds] = useState<Sounds>({});
+  const [audioController, setAudioController] = useState<AudioController | null>(null);
+  const [soundsLoaded, setSoundsLoaded] = useState<boolean>(false);
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (audio) {
-      audio.volume = 0.25;
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsPlaying(true);
-          })
-          .catch(error => {
-            console.log("Auto-play was prevented");
-            setIsPlaying(false);
-          });
-      }
+  const loadSounds = useCallback(async () => {
+    const spaceshipOn = await audioController?.loadSound("/firesound.mp4");
+
+    if (spaceshipOn) {
+      audioController?.playSound(spaceshipOn, true, 0.02);
+      // Pass 'true' as the second argument to enable looping
     }
+
+    setSounds({
+      spaceshipOn,
+    });
+
+    setSoundsLoaded(true);
+  }, [audioController, soundsLoaded]);
+  // AUDIO SETUP
+  useEffect(() => {
+    setAudioController(new AudioController());
   }, []);
 
-  const ToggleSound = () => {
-    const audio = audioRef.current;
-    if (audio) {
-      if (isPlaying) {
-        audio.pause();
-      } else {
-        audio.play();
-      }
-      setIsPlaying(!isPlaying);
+  useEffect(() => {
+    if (audioController && !soundsLoaded) {
+      loadSounds();
     }
-  };
+  }, [audioController, soundsLoaded, loadSounds]);
+  useEffect(() => {
+    if (sounds.spaceshipOn) {
+      audioController?.playSound(sounds.spaceshipOn, true, 0.02);
+      audioController?.playSound(sounds.spaceshipOn, true, 0.02);
+    }
+  }, [sounds.spaceshipOn]);
 
   const provider = useEthersProvider();
 
@@ -444,10 +448,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     fetchDb();
     // Setting the initial volume to 50%
-    const audio = audioRef.current;
-    if (audio) {
-      audio.volume = 0.05;
-    }
   }, []);
 
   useEffect(() => {
@@ -897,13 +897,6 @@ const Home: NextPage = () => {
         >
           {"| HIDE UI |"}{" "}
         </button>
-        <button onClick={() => ToggleSound()}>
-          SOUND OFF
-          <audio ref={audioRef} style={{ display: "none" }} loop>
-            <source src="/firesound.mp4" type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-        </button>
       </div>
 
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
@@ -1004,7 +997,6 @@ const Home: NextPage = () => {
             onClick={e => {
               e.stopPropagation();
               setInfoToggle(!infoToggle);
-              ToggleSound();
             }}
           >
             {"| X |"}{" "}
