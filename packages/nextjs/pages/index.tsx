@@ -56,6 +56,9 @@ const Home: NextPage = () => {
   const [audioController, setAudioController] = useState<AudioController | null>(null);
   const [soundsLoaded, setSoundsLoaded] = useState<boolean>(false);
 
+  const provider = useEthersProvider();
+
+  const signer = useEthersSigner();
   const loadSounds = useCallback(async () => {
     const spaceshipOn = await audioController?.loadSound("/firesound.wav");
 
@@ -71,6 +74,7 @@ const Home: NextPage = () => {
     setSoundsLoaded(true);
   }, [audioController, soundsLoaded]);
   // AUDIO SETUP
+  //
   useEffect(() => {
     setAudioController(new AudioController());
   }, []);
@@ -80,16 +84,13 @@ const Home: NextPage = () => {
       loadSounds();
     }
   }, [audioController, soundsLoaded, loadSounds]);
+
   useEffect(() => {
     if (sounds.spaceshipOn) {
       audioController?.playSound(sounds.spaceshipOn, true, 0.02);
       audioController?.playSound(sounds.spaceshipOn, true, 0.02);
     }
   }, [sounds.spaceshipOn]);
-
-  const provider = useEthersProvider();
-
-  const signer = useEthersSigner();
 
   const EASContractAddress = "0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587"; //
   const url = process.env.NEXT_PUBLIC_WEBSITE || "http://localhost:3000";
