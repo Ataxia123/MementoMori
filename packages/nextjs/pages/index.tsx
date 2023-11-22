@@ -88,7 +88,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (sounds.spaceshipOn) {
       audioController?.playSound(sounds.spaceshipOn, true, 0.02);
-      audioController?.playSound(sounds.spaceshipOn, true, 0.02);
     }
   }, [sounds.spaceshipOn]);
 
@@ -999,21 +998,17 @@ const Home: NextPage = () => {
           </div>
         </div>
       ) : (
-        <div className="fixed z-50 bg-black border-2  border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20">
-          <span
-            className="absolute right-5"
-            onClick={e => {
-              e.stopPropagation();
-              setInfoToggle(!infoToggle);
-            }}
-          >
-            {"| X |"}{" "}
-          </span>
-          <span className="font-bold justify-center pl-96" onClick={() => setTutoggle(!tutoggle)}>
-            💀 Memento Mori 💀
-            <br />
-            <br />
-          </span>
+        <div
+          className="fixed z-50 bg-black border-2  border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20"
+          onClick={e => {
+            e.stopPropagation();
+            playSpaceshipOn();
+            setTutoggle(!tutoggle);
+          }}
+        >
+          {"| X |"} 💀 Memento Mori 💀
+          <br />
+          <br />
           {tutoggle == true ? (
             <>
               Once upon a time, in a distant digital universe, countless adventurers thrived. They faced endless battles
@@ -1062,10 +1057,16 @@ const Home: NextPage = () => {
               <br />
             </>
           ) : (
-            <div className="p-40 text-center">
+            <div
+              className="p-40 text-center"
+              onClick={() => {
+                setInfoToggle(!infoToggle);
+              }}
+            >
               <span className="font-bold">
                 This project is dedicated to the memory of my dog 🐶 Tuto.
                 <br />
+                <br />F
               </span>
             </div>
           )}
