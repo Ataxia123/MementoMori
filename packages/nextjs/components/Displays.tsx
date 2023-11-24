@@ -99,7 +99,6 @@ export const RespectedDisplay = (props: { respected: Character }) => {
     </>
   );
 };
-
 export const MoriDisplay = (props: { respected: Character; respects: Respect[] }) => {
   const { respected, respects } = props;
 
@@ -137,6 +136,8 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
 };
 export const StatsDisplay = (props: { database: Database; fInChat: Character }) => {
   const { database, fInChat } = props;
+  const mostRespected = database.respectsTally[0];
+  console.log(mostRespected, "mostRespected");
   return (
     <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
       FALLEN HEROES: {database.players?.length}
@@ -149,7 +150,6 @@ export const StatsDisplay = (props: { database: Database; fInChat: Character }) 
     </div>
   );
 };
-
 export const CharacterDisplay = (props: { players: Character[] }) => {
   const { players } = props;
   // Shuffle the database array before rendering

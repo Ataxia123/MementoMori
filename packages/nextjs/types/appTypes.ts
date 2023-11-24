@@ -34,5 +34,5 @@ export type Database = {
   players: Character[];
   respects: Respect[];
   items: Item[];
-  respectsTally: { hero: number; tally: Respect[] };
+  respectsTally: [hero: number, tally: Respect[]];
 };
