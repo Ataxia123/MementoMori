@@ -136,15 +136,13 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
 };
 export const StatsDisplay = (props: { database: Database; fInChat: Character }) => {
   const { database, fInChat } = props;
-  const mostRespected = database.respectsTally[0];
-  console.log(mostRespected, "mostRespected");
   return (
     <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
       FALLEN HEROES: {database.players?.length}
       <br />
       RESPECTS PAID: {database.respects?.length}
       <br />
-      MOST RESPECTED 💀
+      MOST RESPECTED 💀:
       <br />
       {!fInChat || !database.respects ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
     </div>
