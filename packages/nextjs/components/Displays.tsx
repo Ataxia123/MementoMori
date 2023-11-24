@@ -1,6 +1,6 @@
 import Slider from "react-slick";
 import { useGlobalState } from "~~/services/store/store";
-import { Character, Item, Respect } from "~~/types/appTypes";
+import { Character, Respect } from "~~/types/appTypes";
 import { playerColor, shuffle } from "~~/utils/utils";
 
 const findDatabase = (id: number, database: any[]) => {
@@ -30,7 +30,7 @@ export const AttestationCount = (respected: Respect[], fInChat: Character) => {
       count: {count}
       {f?.map((respected, index) => (
         <div key={index} className="p-4">
-          <ul></ul>
+          <ul>respected.id: {respected.hero}</ul>
         </div>
       ))}
     </Slider>
@@ -119,21 +119,24 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
   };
 
   return (
-    <Slider {...settings}>
-      {respectedShuffle?.map((respected, index) => (
-        <div key={index} className="p-4">
-          <ul>
-            IN MEMORIAN: <br />
-            <li className="font-mono-bold text-xl">{findDatabase(respected.hero, respects)?.name}</li>
-            <li className="overflow-Y-scroll">
-              Prayer: <br />
-              {respected.prayer}
-            </li>
-            <li className="overflow-hidden">Signed: {respected.Attestation.message.recipient}</li>
-          </ul>
-        </div>
-      ))}
-    </Slider>
+    <>
+      <MostRespectedLeaderBoard />
+      <Slider {...settings}>
+        {respectedShuffle?.map((respected, index) => (
+          <div key={index} className="p-4">
+            <ul>
+              IN MEMORIAN: <br />
+              <li className="font-mono-bold text-xl">{findDatabase(respected.hero, respects)?.name}</li>
+              <li className="overflow-Y-scroll">
+                Prayer: <br />
+                {respected.prayer}
+              </li>
+              <li className="overflow-hidden">Signed: {respected.Attestation.message.recipient}</li>
+            </ul>
+          </div>
+        ))}
+      </Slider>
+    </>
   );
 };
 
