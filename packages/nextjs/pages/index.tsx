@@ -18,6 +18,7 @@ import { useAccount } from "wagmi";
 import AudioController from "~~/components/AudioController";
 import { CharacterDisplay, MoriDisplay, RespectedDisplay } from "~~/components/Displays";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
+import { useGlobalState } from "~~/services/store/store";
 import { Character, Respect, Sounds } from "~~/types/appTypes";
 
 const Home: NextPage = () => {
@@ -30,7 +31,7 @@ const Home: NextPage = () => {
   const [mmToggle, setMmToggle] = useState<boolean>(false);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
-  const [fInChat, setFinChat] = useState<Character>();
+
   const [prayer, setPrayer] = useState<string>("💀 Memento Mori 💀");
   const [isPayingRespects, setIsPayingRespects] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
@@ -38,7 +39,7 @@ const Home: NextPage = () => {
   const [sounds, setSounds] = useState<Sounds>({});
   const [audioController, setAudioController] = useState<AudioController | null>(null);
   const [soundsLoaded, setSoundsLoaded] = useState<boolean>(false);
-
+  const fInChat = useGlobalState(state => state.player);
   const provider = useEthersProvider();
 
   const signer = useEthersSigner();
@@ -513,6 +514,7 @@ const Home: NextPage = () => {
 
     return <div ref={componentRef}>Press F to pay Respects</div>;
   }
+
   // Fisher-Yates (Knuth) shuffle algorithm
   return (
     <>
