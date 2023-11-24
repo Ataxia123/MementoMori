@@ -16,26 +16,9 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { useAccount } from "wagmi";
 import AudioController from "~~/components/AudioController";
+import { CharacterDisplay, MoriDisplay, RespectedDisplay } from "~~/components/Displays";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
-
-type Character = {
-  id: number;
-  name: string;
-  level: number;
-  owner: string;
-  gender: string;
-  class: string;
-  race: string;
-  faction: string;
-  is_ghost: boolean;
-  equipped_items: [unknown];
-  Attestation?: string | undefined;
-  media?: string;
-};
-
-type Sounds = {
-  spaceshipOn?: AudioBuffer | null;
-};
+import { Character, Respect, Sounds } from "~~/types/appTypes";
 
 const Home: NextPage = () => {
   const [user, setUser] = useState<any>(null);
@@ -193,6 +176,7 @@ const Home: NextPage = () => {
       console.log(e.message);
     }
   };
+
   const postRespects = async (players: { uid: string; id: number; prayer: string; attestation: string }) => {
     try {
       const response = await fetch(url + "/api/attest", {
@@ -491,52 +475,6 @@ const Home: NextPage = () => {
   };
   // Once the popup is closed
   //
-  const playerColor = (character: Character) => {
-    let classString = "font-mono text-black "; // Default text color set to black
-
-    // Determine the text color based on the character's class
-    if (character.class == "Druid") {
-      classString += "bg-orange-500/50 ";
-    } else if (character.class == "Priest") {
-      classString += "bg-white/50 ";
-    } else if (character.class == "Warlock") {
-      classString += "bg-purple-600/50 ";
-    } else if (character.class == "Warrior") {
-      classString += "bg-orange-900/50 ";
-    } else if (character.class == "Paladin") {
-      classString += "bg-pink-500/50 ";
-    } else if (character.class == "Rogue") {
-      classString += "bg-yellow-500/50 ";
-    } else if (character.class == "Mage") {
-      classString += "bg-blue-50/50 ";
-    } else if (character.class == "Shaman") {
-      classString += "bg-blue-500/50 ";
-    } else {
-      classString += "bg-green-500/50 ";
-    }
-
-    // Determine the font size based on the character's level
-    if (character.level < 10) {
-      classString += "text-xs ";
-    } else if (character.level >= 10 && character.level < 20) {
-      classString += "text-sm ";
-    } else if (character.level >= 20 && character.level < 30) {
-      classString += "text-base ";
-    } else if (character.level >= 30 && character.level < 40) {
-      classString += "text-lg ";
-    } else if (character.level >= 40 && character.level < 50) {
-      classString += "text-xl ";
-    } else if (character.level >= 50 && character.level < 60) {
-      classString += "text-2xl ";
-    } else if (character.level >= 60) {
-      classString += "text-3xl ";
-    }
-
-    // Add a class for the backdrop glow effect
-    classString += "backdrop-filter backdrop-blur-lg text-opacity-100 z-100  hover:brightness-200 ";
-
-    return classString;
-  };
 
   function FsInChat(props: any) {
     const { fInChat } = props;
@@ -576,189 +514,6 @@ const Home: NextPage = () => {
     return <div ref={componentRef}>Press F to pay Respects</div>;
   }
   // Fisher-Yates (Knuth) shuffle algorithm
-  function shuffle(array: any[]) {
-    if (!Array.isArray(array)) {
-      // Handle the case where the input is not an array
-      console.error("shuffle function received a non-array input:", array);
-      return [];
-    }
-    let currentIndex = array.length,
-      randomIndex;
-
-    // While there remain elements to shuffle...
-    while (currentIndex !== 0) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-    }
-
-    return array;
-  }
-
-  const RespectedDisplay = (props: any) => {
-    const { respected } = props;
-
-    return (
-      <>
-        <div className="border-2 border-gray-500 card mt-4 ml-10 mr-10 text-center text-white font-mono text-xl">
-          <>
-            {" "}
-            💀 Memento Mori 💀
-            {!respected || respected.equipped_items.length <= 1 ? (
-              <div>{respected?.name} </div>
-            ) : (
-              <div>
-                <br />
-                <span className="font-bold text-2xl">{respected?.name}</span> <br />
-                <span className="font-bold">
-                  Level {respected?.level} <span>{respected?.race}</span>
-                  <span> {respected?.class}</span>{" "}
-                </span>
-                <br />
-                ---------------------
-                <br />
-                {respected?.equipped_items?.map((item: any) => (
-                  <div key={item.slot.type}>
-                    {item.quality.type == "POOR" ? (
-                      <span className="text-gray-500"> {item.name.en_US}</span>
-                    ) : (
-                      <>
-                        {item.quality.type == "COMMON" ? (
-                          <span className="text-white"> {item.name.en_US}</span>
-                        ) : (
-                          <>
-                            {item.quality.type == "UNCOMMON" ? (
-                              <span className="text-green-500"> {item.name.en_US}</span>
-                            ) : (
-                              <>
-                                {item.quality.type == "RARE" ? (
-                                  <span className="text-blue-500"> {item.name.en_US}</span>
-                                ) : (
-                                  <>
-                                    {item.quality.type == "EPIC" ? (
-                                      <span className="text-purple-500"> {item.name.en_US}</span>
-                                    ) : (
-                                      <span className="text-orange-500"> {item.name.en_US}</span>
-                                    )}
-                                  </>
-                                )}
-                              </>
-                            )}
-                          </>
-                        )}
-                      </>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </>
-        </div>
-        <br />
-      </>
-    );
-  };
-
-  const findDatabase = (id: number) => {
-    const f = database.filter(x => x.id === id);
-    console.log(f[0], "f");
-    return f[0];
-  };
-
-  const AttestationCount = () => {
-    if (!respected) return <>No Respected</>;
-    const f = respected.filter(x => x.hero === fInChat?.id);
-    const count = f.length;
-    // const sorted = f.sort((a, b) => attestationCount(b.id) - attestationCount(a.id));
-
-    return (
-      <Slider {...settings}>
-        count: {count}
-        {f?.map((respected, index) => (
-          <div key={index} className="p-4">
-            <ul>
-              <li>IN MEMORIAN: {findDatabase(respected.hero)?.name}</li>
-              <li className="overflow-Y-scroll">prayer: {respected.prayer}</li>
-              <li className="overflow-hidden">From: {respected.Attestation.message.recipient}</li>
-            </ul>
-          </div>
-        ))}
-      </Slider>
-    );
-  };
-
-  const MoriDisplay = () => {
-    if (!respected) return <></>;
-    const respectedShuffle = shuffle(respected);
-    const MostRespectedLeaderBoard = () => {
-      return <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">MOST RESPECTED 💀</div>;
-    };
-
-    return (
-      <Slider {...settings}>
-        {respectedShuffle?.map((respected, index) => (
-          <div key={index} className="p-4">
-            <ul>
-              IN MEMORIAN: <br />
-              <li className="font-mono-bold text-xl">{findDatabase(respected.hero)?.name}</li>
-              <li className="overflow-Y-scroll">
-                Prayer: <br />
-                {respected.prayer}
-              </li>
-              <li className="overflow-hidden">Signed: {respected.Attestation.message.recipient}</li>
-            </ul>
-          </div>
-        ))}
-      </Slider>
-    );
-  };
-
-  const CharacterDisplay = (props: any) => {
-    const { players } = props;
-    // Shuffle the database array before rendering
-    const shuffledDatabase = shuffle(players);
-
-    // Define the number of rings and distribute the characters among them
-    const numberOfRings = 20; // Adjust this number as needed
-    const charactersPerRing = Math.ceil(shuffledDatabase.length / numberOfRings);
-    const rings = [];
-
-    for (let i = 0; i < numberOfRings; i++) {
-      const start = i * charactersPerRing;
-      const end = start + charactersPerRing;
-      rings.push(shuffledDatabase.slice(start, end));
-    }
-
-    return (
-      <div className="sphere-container">
-        {rings.map((ring, ringIndex) => (
-          <div key={ringIndex} className={`ring ring-${ringIndex}`}>
-            {ring.map((character: Character) => (
-              <>
-                <div
-                  key={character.id}
-                  className="character mt-0 -translate-y-1/2 animate-marquee2 whitespace-nowrap h-full w-max"
-                >
-                  <button
-                    className={playerColor(character)}
-                    onClick={() => {
-                      const frespected = database.filter(x => x.id === character.id);
-                      setFinChat(frespected[0]);
-                    }}
-                  >
-                    {character.name} <br />
-                  </button>
-                </div>
-              </>
-            ))}
-          </div>
-        ))}
-      </div>
-    );
-  };
   return (
     <>
       <div className="fixed w-full h-full">
@@ -903,7 +658,7 @@ const Home: NextPage = () => {
           {"| HIDE UI |"}{" "}
         </button>
         <br />
-        <MoriDisplay />
+        {!fInChat || !players ? <></> : <MoriDisplay respected={fInChat} players={players} />}
       </div>
 
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
