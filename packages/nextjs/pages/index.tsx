@@ -20,7 +20,7 @@ const Home: NextPage = () => {
   const [players, setPlayers] = useState<any[]>();
   const [dead, setDead] = useState<Character[]>([]);
   const [alive, setAlive] = useState<Character[]>([]);
-  const [database, setDatabase] = useState<any[]>([]);
+
   const [player, setPlayer] = useState<Character | undefined>();
   const [mmToggle, setMmToggle] = useState<boolean>(false);
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
@@ -29,7 +29,6 @@ const Home: NextPage = () => {
   const [prayer, setPrayer] = useState<string>("💀 Memento Mori 💀");
   const [isPayingRespects, setIsPayingRespects] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
-  const [respected, setRespected] = useState<Respect[]>();
   const [sounds, setSounds] = useState<Sounds>({});
   const [audioController, setAudioController] = useState<AudioController | null>(null);
   const [soundsLoaded, setSoundsLoaded] = useState<boolean>(false);
@@ -37,6 +36,7 @@ const Home: NextPage = () => {
   const provider = useEthersProvider();
 
   const signer = useEthersSigner();
+  const database = useGlobalState(state => state.database);
   const url = process.env.NEXT_PUBLIC_WEBSITE || "http://localhost:3000";
 
   const loadSounds = useCallback(async () => {
@@ -317,7 +317,7 @@ const Home: NextPage = () => {
 
       const index0 = alive?.findIndex(x => x.id === data.id);
       const index1 = dead?.findIndex(x => x.id === data.id);
-      const index2 = database.findIndex(x => x.id === data._id);
+      const index2 = database.players.findIndex(x => x.id === data._id);
 
       const profile: Character = {
         id: data.id,
@@ -530,7 +530,7 @@ const Home: NextPage = () => {
               pointerEvents: "none",
             }}
           />
-          <CharacterDisplay players={database} />
+          <CharacterDisplay players={database.players} />
           <Image
             src="/mmoriball2.png"
             fill
@@ -626,9 +626,9 @@ const Home: NextPage = () => {
 
       {/*login logo pulse portion and ? thing*/}
       <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
-        FALLEN HEROES: {database?.length}
+        FALLEN HEROES: {database.players?.length}
         <br />
-        RESPECTS PAID: {respected?.length}
+        RESPECTS PAID: {database.respects?.length}
         <br />
         MOST RESPECTED 💀
         <button
@@ -641,7 +641,7 @@ const Home: NextPage = () => {
           {"| HIDE UI |"}{" "}
         </button>
         <br />
-        {!fInChat || !respected ? <></> : <MoriDisplay respected={fInChat} respects={respected} />}
+        {!fInChat || !database.respects ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
       </div>
 
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
