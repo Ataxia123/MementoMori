@@ -16,7 +16,6 @@ import { useGlobalState } from "~~/services/store/store";
 import { Character, Respect, Sounds } from "~~/types/appTypes";
 
 const Home: NextPage = () => {
-  const [user, setUser] = useState<any>(null);
   const [players, setPlayers] = useState<any[]>();
   const [dead, setDead] = useState<Character[]>([]);
   const [alive, setAlive] = useState<Character[]>([]);
@@ -33,6 +32,7 @@ const Home: NextPage = () => {
   const [audioController, setAudioController] = useState<AudioController | null>(null);
   const [soundsLoaded, setSoundsLoaded] = useState<boolean>(false);
   const fInChat = useGlobalState(state => state.player);
+  const user = useGlobalState(state => state.user);
   const provider = useEthersProvider();
 
   const signer = useEthersSigner();
@@ -90,55 +90,6 @@ const Home: NextPage = () => {
   const address = account?.address;
 
   // LOGIN METHODS
-  let popup: Window | null = null;
-
-  const login = () => {
-    popup = window.open(
-      url + "/oauth/battlenet",
-      "targetWindow",
-      `toolbar=no,
-       location=no,
-       status=no,
-       menubar=no,
-       scrollbars=yes,
-       resizable=yes,
-       width=620,
-       height=700`,
-    );
-    // Once the popup is closed
-    window.addEventListener(
-      "message",
-      event => {
-        if (event.origin !== url) return;
-        console.log("event", event);
-
-        if (event.data) {
-          setUser(event.data);
-          popup?.close();
-        }
-      },
-      false,
-    );
-  };
-
-  const logout = async () => {
-    try {
-      const response = await fetch(url + "/oauth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        setUser(null);
-        toast.success("Logging out successful");
-      } else {
-        console.error("Failed to logout", response);
-        toast.error("Failed to logout");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const postDb = async (players: Character) => {
     try {
@@ -588,22 +539,9 @@ const Home: NextPage = () => {
                 ) : (
                   <div className="card mt-60 pr-2 z-50 font-mono">
                     {!address ? (
-                      <RainbowKitCustomConnectButton />
+                      <>connect wallet</>
                     ) : (
-                      <>
-                        {!user ? (
-                          <button
-                            className="border-2 border-black rounded-md"
-                            onClick={() => {
-                              login();
-                            }}
-                          >
-                            LOGIN WITH BNET
-                          </button>
-                        ) : (
-                          <div>Logged in as {user.battletag}</div>
-                        )}
-                      </>
+                      <>{!user ? <>LOGIN WITH BNET</> : <div>Logged in as {user.battleTag}</div>}</>
                     )}
                   </div>
                 )}
@@ -690,30 +628,9 @@ const Home: NextPage = () => {
         )}
         <div className="ml-20 p-6 justify-items-center">
           <span>Address: {address?.slice(address.length - 5) || "no data"}</span> <br />
-          <span>User: {user ? user.battletag : "no data"}</span>
+          <span>User: {user ? user.battleTag : "no data"}</span>
           <br />
           <br />
-          {!user ? (
-            <button
-              className="border-2 border-black rounded-md"
-              onClick={() => {
-                login();
-              }}
-            >
-              LOGIN WITH BNET
-            </button>
-          ) : (
-            <div>
-              <button
-                onClick={() => {
-                  logout();
-                  toast.success("Successfully logged out");
-                }}
-              >
-                Logout
-              </button>
-            </div>
-          )}
         </div>
       </div>
 
