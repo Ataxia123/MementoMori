@@ -36,7 +36,7 @@ export const AttestationCount = (respected: Respect[], fInChat: Character) => {
     </Slider>
   );
 };
-export const RespectedDisplay = (props: any) => {
+export const RespectedDisplay = (props: { respected: Character }) => {
   const { respected } = props;
 
   return (
@@ -100,8 +100,8 @@ export const RespectedDisplay = (props: any) => {
   );
 };
 
-export const MoriDisplay = (props: { respected: Character; players: Respect[] }) => {
-  const { respected, players } = props;
+export const MoriDisplay = (props: { respected: Character; respects: Respect[] }) => {
+  const { respected, respects } = props;
 
   const settings = {
     dots: true,
@@ -113,7 +113,7 @@ export const MoriDisplay = (props: { respected: Character; players: Respect[] })
   // Once the popup is closed
   //
   if (!respected) return <></>;
-  const respectedShuffle = shuffle(players);
+  const respectedShuffle = shuffle(respects);
   const MostRespectedLeaderBoard = () => {
     return <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">MOST RESPECTED 💀</div>;
   };
@@ -124,7 +124,7 @@ export const MoriDisplay = (props: { respected: Character; players: Respect[] })
         <div key={index} className="p-4">
           <ul>
             IN MEMORIAN: <br />
-            <li className="font-mono-bold text-xl">{findDatabase(respected.hero, players)?.name}</li>
+            <li className="font-mono-bold text-xl">{findDatabase(respected.hero, respects)?.name}</li>
             <li className="overflow-Y-scroll">
               Prayer: <br />
               {respected.prayer}

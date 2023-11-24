@@ -35,7 +35,7 @@ const Home: NextPage = () => {
   const [prayer, setPrayer] = useState<string>("💀 Memento Mori 💀");
   const [isPayingRespects, setIsPayingRespects] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
-  const [respected, setRespected] = useState<any[]>();
+  const [respected, setRespected] = useState<Respect[]>();
   const [sounds, setSounds] = useState<Sounds>({});
   const [audioController, setAudioController] = useState<AudioController | null>(null);
   const [soundsLoaded, setSoundsLoaded] = useState<boolean>(false);
@@ -660,7 +660,7 @@ const Home: NextPage = () => {
           {"| HIDE UI |"}{" "}
         </button>
         <br />
-        {!fInChat || !players ? <></> : <MoriDisplay respected={fInChat} players={players} />}
+        {!fInChat || !respected ? <></> : <MoriDisplay respected={fInChat} respects={respected} />}
       </div>
 
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
