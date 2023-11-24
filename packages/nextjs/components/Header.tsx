@@ -151,7 +151,7 @@ export const Header = () => {
             <RainbowKitCustomConnectButton />
           </div>
         </div>
-        {!user ? (
+        {user.token == "" ? (
           <button
             className="border-2 border-black rounded-md"
             onClick={() => {
