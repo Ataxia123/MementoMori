@@ -14,7 +14,7 @@ type TGlobalState = {
   nativeCurrencyPrice: number;
   setNativeCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
   database: { players: Character[]; respects: Respect[]; items: Item[] };
-  setDatabase: (newDatabase: any) => void;
+  setDatabase: (newDatabase: { players: Character[]; respects: Respect[]; items: Item[] }) => void;
   user: { bnet: string; address: string; battleTag: string };
   setUser: (newUser: any) => void;
   deadPlayers: Character[];
@@ -27,7 +27,8 @@ export const useGlobalState = create<TGlobalState>(set => ({
   nativeCurrencyPrice: 0,
   setNativeCurrencyPrice: (newValue: number): void => set(() => ({ nativeCurrencyPrice: newValue })),
   database: { players: [], respects: [], items: [] },
-  setDatabase: (newDatabase: any): void => set(() => ({ database: newDatabase })),
+  setDatabase: (newDatabase: { players: Character[]; respects: Respect[]; items: Item[] }): void =>
+    set(() => ({ database: newDatabase })),
   user: { bnet: "", address: "", battleTag: "" },
   setUser: (newUser: any): void => set(() => ({ user: newUser })),
   deadPlayers: [],

@@ -17,8 +17,22 @@ import { appChains } from "~~/services/web3/wagmiConnectors";
 import "~~/styles/globals.css";
 
 const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
+  const url = process.env.NEXT_PUBLIC_WEBSITE || "http://localhost:3000";
+
   const price = useNativeCurrencyPrice();
+  const setDatabase = useGlobalState(state => state.setDatabase);
   const setNativeCurrencyPrice = useGlobalState(state => state.setNativeCurrencyPrice);
+  const fetchDb = async () => {
+    try {
+      const response = await fetch(url + "/api/database"); // assume the same host
+      const data = await response.json();
+      console.log(data, "Player data from DB");
+      setDatabase(data);
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
   // This variable is required for initial client side rendering of correct theme for RainbowKit
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const { isDarkMode } = useDarkMode();
@@ -32,6 +46,10 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     setIsDarkTheme(isDarkMode);
   }, [isDarkMode]);
+
+  useEffect(() => {
+    fetchDb();
+  }, []);
 
   return (
     <WagmiConfig config={wagmiConfig}>
