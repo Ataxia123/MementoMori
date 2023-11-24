@@ -45,7 +45,7 @@ export const RespectedDisplay = (props: { respected: Character }) => {
         <>
           {" "}
           💀 Memento Mori 💀
-          {!respected || respected.equipped_items.length <= 1 ? (
+          {!respected.equipped_items || respected.equipped_items.length <= 1 ? (
             <div>{respected?.name} </div>
           ) : (
             <div>
