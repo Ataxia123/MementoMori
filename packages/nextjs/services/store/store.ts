@@ -14,7 +14,12 @@ type TGlobalState = {
   nativeCurrencyPrice: number;
   setNativeCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
   database: { players: Character[]; respects: Respect[]; items: Item[] };
-  setDatabase: (newDatabase: { players: Character[]; respects: Respect[]; items: Item[] }) => void;
+  setDatabase: (newDatabase: {
+    players: Character[];
+    respects: Respect[];
+    respectsTally: { hero: number; tally: Respect[] };
+    items: Item[];
+  }) => void;
   user: { token: string; address: string; battleTag: string };
   setUser: (newUser: any) => void;
   deadPlayers: Character[];
@@ -26,10 +31,14 @@ type TGlobalState = {
 export const useGlobalState = create<TGlobalState>(set => ({
   nativeCurrencyPrice: 0,
   setNativeCurrencyPrice: (newValue: number): void => set(() => ({ nativeCurrencyPrice: newValue })),
-  database: { players: [], respects: [], items: [] },
-  setDatabase: (newDatabase: { players: Character[]; respects: Respect[]; items: Item[] }): void =>
-    set(() => ({ database: newDatabase })),
-  user: { token: "", address: "", battleTag: "" },
+  database: { players: [], respects: [], items: [], respectsTally: { hero: 0, tally: [] } },
+  setDatabase: (newDatabase: {
+    players: Character[];
+    respects: Respect[];
+    respectsTally: { hero: number; tally: Respect[] };
+    items: Item[];
+  }): void => set(() => ({ database: newDatabase })),
+  user: { token: "notyet", address: "", battleTag: "" },
   setUser: (newUser: any): void => set(() => ({ user: newUser })),
   deadPlayers: [],
   setDeadPlayers: (newDeadPlayers: Character[]): void => set(() => ({ deadPlayers: newDeadPlayers })),

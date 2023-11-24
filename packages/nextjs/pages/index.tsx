@@ -375,7 +375,7 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    if (user.token === "") return;
+    if (!user.token || user.token === "notyet") return;
     fetchCharacter();
   }, [user]);
 
