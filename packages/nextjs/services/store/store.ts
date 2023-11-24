@@ -1,5 +1,5 @@
 import create from "zustand";
-import { Character, Item, Respect } from "~~/types/appTypes";
+import { Character, Database, Item, Respect } from "~~/types/appTypes";
 
 /**
  * Zustand Store
@@ -13,7 +13,7 @@ import { Character, Item, Respect } from "~~/types/appTypes";
 type TGlobalState = {
   nativeCurrencyPrice: number;
   setNativeCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
-  database: { players: Character[]; respects: Respect[]; items: Item[] };
+  database: Database;
   setDatabase: (newDatabase: {
     players: Character[];
     respects: Respect[];

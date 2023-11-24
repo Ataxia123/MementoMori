@@ -29,3 +29,10 @@ export type Item = {
   name: string;
   owner: string;
 };
+
+export type Database = {
+  players: Character[];
+  respects: Respect[];
+  items: Item[];
+  respectsTally: { hero: number; tally: Respect[] };
+};

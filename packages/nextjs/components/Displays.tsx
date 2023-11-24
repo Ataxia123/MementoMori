@@ -1,6 +1,6 @@
 import Slider from "react-slick";
 import { useGlobalState } from "~~/services/store/store";
-import { Character, Respect } from "~~/types/appTypes";
+import { Character, Database, Respect } from "~~/types/appTypes";
 import { playerColor, shuffle } from "~~/utils/utils";
 
 const findDatabase = (id: number, database: any[]) => {
@@ -133,6 +133,20 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
         ))}
       </Slider>
     </>
+  );
+};
+export const StatsDisplay = (props: { database: Database; fInChat: Character }) => {
+  const { database, fInChat } = props;
+  return (
+    <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
+      FALLEN HEROES: {database.players?.length}
+      <br />
+      RESPECTS PAID: {database.respects?.length}
+      <br />
+      MOST RESPECTED 💀
+      <br />
+      {!fInChat || !database.respects ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
+    </div>
   );
 };
 

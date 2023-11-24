@@ -10,10 +10,10 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { useAccount } from "wagmi";
 import AudioController from "~~/components/AudioController";
-import { CharacterDisplay, MoriDisplay, RespectedDisplay } from "~~/components/Displays";
+import { CharacterDisplay, RespectedDisplay, StatsDisplay } from "~~/components/Displays";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
-import { Character, Respect, Sounds } from "~~/types/appTypes";
+import { Character, Database, Respect, Sounds } from "~~/types/appTypes";
 
 const Home: NextPage = () => {
   const [players, setPlayers] = useState<any[]>();
@@ -563,24 +563,7 @@ const Home: NextPage = () => {
       )}
 
       {/*login logo pulse portion and ? thing*/}
-      <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
-        FALLEN HEROES: {database.players?.length}
-        <br />
-        RESPECTS PAID: {database.respects?.length}
-        <br />
-        MOST RESPECTED 💀
-        <button
-          className="text-red-500 hover:text-blue-500"
-          onClick={e => {
-            e.stopPropagation();
-            setHidden(!hidden);
-          }}
-        >
-          {"| HIDE UI |"}{" "}
-        </button>
-        <br />
-        {!fInChat || !database.respects ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
-      </div>
+      <StatsDisplay database={database} fInChat={fInChat} />
 
       <div className="card fixed right-20 top-1/3 mt-24 pr-2 z-50 font-mono">
         {!address ? (
@@ -630,6 +613,15 @@ const Home: NextPage = () => {
           <span>Address: {address?.slice(address.length - 5) || "no data"}</span> <br />
           <span>User: {user ? user.battleTag : "no data"}</span>
           <br />
+          <button
+            className="text-red-500 hover:text-blue-500"
+            onClick={e => {
+              e.stopPropagation();
+              setHidden(!hidden);
+            }}
+          >
+            {"| HIDE UI |"}{" "}
+          </button>
           <br />
         </div>
       </div>
