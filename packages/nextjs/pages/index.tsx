@@ -140,19 +140,6 @@ const Home: NextPage = () => {
     }
   };
 
-  const fetchDb = async () => {
-    try {
-      const response = await fetch(url + "/api/database"); // assume the same host
-      const data = await response.json();
-      console.log(data, "Player data from DB");
-      setDatabase(data.players);
-      setRespected(data.respects);
-    } catch (e: any) {
-      toast.error("error posting dead players to db");
-      console.log(e.message);
-    }
-  };
-
   const postDb = async (players: Character) => {
     try {
       const response = await fetch(url + "/api/db", {
@@ -432,7 +419,6 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
-    fetchDb();
     playSpaceshipOn();
     // Setting the initial volume to 50%
   }, []);
