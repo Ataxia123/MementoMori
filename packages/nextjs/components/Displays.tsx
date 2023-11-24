@@ -50,7 +50,7 @@ export const RespectedDisplay = (props: { respected: Character }) => {
           ) : (
             <div>
               <br />
-              <span className="font-bold text-2xl">{respected?.name}</span> <br />
+              <span className="font-bold text-2xl">{respected?.name}</span> <br />{" "}
               <span className="font-bold">
                 Level {respected?.level} <span>{respected?.race}</span>
                 <span> {respected?.class}</span>{" "}
@@ -136,6 +136,24 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
 };
 export const StatsDisplay = (props: { database: Database; fInChat: Character }) => {
   const { database, fInChat } = props;
+
+  const TallyDisplay = () => {
+    const tally = database.respects?.filter(x => x.hero === fInChat?.id);
+    tally.map((respected, index) => (
+      <div key={index} className="p-4">
+        <ul>
+          IN MEMORIAN: <br />
+          <li className="font-mono-bold text-xl">{findDatabase(respected.hero, database.respects)?.name}</li>
+          <li className="overflow-Y-scroll">
+            Prayer: <br />
+            {respected.prayer}
+          </li>
+          <li className="overflow-hidden">Signed: {respected.signer}</li>
+        </ul>
+      </div>
+    ));
+  };
+
   return (
     <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
       FALLEN HEROES: {database.players?.length}
