@@ -114,13 +114,9 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
   //
   if (!respected) return <></>;
   const respectedShuffle = shuffle(respects);
-  const MostRespectedLeaderBoard = () => {
-    return <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">MOST RESPECTED 💀</div>;
-  };
 
   return (
     <>
-      <MostRespectedLeaderBoard />
       <Slider {...settings}>
         {respectedShuffle?.map((respected, index) => (
           <div key={index} className="p-4">
