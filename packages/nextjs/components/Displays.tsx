@@ -106,7 +106,6 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
     slidesToScroll: 1,
   };
   // Once the popup is closed
-  //
   if (!respected) return <></>;
   const respectedShuffle = shuffle(respects);
 
@@ -114,15 +113,18 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
     <>
       <Slider {...settings}>
         {respectedShuffle?.map((respected, index) => (
-          <div key={index} className="p-4">
+          <div key={index} className="p-4 overflow-y-scroll">
             <ul>
               IN MEMORIAN: <br />
               <li className="font-mono-bold text-xl">{findDatabase(respected.hero, respects)?.name}</li>
-              <li className="overflow-Y-scroll">
+              <li className="text-sm">
                 Prayer: <br />
                 {respected.prayer}
               </li>
-              <li className="overflow-hidden">Signed: {respected.Attestation.message.recipient}</li>
+              <li className="overflow-hidden">
+                Signed:{" "}
+                {respected.Attestation.message.recipient.slice(respected.Attestation.message.recipient.length - 5)}
+              </li>
             </ul>
           </div>
         ))}
