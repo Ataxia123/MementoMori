@@ -110,9 +110,10 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
   const respectedShuffle = shuffle(respects);
 
   return (
-    <>
+    <div className="overflow-y-scroll overflow-x-hidden">
+      Fs On Chain: {respectedShuffle.length}
       {respectedShuffle?.map((respected, index) => (
-        <div key={index} className="p-4 overflow-y-scroll overflow-x-hidden">
+        <div key={index} className="p-4">
           <ul>
             IN MEMORIAN: <br />
             <li className="font-mono-bold text-xl">{findDatabase(respected.hero, respects)?.name}</li>
@@ -127,7 +128,7 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
           </ul>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 
