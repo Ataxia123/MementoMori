@@ -143,7 +143,7 @@ export const StatsDisplay = (props: { database: Database; fInChat: Character }) 
       <br />
       <MoriDisplay respected={fInChat} respects={tally} />
       <br />
-      {fInChat.name == "" ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
+      {!fInChat.name ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
     </div>
   );
 };
