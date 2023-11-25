@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { useAccount } from "wagmi";
+import { useAccount, useBlockNumber } from "wagmi";
 import AudioController from "~~/components/AudioController";
 import { CharacterDisplay, RespectedDisplay, StatsDisplay } from "~~/components/Displays";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
@@ -34,11 +34,11 @@ const Home: NextPage = () => {
   const fInChat = useGlobalState(state => state.player);
   const user = useGlobalState(state => state.user);
   const provider = useEthersProvider();
-
   const signer = useEthersSigner();
   const database = useGlobalState(state => state.database);
   const url = process.env.NEXT_PUBLIC_WEBSITE || "http://localhost:3000";
 
+  const { data: blockNumber, isError, isLoading } = useBlockNumber();
   const loadSounds = useCallback(async () => {
     const spaceshipOn = await audioController?.loadSound("/firesound.wav");
 
@@ -70,6 +70,9 @@ const Home: NextPage = () => {
       audioController?.playSound(sounds.spaceshipOn, true, 0.02);
     }
   }, [sounds.spaceshipOn]);
+  useEffect(() => {
+    console.log(blockNumber);
+  }, [blockNumber]);
 
   function playSpaceshipOn() {
     if (sounds.spaceshipOn) {
@@ -157,7 +160,7 @@ const Home: NextPage = () => {
         version: 1,
         recipient: address ? address : "0x0000000000000000",
         expirationTime: BigInt(0),
-        time: BigInt(123),
+        time: blockNumber ? blockNumber : BigInt(0),
         revocable: true,
         refUID: "0x0000000000000000000000000000000000000000000000000000000000000000",
         // Be aware that if your schema is not revocable, this MUST be false
@@ -227,7 +230,7 @@ const Home: NextPage = () => {
           version: 1,
           recipient: address ? address : "0x0000000000000000",
           expirationTime: BigInt(0),
-          time: BigInt(123),
+          time: blockNumber ? blockNumber : BigInt(0),
           revocable: true,
           refUID: "0x0000000000000000000000000000000000000000000000000000000000000000",
           // Be aware that if your schema is not revocable, this MUST be false
@@ -533,6 +536,7 @@ const Home: NextPage = () => {
         ) : (
           <div className="fixed z-50 bg-black border-2 text-center border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20">
             <br />
+            Block Number: {blockNumber ? blockNumber.toString() : "no data"}
             <br />
             {tutoggle == true ? (
               <div
