@@ -54,39 +54,27 @@ export const RespectedDisplay = (props: { respected: Character }) => {
               <br />
               ---------------------
               <br />
-              {respected?.equipped_items?.map((item: any) => (
-                <div key={item.slot.type}>
-                  {item.quality.type == "POOR" ? (
-                    <span className="text-gray-500">{item.name.en_US}</span>
-                  ) : (
-                    <>
-                      {item.quality.type == "COMMON" ? (
-                        <span className="text-white">{item.name.en_US}</span>
-                      ) : (
-                        <>
-                          {item.quality.type == "UNCOMMON" ? (
-                            <span className="text-green-500">{item.name.en_US}</span>
-                          ) : (
-                            <>
-                              {item.quality.type == "RARE" ? (
-                                <span className="text-blue-500">{item.name.en_US}</span>
-                              ) : (
-                                <>
-                                  {item.quality.type == "EPIC" ? (
-                                    <span className="text-purple-500">{item.name.en_US}</span>
-                                  ) : (
-                                    <span className="text-orange-500">{item.name.en_US}</span>
-                                  )}
-                                </>
-                              )}
-                            </>
-                          )}
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
-              ))}
+              {respected?.equipped_items?.map((item: any) => {
+                let textColor = "";
+                if (item.quality.type == "POOR") {
+                  textColor = "text-gray-500";
+                } else if (item.quality.type == "COMMON") {
+                  textColor = "text-white";
+                } else if (item.quality.type == "UNCOMMON") {
+                  textColor = "text-green-500";
+                } else if (item.quality.type == "RARE") {
+                  textColor = "text-blue-500";
+                } else if (item.quality.type == "EPIC") {
+                  textColor = "text-purple-500";
+                } else {
+                  textColor = "text-orange-500";
+                }
+                return (
+                  <div key={item.slot.type}>
+                    <span className={textColor}>{item.name.en_US}</span>
+                  </div>
+                );
+              })}
             </div>
           )}
         </>
@@ -95,6 +83,7 @@ export const RespectedDisplay = (props: { respected: Character }) => {
     </>
   );
 };
+
 export const MoriDisplay = (props: { respected: Character; respects: Respect[] }) => {
   const { respected, respects } = props;
 
