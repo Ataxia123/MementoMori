@@ -452,49 +452,7 @@ const Home: NextPage = () => {
   const UserDisplay = () => {
     return (
       <div className="card fixed right-20 top-1/4 mt-14 pr-2 z-50 font-mono">
-        {!address ? (
-          <RainbowKitCustomConnectButton />
-        ) : (
-          <>
-            💀 Memento Mori 💀
-            <div className="card mr-3 mt-4">
-              {!fInChat ? (
-                <>SELECT A HERO</>
-              ) : (
-                <div className="font-mono text-xl">
-                  In Memorian of: <br /> <span className="font-bold">{fInChat?.name}</span>
-                  <div>
-                    <br />
-                    <form>
-                      <label className={"text-black"}>
-                        <input
-                          type="text"
-                          value={prayer}
-                          onChange={e => {
-                            e.stopPropagation();
-                            setPrayer(e.target.value);
-                          }}
-                        />
-                      </label>
-                      <br />
-                      <br />
-                      <button
-                        className="border-2 border-white text-center rounded-md p-2"
-                        onClick={e => {
-                          e.preventDefault();
-                          if (!fInChat) return;
-                          pressFtoPayRespects(fInChat, prayer);
-                        }}
-                      >
-                        <FsInChat />
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              )}
-            </div>
-          </>
-        )}
+        {!address ? <RainbowKitCustomConnectButton /> : <>💀 Memento Mori 💀</>}
         <div className="ml-20 p-6 justify-items-center">
           <span>Address: {address?.slice(address.length - 5) || "no data"}</span> <br />
           <span>User: {user ? user.battleTag : "no data"}</span>
@@ -598,7 +556,7 @@ const Home: NextPage = () => {
           className="-mt-12 transform -translate-y-1/6 scale-75 scale-y-125 scale-x-90"
         />
         <div
-          className="fixed overflow-hidden rounded-full fixed h-1/2 w-1/4 top-2 left-1/2 transform transform scale-150 -translate-x-1/2 translate-y-1/3 shadow-xl shadow-black"
+          className="fixed overflow-hidden rounded-full h-1/2 w-1/4 top-2 left-1/2 transform scale-150 -translate-x-1/2 translate-y-1/3 shadow-xl shadow-black"
           style={{
             opacity: "1",
             scale: "1",
@@ -705,7 +663,45 @@ const Home: NextPage = () => {
       {/*login logo pulse portion and ? thing*/}
       <StatsDisplay database={database} fInChat={fInChat} />
       <UserDisplay />
-      <InfoDisplay />
+      <>
+        <div className="card mr-3 mt-4">
+          {!fInChat ? (
+            <>SELECT A HERO</>
+          ) : (
+            <div className="font-mono text-xl">
+              In Memorian of: <br /> <span className="font-bold">{fInChat?.name}</span>
+              <div>
+                <br />
+                <form>
+                  <label className={"text-black"}>
+                    <input
+                      type="text"
+                      value={prayer}
+                      onChange={e => {
+                        e.stopPropagation();
+                        setPrayer(e.target.value);
+                      }}
+                    />
+                  </label>
+                  <br />
+                  <br />
+                  <button
+                    className="border-2 border-white text-center rounded-md p-2"
+                    onClick={e => {
+                      e.preventDefault();
+                      if (!fInChat) return;
+                      pressFtoPayRespects(fInChat, prayer);
+                    }}
+                  >
+                    <FsInChat />
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
+          <InfoDisplay />
+        </div>
+      </>
     </>
   );
 };
