@@ -10,7 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { useAccount, useBlockNumber } from "wagmi";
 import AudioController from "~~/components/AudioController";
-import { CharacterDisplay, RespectedDisplay, StatsDisplay } from "~~/components/Displays";
+import { CharacterDisplay, MoriDisplay, RespectedDisplay, StatsDisplay } from "~~/components/Displays";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
 import { Character, Database, Respect, Sounds } from "~~/types/appTypes";
@@ -655,23 +655,21 @@ const Home: NextPage = () => {
       </>
     );
   };
-  // Fisher-Yates (Knuth) shuffle algorithm
-  return (
-    <>
-      <BallDiv />
-      {hidden == true ? <></> : <MainDisplay />}
-      {/*login logo pulse portion and ? thing*/}
-      <StatsDisplay database={database} fInChat={fInChat} />
-      <UserDisplay />
-      <>
+  const StatsDisplay = () => {
+    const tally = database.respects?.filter(x => x.hero === fInChat?.id);
+
+    return (
+      <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
         <div className="card mr-3 mt-4">
           {!fInChat ? (
             <>SELECT A HERO</>
           ) : (
             <div className="font-mono text-xl">
-              In Memorian of: <br /> <span className="font-bold">{fInChat?.name}</span>
+              {!fInChat.name ? "HERE BE THE DEAD" : "In Memorian of:"} <br />
+              <span className="font-bold">{fInChat?.name}</span>
               <div>
                 <br />
+
                 <form>
                   <label className={"text-black"}>
                     <input
@@ -699,9 +697,27 @@ const Home: NextPage = () => {
               </div>
             </div>
           )}
-          <InfoDisplay />
         </div>
-      </>
+        FALLEN HEROES: {database.players?.length}
+        <br />
+        RESPECTS PAID: {database.respects?.length}
+        <br />
+        <MoriDisplay respected={fInChat} respects={tally} />
+        <br />
+        {!fInChat.name ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
+      </div>
+    );
+  };
+  // Fisher-Yates (Knuth) shuffle algorithm
+  return (
+    <>
+      <BallDiv />
+      {hidden == true ? <></> : <MainDisplay />}
+      {/*login logo pulse portion and ? thing*/}
+      <UserDisplay />
+      <StatsDisplay />
+
+      <InfoDisplay />
     </>
   );
 };
