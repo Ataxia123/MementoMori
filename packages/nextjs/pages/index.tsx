@@ -10,7 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { useAccount, useBlockNumber } from "wagmi";
 import AudioController from "~~/components/AudioController";
-import { CharacterDisplay, MoriDisplay, RespectedDisplay, StatsDisplay } from "~~/components/Displays";
+import { CharacterDisplay, MoriDisplay, RespectedDisplay } from "~~/components/Displays";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
 import { Character, Database, Respect, Sounds } from "~~/types/appTypes";
@@ -450,12 +450,24 @@ const Home: NextPage = () => {
     return <div ref={componentRef}>Press F to pay Respects</div>;
   }
   const UserDisplay = () => {
+    const tally = database.respects?.filter(x => x.hero === fInChat?.id);
     return (
-      <div className="card fixed right-20 top-1/4 mt-14 pr-2 z-50 font-mono">
-        {!address ? <RainbowKitCustomConnectButton /> : <>💀 Memento Mori 💀</>}
-        <div className="ml-20 p-6 justify-items-center">
-          <span>Address: {address?.slice(address.length - 5) || "no data"}</span> <br />
+      <div className="card fixed right-20 top-1/5 mt-14 pr-2 z-50 font-mono">
+        <div className="p-6 justify-items-center border-2 color-white">
+          <div className="overflow-y-scroll">
+            <MoriDisplay respected={fInChat} respects={tally} />
+          </div>
+          {!address ? <RainbowKitCustomConnectButton /> : <>💀 Memento Mori 💀</>}
+          <br />
+          <br />
+          FALLEN HEROES: {database.players?.length}
+          <br />
+          TOTAL RESPECTS PAID: {database.respects?.length}
+          <br />
+          <span>Respects paid by {address?.slice(address.length - 5) || "no data"}</span> <br />
           <span>User: {user ? user.battleTag : "no data"}</span>
+          <br />
+          block:{blockNumber ? blockNumber.toString() : "no data"}
           <br />
           <button
             className="text-red-500 hover:text-blue-500"
@@ -494,7 +506,7 @@ const Home: NextPage = () => {
         ) : (
           <div className="fixed z-50 bg-black border-2 text-center border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20">
             <br />
-            Block Number: {blockNumber ? blockNumber.toString() : "no data"}
+
             <br />
             {tutoggle == true ? (
               <div
@@ -656,8 +668,6 @@ const Home: NextPage = () => {
     );
   };
   const StatsDisplay = () => {
-    const tally = database.respects?.filter(x => x.hero === fInChat?.id);
-
     return (
       <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
         <div className="card mr-3 mt-4">
@@ -698,13 +708,6 @@ const Home: NextPage = () => {
             </div>
           )}
         </div>
-        FALLEN HEROES: {database.players?.length}
-        <br />
-        RESPECTS PAID: {database.respects?.length}
-        <br />
-        <MoriDisplay respected={fInChat} respects={tally} />
-        <br />
-        {!fInChat.name ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
       </div>
     );
   };

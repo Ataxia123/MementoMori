@@ -130,23 +130,6 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
     </>
   );
 };
-export const StatsDisplay = (props: { database: Database; fInChat: Character }) => {
-  const { database, fInChat } = props;
-
-  const tally = database.respects?.filter(x => x.hero === fInChat?.id);
-
-  return (
-    <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
-      FALLEN HEROES: {database.players?.length}
-      <br />
-      RESPECTS PAID: {database.respects?.length}
-      <br />
-      <MoriDisplay respected={fInChat} respects={tally} />
-      <br />
-      {!fInChat.name ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
-    </div>
-  );
-};
 
 export const CharacterDisplay = (props: { players: Character[] }) => {
   const { players } = props;
