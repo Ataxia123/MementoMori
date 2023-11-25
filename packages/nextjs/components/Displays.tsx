@@ -9,30 +9,20 @@ const findDatabase = (id: number, database: any[]) => {
   return f[0];
 };
 
-export const AttestationCount = (respected: Respect[], fInChat: Character) => {
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-  if (!respected) return <>No Respected</>;
-  const f = respected.filter(x => x.hero === fInChat?.id);
-  const count = f.length;
-  // const sorted = f.sort((a, b) => attestationCount(b.id) - attestationCount(a.id));
+const AttestationCount = (respects: Respect[]) => {
+  const respectCounts = respects.reduce((acc, respect) => {
+    acc[respect.hero] = (acc[respect.hero] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 
-  return (
-    <Slider {...settings}>
-      count: {count}
-      {f?.map((respected, index) => (
-        <div key={index} className="p-4">
-          <ul>respected.id: {respected.hero}</ul>
-        </div>
-      ))}
-    </Slider>
+  const mostRespectedHeroId = Object.keys(respectCounts).reduce((a, b) =>
+    respectCounts[a] > respectCounts[b] ? a : b,
   );
+  const mostRespectedCount = respectCounts[mostRespectedHeroId];
+
+  return { heroId: parseInt(mostRespectedHeroId, 10), count: mostRespectedCount };
 };
+
 export const RespectedDisplay = (props: { respected: Character }) => {
   const { respected } = props;
   return (
