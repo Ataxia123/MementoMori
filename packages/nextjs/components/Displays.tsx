@@ -133,37 +133,7 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
 export const StatsDisplay = (props: { database: Database; fInChat: Character }) => {
   const { database, fInChat } = props;
 
-  const TallyDisplay = () => {
-    const tally = database.respects?.filter(x => x.hero === fInChat?.id);
-
-    return (
-      <>
-        💀 MEMENTO MORI 💀:
-        {tally.length > 0 ? (
-          tally.map((respected, index) => (
-            <div key={index} className="p-5">
-              <ul>
-                IN MEMORIAN: <br />
-                <li className="font-mono-bold text-xl">{findDatabase(respected.hero, database.respects)?.name}</li>
-                <li className="overflow-Y-scroll">
-                  Prayer: <br />
-                  {respected.prayer}
-                </li>
-                <li className="overflow-hidden">Signed: {respected.signer}</li>
-              </ul>
-            </div>
-          ))
-        ) : (
-          <>
-            <br />
-            Nothing
-          </>
-        )}
-        <br />
-        respects paid: {tally.length}
-      </>
-    );
-  };
+  const tally = database.respects?.filter(x => x.hero === fInChat?.id);
 
   return (
     <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
@@ -171,9 +141,9 @@ export const StatsDisplay = (props: { database: Database; fInChat: Character }) 
       <br />
       RESPECTS PAID: {database.respects?.length}
       <br />
-      <TallyDisplay />
+      <MoriDisplay respected={fInChat} respects={tally} />
       <br />
-      {!fInChat || !database.respects ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
+      {fInChat.name == "" ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
     </div>
   );
 };
