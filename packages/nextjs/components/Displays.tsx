@@ -111,24 +111,22 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
 
   return (
     <>
-      <Slider {...settings}>
-        {respectedShuffle?.map((respected, index) => (
-          <div key={index} className="p-4 overflow-y-scroll">
-            <ul>
-              IN MEMORIAN: <br />
-              <li className="font-mono-bold text-xl">{findDatabase(respected.hero, respects)?.name}</li>
-              <li className="text-sm">
-                Prayer: <br />
-                {respected.prayer}
-              </li>
-              <li className="overflow-hidden">
-                Signed:{" "}
-                {respected.Attestation.message.recipient.slice(respected.Attestation.message.recipient.length - 5)}
-              </li>
-            </ul>
-          </div>
-        ))}
-      </Slider>
+      {respectedShuffle?.map((respected, index) => (
+        <div key={index} className="p-4 overflow-y-scroll overflow-x-hidden">
+          <ul>
+            IN MEMORIAN: <br />
+            <li className="font-mono-bold text-xl">{findDatabase(respected.hero, respects)?.name}</li>
+            <li className="text-sm">
+              Prayer: <br />
+              {respected.prayer}
+            </li>
+            <li className="">
+              Signed:{" "}
+              {respected.Attestation.message.recipient.slice(respected.Attestation.message.recipient.length - 5)}
+            </li>
+          </ul>
+        </div>
+      ))}
     </>
   );
 };

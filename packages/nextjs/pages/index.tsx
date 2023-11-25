@@ -454,9 +454,7 @@ const Home: NextPage = () => {
     return (
       <div className="card fixed right-20 top-1/5 mt-14 pr-2 z-50 font-mono">
         <div className="p-6 justify-items-center border-2 color-white">
-          <div className="overflow-y-scroll">
-            <MoriDisplay respected={fInChat} respects={tally} />
-          </div>
+          <MoriDisplay respected={fInChat} respects={tally} />
           {!address ? <RainbowKitCustomConnectButton /> : <>💀 Memento Mori 💀</>}
           <br />
           <br />
