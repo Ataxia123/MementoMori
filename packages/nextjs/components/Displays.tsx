@@ -17,9 +17,6 @@ export const AttestationCount = (respected: Respect[], fInChat: Character) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  // Once the popup is closed
-  //
-
   if (!respected) return <>No Respected</>;
   const f = respected.filter(x => x.hero === fInChat?.id);
   const count = f.length;
@@ -38,7 +35,6 @@ export const AttestationCount = (respected: Respect[], fInChat: Character) => {
 };
 export const RespectedDisplay = (props: { respected: Character }) => {
   const { respected } = props;
-
   return (
     <>
       <div className="border-2 border-gray-500 card mt-4 ml-10 mr-10 text-center text-white font-mono text-xl">
@@ -46,14 +42,14 @@ export const RespectedDisplay = (props: { respected: Character }) => {
           {" "}
           💀 Memento Mori 💀
           {!respected.equipped_items || respected.equipped_items.length <= 1 ? (
-            <div>{respected?.name} </div>
+            <div>{respected?.name}</div>
           ) : (
             <div>
               <br />
               <span className="font-bold text-2xl">{respected?.name}</span> <br />{" "}
               <span className="font-bold">
                 Level {respected?.level} <span>{respected?.race}</span>
-                <span> {respected?.class}</span>{" "}
+                <span>{respected?.class}</span>{" "}
               </span>
               <br />
               ---------------------
@@ -61,25 +57,25 @@ export const RespectedDisplay = (props: { respected: Character }) => {
               {respected?.equipped_items?.map((item: any) => (
                 <div key={item.slot.type}>
                   {item.quality.type == "POOR" ? (
-                    <span className="text-gray-500"> {item.name.en_US}</span>
+                    <span className="text-gray-500">{item.name.en_US}</span>
                   ) : (
                     <>
                       {item.quality.type == "COMMON" ? (
-                        <span className="text-white"> {item.name.en_US}</span>
+                        <span className="text-white">{item.name.en_US}</span>
                       ) : (
                         <>
                           {item.quality.type == "UNCOMMON" ? (
-                            <span className="text-green-500"> {item.name.en_US}</span>
+                            <span className="text-green-500">{item.name.en_US}</span>
                           ) : (
                             <>
                               {item.quality.type == "RARE" ? (
-                                <span className="text-blue-500"> {item.name.en_US}</span>
+                                <span className="text-blue-500">{item.name.en_US}</span>
                               ) : (
                                 <>
                                   {item.quality.type == "EPIC" ? (
-                                    <span className="text-purple-500"> {item.name.en_US}</span>
+                                    <span className="text-purple-500">{item.name.en_US}</span>
                                   ) : (
-                                    <span className="text-orange-500"> {item.name.en_US}</span>
+                                    <span className="text-orange-500">{item.name.en_US}</span>
                                   )}
                                 </>
                               )}
@@ -139,19 +135,34 @@ export const StatsDisplay = (props: { database: Database; fInChat: Character }) 
 
   const TallyDisplay = () => {
     const tally = database.respects?.filter(x => x.hero === fInChat?.id);
-    tally.map((respected, index) => (
-      <div key={index} className="p-4">
-        <ul>
-          IN MEMORIAN: <br />
-          <li className="font-mono-bold text-xl">{findDatabase(respected.hero, database.respects)?.name}</li>
-          <li className="overflow-Y-scroll">
-            Prayer: <br />
-            {respected.prayer}
-          </li>
-          <li className="overflow-hidden">Signed: {respected.signer}</li>
-        </ul>
-      </div>
-    ));
+
+    return (
+      <>
+        💀 MEMENTO MORI 💀:
+        {tally.length > 0 ? (
+          tally.map((respected, index) => (
+            <div key={index} className="p-5">
+              <ul>
+                IN MEMORIAN: <br />
+                <li className="font-mono-bold text-xl">{findDatabase(respected.hero, database.respects)?.name}</li>
+                <li className="overflow-Y-scroll">
+                  Prayer: <br />
+                  {respected.prayer}
+                </li>
+                <li className="overflow-hidden">Signed: {respected.signer}</li>
+              </ul>
+            </div>
+          ))
+        ) : (
+          <>
+            <br />
+            Nothing
+          </>
+        )}
+        <br />
+        respects paid: {tally.length}
+      </>
+    );
   };
 
   return (
@@ -160,12 +171,13 @@ export const StatsDisplay = (props: { database: Database; fInChat: Character }) 
       <br />
       RESPECTS PAID: {database.respects?.length}
       <br />
-      MOST RESPECTED 💀:
+      <TallyDisplay />
       <br />
       {!fInChat || !database.respects ? <></> : <MoriDisplay respected={fInChat} respects={database.respects} />}
     </div>
   );
 };
+
 export const CharacterDisplay = (props: { players: Character[] }) => {
   const { players } = props;
   // Shuffle the database array before rendering
