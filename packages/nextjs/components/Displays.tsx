@@ -89,24 +89,32 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
   const respectedShuffle = shuffle(respects);
 
   return (
-    <div className="overflow-y-scroll overflow-x-hidden">
-      Fs On Chain: {respectedShuffle.length}
-      {respectedShuffle?.map((respected, index) => (
-        <div key={index} className="p-4">
-          <ul>
-            IN MEMORIAN: <br />
-            <li className="font-mono-bold text-xl">{findDatabase(respected.hero, respects)?.name}</li>
-            <li className="text-sm">
-              Prayer: <br />
-              {respected.prayer}
-            </li>
-            <li className="">
-              Signed:{" "}
-              {respected.Attestation.message.recipient.slice(respected.Attestation.message.recipient.length - 5)}
-            </li>
-          </ul>
-        </div>
-      ))}
+    <div className="font-serif text-bold text text-center">
+      <span className="text-3xl">
+        💀 Memento Mori 💀
+        <br />
+      </span>
+      <div className="border-2 border-white h-60 w-full font-bold">
+        Prayers for the Dead
+        <br />
+        {respectedShuffle?.map((respected, index) => (
+          <div key={index} className="p-4">
+            <ul>
+              IN MEMORIAN: <br />
+              <li className="font-mono-bold text-xl">{findDatabase(respected.hero, respects)?.name}</li>
+              <li className="text-sm">
+                Prayer: <br />
+                {respected.prayer}
+              </li>
+              <li className="">
+                Signed:{" "}
+                {respected.Attestation.message.recipient.slice(respected.Attestation.message.recipient.length - 5)}
+              </li>
+            </ul>
+          </div>
+        ))}
+        <span className="">Fs On Chain: {respectedShuffle.length}</span>
+      </div>
     </div>
   );
 };

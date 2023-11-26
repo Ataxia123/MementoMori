@@ -452,20 +452,25 @@ const Home: NextPage = () => {
   const UserDisplay = () => {
     const tally = database.respects?.filter(x => x.hero === fInChat?.id);
     return (
-      <div className="card fixed right-20 top-1/5 mt-14 pr-2 z-50 font-mono">
+      <div className="card fixed right-20 top-1/6 w-1/4 mt-0 pr-2 z-50 font-mono border-2 color-white overflow-y-auto">
         <div className="p-6 justify-items-center border-2 color-white">
-          <MoriDisplay respected={fInChat} respects={tally} />
-          {!address ? <RainbowKitCustomConnectButton /> : <>💀 Memento Mori 💀</>}
           <br />
+          <div className="border-2 color-white top-2 right-0 h-72 w-full">
+            <MoriDisplay respected={fInChat} respects={tally} />
+          </div>
           <br />
           FALLEN HEROES: {database.players?.length}
           <br />
           TOTAL RESPECTS PAID: {database.respects?.length}
           <br />
+        </div>
+        <div className="p-6 justify-items-center border-2 color-white">
           <span>Respects paid by {address?.slice(address.length - 5) || "no data"}</span> <br />
-          <span>User: {user ? user.battleTag : "no data"}</span>
+          <span> {"User:" + user.battleTag}</span>
           <br />
           block:{blockNumber ? blockNumber.toString() : "no data"}
+          <br />
+          <RainbowKitCustomConnectButton />
           <br />
           <button
             className="text-red-500 hover:text-blue-500"
