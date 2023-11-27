@@ -469,6 +469,7 @@ const Home: NextPage = () => {
         pressFtoPayRespects={pressFtoPayRespects}
         FsInChat={FsInChat}
         respected={database.respects}
+        players={database.players}
       />
 
       <InfoDisplay

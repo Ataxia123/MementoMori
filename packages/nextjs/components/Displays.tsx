@@ -3,22 +3,22 @@ import Slider from "react-slick";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth/RainbowKitCustomConnectButton";
 import { useGlobalState } from "~~/services/store/store";
 import { Character, Database, Respect } from "~~/types/appTypes";
-import { playerColor, shuffle } from "~~/utils/utils";
+import { findDatabase, playerColor, shuffle } from "~~/utils/utils";
 
-const AttestationCount = (props: { respects: Respect[]; filter?: Filter }) => {
-  const { respects, filter } = props;
+const AttestationCount = (props: { players: Character[]; respects: Respect[]; filter?: Filter }) => {
+  const { respects, filter, players } = props;
   if (!Array.isArray(respects)) {
     return <p>Database is not ready or the data is invalid.</p>;
   }
 
   /*
-        const filteredRespects = respects.filter((respect) => {
-            return (
-                (!filter.class || respect.class === filter.class) &&
-                (!filter.race || respect.race === filter.race) &&
-                (!filter.level || respect.level === filter.level)
-            );
-        }); */
+          const filteredRespects = respects.filter((respect) => {
+              return (
+                  (!filter.class || respect.class === filter.class) &&
+                  (!filter.race || respect.race === filter.race) &&
+                  (!filter.level || respect.level === filter.level)
+              );
+          }); */
 
   const respectCounts = respects.reduce((acc, respect) => {
     acc[respect.hero] = (acc[respect.hero] || 0) + 1;
@@ -28,12 +28,13 @@ const AttestationCount = (props: { respects: Respect[]; filter?: Filter }) => {
   const leaderboard = Object.entries(respectCounts)
     .sort(([, aCount], [, bCount]) => bCount - aCount)
     .map(([heroId, count]) => ({ heroId: parseInt(heroId, 10), count }));
-
   return (
     <ul className="list-disc bg-white shadow-md rounded px-4 py-6 max-w-sm mx-auto">
       {leaderboard.map(entry => (
         <li key={entry.heroId} className="border-b border-gray-200 py-2 flex justify-between items-center">
-          <span className="text-gray-700">Hero ID: {entry.heroId}</span>
+          <span className={playerColor(findDatabase(entry.heroId, players))}>
+            Hero ID: {findDatabase(entry.heroId, players)?.name}
+          </span>
           <span className="text-blue-600 font-bold">Count: {entry.count}</span>
         </li>
       ))}
@@ -301,11 +302,12 @@ export const StatsDisplay = (props: {
   pressFtoPayRespects: (fInChat: Character, prayer: string) => void;
   FsInChat: (props: { fInChat: Character }) => JSX.Element;
   respected: Respect[];
+  players: Character[];
 }) => {
-  const { fInChat, setPrayer, prayer, pressFtoPayRespects, FsInChat, respected } = props;
+  const { fInChat, setPrayer, players, prayer, pressFtoPayRespects, FsInChat, respected } = props;
   return (
     <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
-      <AttestationCount respects={respected} />
+      <AttestationCount players={players} respects={respected} />
       <div className="card mr-3 mt-4">
         {!fInChat ? (
           <>SELECT A HERO</>
