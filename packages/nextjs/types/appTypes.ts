@@ -36,3 +36,10 @@ export type Database = {
   items: Item[];
   respectsTally: { hero: number; tally: Respect[] };
 };
+
+export interface Filter {
+  class?: string;
+  race?: string;
+  level?: number;
+  name?: string;
+}

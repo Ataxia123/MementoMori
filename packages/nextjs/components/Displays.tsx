@@ -2,7 +2,7 @@ import Image from "next/image";
 import Slider from "react-slick";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth/RainbowKitCustomConnectButton";
 import { useGlobalState } from "~~/services/store/store";
-import { Character, Database, Respect } from "~~/types/appTypes";
+import { Character, Database, Filter, Respect } from "~~/types/appTypes";
 import { findDatabase, playerColor, shuffle } from "~~/utils/utils";
 
 const AttestationCount = (props: { players: Character[]; respects: Respect[]; filter?: Filter }) => {
@@ -12,14 +12,14 @@ const AttestationCount = (props: { players: Character[]; respects: Respect[]; fi
     return <p>Database is not ready or the data is invalid.</p>;
   }
 
-  /*
-            const filteredRespects = respects.filter((respect) => {
-                return (
-                    (!filter.class || respect.class === filter.class) &&
-                    (!filter.race || respect.race === filter.race) &&
-                    (!filter.level || respect.level === filter.level)
-                );
-            }); */
+  /* 
+              const filteredRespects = respects.filter((respect) => {
+                  return (
+                      (!filter.class || respect.class === filter.class) &&
+                      (!filter.race || respect.race === filter.race) &&
+                      (!filter.level || respect.level === filter.level)
+                  );
+              }); */
 
   const respectCounts = respects.reduce((acc, respect) => {
     acc[respect.hero] = (acc[respect.hero] || 0) + 1;
@@ -30,7 +30,7 @@ const AttestationCount = (props: { players: Character[]; respects: Respect[]; fi
     .sort(([, aCount], [, bCount]) => bCount - aCount)
     .map(([heroId, count]) => ({ heroId: parseInt(heroId, 10), count }));
   return (
-    <ul className="list-disc shadow-md rounded px-4 py-6 max-w-sm mx-auto overflow-auto">
+    <ul className="list-disc shadow-md rounded px-4 py-6 h-40 max-w-sm mx-auto overflow-auto">
       {leaderboard.map(entry => (
         <li key={entry.heroId} className="border-b border-gray-200 py-2 flex justify-between items-center">
           <button
@@ -39,20 +39,14 @@ const AttestationCount = (props: { players: Character[]; respects: Respect[]; fi
             }}
             className={playerColor(findDatabase(entry.heroId, players))}
           >
-            Hero ID: {findDatabase(entry.heroId, players)?.name}
+            {findDatabase(entry.heroId, players)?.name}
           </button>
-          <span className="text-blue-600 font-bold">Count: {entry.count}</span>
+          <br /> <span className="text-blue-600 font-bold">Count: {entry.count}</span>
         </li>
       ))}
     </ul>
   );
 };
-
-interface Filter {
-  class?: string;
-  race?: string;
-  level?: number;
-}
 
 export const MainDisplay = (props: {
   mmToggle: boolean;
@@ -309,11 +303,13 @@ export const StatsDisplay = (props: {
   FsInChat: (props: { fInChat: Character }) => JSX.Element;
   respected: Respect[];
   players: Character[];
+  filter: Filter;
+  setFilter: (filter: Filter) => void;
 }) => {
-  const { fInChat, setPrayer, players, prayer, pressFtoPayRespects, FsInChat, respected } = props;
+  const { filter, setFilter, fInChat, setPrayer, players, prayer, pressFtoPayRespects, FsInChat, respected } = props;
+
   return (
-    <div className="card fixed w-80 h-80 left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
-      <AttestationCount players={players} respects={respected} />
+    <div className="card fixed w-96 border-2 color-white left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
       <div className="card mr-3 mt-4">
         {!fInChat ? (
           <>SELECT A HERO</>
@@ -322,16 +318,41 @@ export const StatsDisplay = (props: {
             {!fInChat.name ? "HERE BE THE DEAD" : "In Memorian of:"} <br />
             <span className="font-bold">{fInChat?.name}</span>
             <div>
-              <br />
+              <AttestationCount players={players} respects={respected} />
 
               <form>
-                <label className={"text-black"}>
+                <label className={"text-white"}>
+                  Filter:
                   <input
                     type="text"
-                    value={prayer}
+                    value={filter?.class}
                     onChange={e => {
                       e.stopPropagation();
-                      setPrayer(e.target.value);
+                      setFilter({ class: e.target.value });
+                    }}
+                  />
+                  <input
+                    type="text"
+                    value={filter?.name}
+                    onChange={e => {
+                      e.stopPropagation();
+                      setFilter({ name: e.target.value });
+                    }}
+                  />
+                  <input
+                    type="number"
+                    value={filter?.level}
+                    onChange={e => {
+                      e.stopPropagation();
+                      setFilter({ level: Number(e.target.value) });
+                    }}
+                  />
+                  <input
+                    type="text"
+                    value={filter?.race}
+                    onChange={e => {
+                      e.stopPropagation();
+                      setFilter({ race: e.target.value });
                     }}
                   />
                 </label>

@@ -12,7 +12,7 @@ import { useAccount, useBlockNumber } from "wagmi";
 import AudioController from "~~/components/AudioController";
 import { BallDiv, InfoDisplay, MainDisplay, RespectedDisplay, StatsDisplay, UserDisplay } from "~~/components/Displays";
 import { useGlobalState } from "~~/services/store/store";
-import { Character, Database, Respect, Sounds } from "~~/types/appTypes";
+import { Character, Database, Filter, Respect, Sounds } from "~~/types/appTypes";
 
 const Home: NextPage = () => {
   const [players, setPlayers] = useState<any[]>();
@@ -28,6 +28,8 @@ const Home: NextPage = () => {
   const [isPayingRespects, setIsPayingRespects] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
   const [sounds, setSounds] = useState<Sounds>({});
+
+  const [filter, setFilter] = useState<Filter>({ name: "test", level: 12, class: "Druid", race: "Elf" });
   const [audioController, setAudioController] = useState<AudioController | null>(null);
   const [soundsLoaded, setSoundsLoaded] = useState<boolean>(false);
   const fInChat = useGlobalState(state => state.player);
@@ -470,6 +472,8 @@ const Home: NextPage = () => {
         FsInChat={FsInChat}
         respected={database.respects}
         players={database.players}
+        filter={filter as Filter}
+        setFilter={setFilter}
       />
 
       <InfoDisplay
