@@ -93,14 +93,14 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
         💀 Memento Mori 💀
         <br />{" "}
       </span>
-
+      <span className="font-bold text-xl">Prayers for {respected.name}</span>
+      <br />
+      <span className="">Fs On Chain: {respectedShuffle.length}</span>
       <div className="h-60 w-full font-bold overflow-auto">
-        <span className="font-bold text-xl">Prayers for {respected.name}</span>
         <br />
         {respectedShuffle?.map((respected, index) => (
           <div key={index} className="p-4">
             <ul>
-              IN MEMORIAN: <br />
               <li className="text-sm">
                 Prayer: <br />
                 {respected.prayer}
@@ -112,7 +112,6 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
             </ul>
           </div>
         ))}
-        <span className="">Fs On Chain: {respectedShuffle.length}</span>
       </div>
     </div>
   );
