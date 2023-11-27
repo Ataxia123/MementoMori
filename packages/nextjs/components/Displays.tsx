@@ -5,23 +5,25 @@ import { useGlobalState } from "~~/services/store/store";
 import { Character, Database, Filter, Respect } from "~~/types/appTypes";
 import { findDatabase, playerColor, shuffle } from "~~/utils/utils";
 
-const AttestationCount = (props: { players: Character[]; respects: Respect[]; filter?: Filter }) => {
+const AttestationCount = (props: { players: Character[]; respects: Respect[]; filter: Filter }) => {
   const { respects, filter, players } = props;
   const setFinChat = useGlobalState(state => state.setPlayer);
   if (!Array.isArray(respects)) {
     return <p>Database is not ready or the data is invalid.</p>;
   }
 
-  /* 
-              const filteredRespects = respects.filter((respect) => {
-                  return (
-                      (!filter.class || respect.class === filter.class) &&
-                      (!filter.race || respect.race === filter.race) &&
-                      (!filter.level || respect.level === filter.level)
-                  );
-              }); */
+  const filteredRespects = players.filter(respect => {
+    return (
+      (!filter.class || respect.class === filter.class) &&
+      (!filter.race || respect.race === filter.race) &&
+      (!filter.name || respect.name === filter.name) &&
+      (!filter.level || respect.level === filter.level)
+    );
+  });
 
-  const respectCounts = respects.reduce((acc, respect) => {
+  const appliedFilter = respects.filter(respect => filteredRespects.some(player => player.id === respect.hero));
+
+  const respectCounts = appliedFilter.reduce((acc, respect) => {
     acc[respect.hero] = (acc[respect.hero] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
@@ -307,6 +309,8 @@ export const StatsDisplay = (props: {
   setFilter: (filter: Filter) => void;
 }) => {
   const { filter, setFilter, fInChat, setPrayer, players, prayer, pressFtoPayRespects, FsInChat, respected } = props;
+  const classes = ["Warrior", "Paladin", "Hunter", "Rogue", "Priest", "Shaman", "Mage", "Warlock", "Druid"];
+  const races = ["Human", "Orc", "Dwarf", "Night Elf", "Undead", "Tauren", "Gnome", "Troll"];
 
   return (
     <div className="card fixed w-96 border-2 color-white left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
@@ -318,48 +322,78 @@ export const StatsDisplay = (props: {
             {!fInChat.name ? "HERE BE THE DEAD" : "In Memorian of:"} <br />
             <span className="font-bold">{fInChat?.name}</span>
             <div>
-              <AttestationCount players={players} respects={respected} />
-
-              <form>
-                <label className={"text-white"}>
-                  Filter:
+              <AttestationCount players={players} respects={respected} filter={filter} />
+              Filter:
+              <form className="text-sm">
+                <br />
+                <label className="text-white">
+                  Name:
                   <input
-                    type="text"
-                    value={filter?.class}
-                    onChange={e => {
-                      e.stopPropagation();
-                      setFilter({ class: e.target.value });
-                    }}
-                  />
-                  <input
+                    className="text-black w-1/3 pl-2 ml-0"
                     type="text"
                     value={filter?.name}
                     onChange={e => {
                       e.stopPropagation();
-                      setFilter({ name: e.target.value });
+                      setFilter({ ...filter, name: e.target.value });
                     }}
                   />
-                  <input
-                    type="number"
-                    value={filter?.level}
+                  <label className="text-white">
+                    Level:
+                    <input
+                      className="text-black w-1/6 pl-4 ml-0"
+                      type="number"
+                      value={filter?.level}
+                      onChange={e => {
+                        e.stopPropagation();
+                        setFilter({ ...filter, level: Number(e.target.value) });
+                      }}
+                    />
+                  </label>
+                </label>
+                <br />
+                <label className={"text-white"}>
+                  Class:
+                  <select
+                    className="text-black"
+                    value={filter?.class}
                     onChange={e => {
                       e.stopPropagation();
-                      setFilter({ level: Number(e.target.value) });
+                      setFilter({ ...filter, class: e.target.value });
                     }}
-                  />
-                  <input
-                    type="text"
+                  >
+                    <option value="">Select Class</option>
+                    {classes.map(c => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <br />
+
+                <label className="text-white">
+                  Race:
+                  <select
+                    className="text-black pl-4 ml-4"
                     value={filter?.race}
                     onChange={e => {
                       e.stopPropagation();
-                      setFilter({ race: e.target.value });
+                      setFilter({ ...filter, race: e.target.value });
                     }}
-                  />
+                  >
+                    <option value="">Select Race</option>
+                    {races.map(r => (
+                      <option key={r} value={r}>
+                        {r}
+                      </option>
+                    ))}
+                  </select>
                 </label>
+
                 <br />
                 <br />
                 <button
-                  className="border-2 border-white text-center rounded-md p-2"
+                  className="border-2 border-white text-center rounded-md ml-10 p-2"
                   onClick={e => {
                     e.preventDefault();
                     if (!fInChat) return;
@@ -376,6 +410,7 @@ export const StatsDisplay = (props: {
     </div>
   );
 };
+
 export const BallDiv = (props: { players: Character[] }) => {
   const { players } = props;
   return (

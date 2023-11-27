@@ -29,7 +29,7 @@ const Home: NextPage = () => {
   const [hidden, setHidden] = useState<boolean>(false);
   const [sounds, setSounds] = useState<Sounds>({});
 
-  const [filter, setFilter] = useState<Filter>({ name: "test", level: 12, class: "Druid", race: "Elf" });
+  const [filter, setFilter] = useState<Filter>({});
   const [audioController, setAudioController] = useState<AudioController | null>(null);
   const [soundsLoaded, setSoundsLoaded] = useState<boolean>(false);
   const fInChat = useGlobalState(state => state.player);
