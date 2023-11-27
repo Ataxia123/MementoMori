@@ -38,8 +38,7 @@ export const RespectedDisplay = (props: { respected: Character }) => {
               <br />
               <span className="font-bold text-2xl">{respected?.name}</span> <br />{" "}
               <span className="font-bold">
-                Level {respected?.level} <span>{respected?.race}</span>
-                <span>{respected?.class}</span>{" "}
+                Level {respected?.level} <span>{respected?.race}</span> <span>{respected?.class}</span>{" "}
               </span>
               <br />
               ---------------------
@@ -89,19 +88,19 @@ export const MoriDisplay = (props: { respected: Character; respects: Respect[] }
   const respectedShuffle = shuffle(respects);
 
   return (
-    <div className="font-serif text-bold text text-center">
+    <div className="font-mono text-bold text text-center">
       <span className="text-3xl">
         💀 Memento Mori 💀
-        <br />
+        <br />{" "}
       </span>
-      <div className="border-2 border-white h-60 w-full font-bold">
-        Prayers for the Dead
+
+      <div className="h-60 w-full font-bold overflow-auto">
+        <span className="font-bold text-xl">Prayers for {respected.name}</span>
         <br />
         {respectedShuffle?.map((respected, index) => (
           <div key={index} className="p-4">
             <ul>
               IN MEMORIAN: <br />
-              <li className="font-mono-bold text-xl">{findDatabase(respected.hero, respects)?.name}</li>
               <li className="text-sm">
                 Prayer: <br />
                 {respected.prayer}
