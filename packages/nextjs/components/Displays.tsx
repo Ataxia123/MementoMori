@@ -137,15 +137,7 @@ export const InfoDisplay = (props: {
   const { mmToggle, setMmToggle, infoToggle, setInfoToggle, tutoggle, setTutoggle, playSpaceshipOn } = props;
   return (
     <>
-      <div
-        className="fixed -mt-10 top-2/3 left-1/2 w-1/4 h-1/3 z-50 transform -translate-x-1/2 scale-100 hover:scale-105"
-        onClick={() => {
-          mmToggle ? setMmToggle(false) : setMmToggle(true);
-        }}
-      >
-        <Image src="/logo.png" alt="Logo" fill />
-      </div>
-      {infoToggle == true ? (
+      {!infoToggle == true ? (
         <div className="fixed z-50 border-gray-500 right-12 mr-12 mt-10 bottom-4/5 scale-50">
           <div
             className="animate-bounce absolute right-20 -left-6 h-80 w-60 scale-x-110 scale-y-110"
@@ -155,7 +147,7 @@ export const InfoDisplay = (props: {
           </div>
         </div>
       ) : (
-        <div className="fixed z-50 bg-black border-2 text-center border-gray-500 font-mono p-4 w-1/2 right-60 mr-60 top-20">
+        <div className="fixed z-50 bg-black border-2 text-center border-gray-500 font-mono font-bold p-5 w-2/5 right-1/5 mr-0 top-20">
           <br />
 
           <br />
@@ -174,7 +166,6 @@ export const InfoDisplay = (props: {
               the power of the secret flame to create...
               <br />
               <br />
-              <span className="font-bold">💀 Memento Mori 💀</span> <br />
               <br />
               An onChain memorial to fallen hardcore adventurers which records their unique journey through their gear,
               their name, race and level at their time of death and stores it for use throughout the Metaverse. Stats,
@@ -307,16 +298,32 @@ export const StatsDisplay = (props: {
   players: Character[];
   filter: Filter;
   setFilter: (filter: Filter) => void;
+  setShowModal2: (showModal2: boolean) => void;
 }) => {
-  const { filter, setFilter, fInChat, setPrayer, players, prayer, pressFtoPayRespects, FsInChat, respected } = props;
+  const {
+    filter,
+    setFilter,
+    fInChat,
+    setPrayer,
+    setShowModal2,
+    players,
+    prayer,
+    pressFtoPayRespects,
+    FsInChat,
+    respected,
+  } = props;
   const classes = ["Warrior", "Paladin", "Hunter", "Rogue", "Priest", "Shaman", "Mage", "Warlock", "Druid"];
   const races = ["Human", "Orc", "Dwarf", "Night Elf", "Undead", "Tauren", "Gnome", "Troll"];
 
   return (
     <div className="card fixed w-96 border-2 color-white left-20 bottom-1/3 mt-24 pr-2 z-50 font-mono">
+      <FsInChat fInChat={fInChat as Character} />
       <div className="card mr-3 mt-4">
-        {!fInChat ? (
-          <>SELECT A HERO</>
+        {!fInChat.name ? (
+          <>
+            SELECT A HERO
+            <AttestationCount players={players} respects={respected} filter={filter} />
+          </>
         ) : (
           <div className="font-mono text-xl">
             {!fInChat.name ? "HERE BE THE DEAD" : "In Memorian of:"} <br />
@@ -397,10 +404,10 @@ export const StatsDisplay = (props: {
                   onClick={e => {
                     e.preventDefault();
                     if (!fInChat) return;
-                    pressFtoPayRespects(fInChat, prayer);
+                    setShowModal2(true);
                   }}
                 >
-                  <FsInChat fInChat={fInChat as Character} />
+                  Press F to Pay Respects
                 </button>
               </form>
             </div>
@@ -471,8 +478,10 @@ export const UserDisplay = (props: {
   fInChat: Character;
   address: string;
   blockNumber: bigint;
+  setShow1: (value: boolean) => void;
+  show1: boolean;
 }) => {
-  const { database, fInChat, address, blockNumber, setHidden, hidden } = props;
+  const { database, fInChat, address, blockNumber, setHidden, hidden, show1, setShow1 } = props;
   const tally = database.respects?.filter(x => x.hero === fInChat?.id);
   const user = useGlobalState(state => state.user);
   return (
@@ -501,9 +510,10 @@ export const UserDisplay = (props: {
           onClick={e => {
             e.stopPropagation();
             setHidden(!hidden);
+            setShow1(!show1);
           }}
         >
-          {"| HIDE UI |"}{" "}
+          {"| INFO |"}{" "}
         </button>
         <br />
       </div>

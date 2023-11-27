@@ -2,19 +2,26 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import React from "react";
 import Image from "next/image";
 import { useEthersProvider, useEthersSigner } from "../utils/wagmi-utils";
+import { INITIAL_CONFIG } from "./config-dummy";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { useAccount, useBlockNumber } from "wagmi";
 import AudioController from "~~/components/AudioController";
-import { BallDiv, InfoDisplay, MainDisplay, RespectedDisplay, StatsDisplay, UserDisplay } from "~~/components/Displays";
+import { BallDiv, InfoDisplay, MainDisplay, StatsDisplay, UserDisplay } from "~~/components/Displays";
+import { Buttons, Modal } from "~~/components/Modals";
+import * as S from "~~/components/Modals/styles";
 import { useGlobalState } from "~~/services/store/store";
 import { Character, Database, Filter, Respect, Sounds } from "~~/types/appTypes";
 
 const Home: NextPage = () => {
+  const [theme, setTheme] = useState("dark");
+  const [show1, setShow1] = useState<boolean>(true);
+  const [show2, setShow2] = useState<boolean>(false);
+  const [show3, setShow3] = useState<boolean>(false);
+  const [show4, setShow4] = useState<boolean>(false);
   const [players, setPlayers] = useState<any[]>();
   const [dead, setDead] = useState<Character[]>([]);
   const [alive, setAlive] = useState<Character[]>([]);
@@ -28,6 +35,7 @@ const Home: NextPage = () => {
   const [isPayingRespects, setIsPayingRespects] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
   const [sounds, setSounds] = useState<Sounds>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [filter, setFilter] = useState<Filter>({});
   const [audioController, setAudioController] = useState<AudioController | null>(null);
@@ -372,42 +380,34 @@ const Home: NextPage = () => {
 
     toast.success("Memento Mori" + playerData.name);
   };
-  function FsInChat(props: { fInChat: Character }) {
-    const { fInChat } = props;
-    const componentRef = useRef(null); // Reference to the component
 
-    useEffect(() => {
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // Component is visible, add event listener
-            document.addEventListener("keydown", handleKeyPress);
-          } else {
-            // Component is not visible, remove event listener
-            document.removeEventListener("keydown", handleKeyPress);
-          }
-        });
-      });
-
-      const handleKeyPress = (event: any) => {
-        if (event.key === "F" || event.key === "f") {
-          setIsPayingRespects(true);
-        }
-      };
-
-      if (componentRef.current) {
-        observer.observe(componentRef.current); // Start observing
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      console.log("weeee");
+      if (event.key === "F" || event.key === "f") {
+        setShow2(true);
       }
+    };
 
-      return () => {
-        if (componentRef.current) {
-          observer.unobserve(componentRef.current); // Clean up
-        }
-        document.removeEventListener("keydown", handleKeyPress);
-      };
-    }, [fInChat]);
+    document.addEventListener("keydown", handleKeyPress);
 
-    return <div ref={componentRef}>Press F to pay Respects</div>;
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+
+  const handlePayRespects = () => {
+    setIsPayingRespects(true);
+    setShow2(false);
+  };
+
+  function FsInModal(props: { fInChat: Character }) {
+    return (
+      <>
+        <div className="text-center border-2 color-white p-1">💀 Memento Mori 💀</div>
+        {!show2 && <div>Press F to pay Respects</div>}
+      </>
+    );
   }
   useEffect(() => {
     playSpaceshipOn();
@@ -441,8 +441,62 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <div
+        className="fixed -mt-10 top-2/3 left-1/2 w-1/4 h-1/3 z-50 transform -translate-x-1/2 scale-100 hover:scale-105"
+        onClick={() => {
+          mmToggle ? setMmToggle(false) : setMmToggle(true);
+        }}
+      >
+        <Image src="/logo.png" alt="Logo" fill />
+      </div>
+      <Modal show={show1} setShow={setShow1} config={INITIAL_CONFIG.modal1}>
+        <h1>My Modal 1</h1>
+        <InfoDisplay
+          infoToggle={show1}
+          setInfoToggle={setShow1}
+          tutoggle={tutoggle}
+          setTutoggle={setTutoggle}
+          playSpaceshipOn={playSpaceshipOn}
+          mmToggle={mmToggle}
+          setMmToggle={setMmToggle}
+        />
+        <S.ModalFooter>
+          <S.ModalButtonSecondary onClick={() => setShow1(!show1)}>Cancel</S.ModalButtonSecondary>
+          <S.ModalButtonPrimary>Acept</S.ModalButtonPrimary>
+        </S.ModalFooter>
+      </Modal>
+
+      <Modal show={show2} setShow={setShow2} config={INITIAL_CONFIG.modal2}>
+        <>
+          <div className="text-center border-2 color-white p-1 mb-40">
+            💀 Memento Mori 💀
+            <br />
+            <>
+              {fInChat.name}
+              {"level"}
+              {fInChat.level} {fInChat.race} {fInChat.class}
+            </>
+            <br />
+            <input type="text" className="pl-10" placeholder="A prayer for the fallen" />
+            <br />
+            {isPayingRespects && <div>Respects paid.</div>}
+            <S.ModalFooter>
+              <div className="text-center">
+                <button onClick={handlePayRespects} className="border-2 color-white p-1">
+                  Pay Respects
+                </button>
+              </div>
+            </S.ModalFooter>
+          </div>
+        </>
+      </Modal>
+
+      <Modal show={show4} setShow={setShow4} config={INITIAL_CONFIG.modal4}>
+        <h1>My Modal 4</h1>
+        <p>Reusable Modal with options to customize.</p>
+      </Modal>
       <BallDiv players={database.players} />
-      {hidden == true ? (
+      {show1 == true || show2 == true ? (
         <></>
       ) : (
         <MainDisplay
@@ -462,6 +516,8 @@ const Home: NextPage = () => {
         blockNumber={blockNumber ? blockNumber : BigInt(0)}
         setHidden={setHidden}
         hidden={hidden}
+        setShow1={setShow1}
+        show1={show1}
       />
 
       <StatsDisplay
@@ -469,22 +525,26 @@ const Home: NextPage = () => {
         setPrayer={setPrayer}
         prayer={prayer}
         pressFtoPayRespects={pressFtoPayRespects}
-        FsInChat={FsInChat}
+        FsInChat={FsInModal}
         respected={database.respects}
         players={database.players}
         filter={filter as Filter}
         setFilter={setFilter}
+        setShowModal2={setShow2}
       />
 
-      <InfoDisplay
-        infoToggle={infoToggle}
-        setInfoToggle={setInfoToggle}
-        tutoggle={tutoggle}
-        setTutoggle={setTutoggle}
-        playSpaceshipOn={playSpaceshipOn}
-        mmToggle={mmToggle}
-        setMmToggle={setMmToggle}
-      />
+      <div className="fixed bottom-20 right-20 z-50 color-black">
+        <Buttons
+          show1={show1}
+          setShow1={setShow1}
+          show2={show2}
+          setShow2={setShow2}
+          show3={show3}
+          setShow3={setShow3}
+          show4={show4}
+          setShow4={setShow4}
+        />
+      </div>
     </>
   );
 };
