@@ -452,7 +452,7 @@ const Home: NextPage = () => {
   const UserDisplay = () => {
     const tally = database.respects?.filter(x => x.hero === fInChat?.id);
     return (
-      <div className="card fixed right-20 top-1/6 w-1/4 mt-0 pr-2 z-50 font-mono border-2 color-white overflow-y-auto">
+      <div className="card fixed right-20 top-1/6 w-1/4 mt-0 pr-2 z-50 font-mono border-2 color-white">
         <div className="p-6 justify-items-center border-2 color-white">
           <br />
           <div className="border-2 color-white top-2 right-0 h-72 w-full">
