@@ -384,7 +384,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       console.log("weeee");
-      if (event.key === "F" || event.key === "f") {
+      if (event.key === "F" || (event.key === "f" && fInChat.name)) {
         setShow2(true);
       }
     };
@@ -405,6 +405,7 @@ const Home: NextPage = () => {
     return (
       <>
         <div className="text-center border-2 color-white p-1">💀 Memento Mori 💀</div>
+        {!fInChat.name && <div>No one in chat</div>}
         {!show2 && <div>Press F to pay Respects</div>}
       </>
     );
