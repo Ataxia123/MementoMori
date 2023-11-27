@@ -468,6 +468,7 @@ const Home: NextPage = () => {
         prayer={prayer}
         pressFtoPayRespects={pressFtoPayRespects}
         FsInChat={FsInChat}
+        respected={database.respects}
       />
 
       <InfoDisplay
