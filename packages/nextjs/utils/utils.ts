@@ -21,6 +21,12 @@ export function shuffle(array: any[]) {
 
   return array;
 }
+
+export const findDatabase = (id: number, database: any[]) => {
+  const f = database.filter(x => x.id === id);
+  console.log(f[0], "f");
+  return f[0];
+};
 export const playerColor = (character: Character) => {
   let classString = "font-mono text-black "; // Default text color set to black
 
