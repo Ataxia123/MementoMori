@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import React from "react";
 import Image from "next/image";
+import { INITIAL_CONFIG } from "../config-dummy";
 import { useEthersProvider, useEthersSigner } from "../utils/wagmi-utils";
-import { INITIAL_CONFIG } from "./config-dummy";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import type { NextPage } from "next";
 import toast from "react-hot-toast";
