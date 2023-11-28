@@ -37,7 +37,7 @@ const Home: NextPage = () => {
   const [sounds, setSounds] = useState<Sounds>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [filter, setFilter] = useState<Filter>({});
+  const [filter, setFilter] = useState<Filter>();
   const [audioController, setAudioController] = useState<AudioController | null>(null);
   const [soundsLoaded, setSoundsLoaded] = useState<boolean>(false);
   const fInChat = useGlobalState(state => state.player);
@@ -102,6 +102,38 @@ const Home: NextPage = () => {
   const address = account?.address;
 
   // LOGIN METHODS
+  async function createUrlAndCopy(filter: Filter): Promise<void> {
+    const baseUrl = "https://example.com/characters";
+    const queryParams = new URLSearchParams();
+
+    Object.entries(filter).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        queryParams.append(key, value.toString());
+      }
+    });
+
+    const urlWithParams = `${baseUrl}?${queryParams.toString()}`;
+    await navigator.clipboard.writeText(urlWithParams);
+  }
+
+  function loadFilterFromUrl(filter: Filter): Filter {
+    const urlParams = new URLSearchParams(window.location.search);
+    Object.keys(filter).forEach(key => {
+      const value = urlParams.get(key);
+      if (value !== null) {
+        if (key === "level") {
+          const level = parseInt(value, 10);
+          if (!isNaN(level)) {
+            filter[key as keyof Filter] = level as any;
+          }
+        } else {
+          filter[key as keyof Filter] = value as any;
+        }
+      }
+    });
+
+    return filter;
+  }
 
   const postDb = async (players: Character) => {
     try {
@@ -478,7 +510,14 @@ const Home: NextPage = () => {
               {fInChat.level} {fInChat.race} {fInChat.class}
             </>
             <br />
-            <input type="text" className="pl-10" placeholder="A prayer for the fallen" />
+            <input
+              type="text"
+              className="pl-10"
+              placeholder="A prayer for the fallen"
+              onChange={e => {
+                setPrayer(e.target.value);
+              }}
+            />
             <br />
             {isPayingRespects && <div>Respects paid.</div>}
             <S.ModalFooter>
