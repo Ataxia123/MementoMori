@@ -17,10 +17,8 @@ import { useGlobalState } from "~~/services/store/store";
 import { Character, Database, Filter, Respect, Sounds } from "~~/types/appTypes";
 
 const Home: NextPage = () => {
-  const [theme, setTheme] = useState("dark");
   const [show1, setShow1] = useState<boolean>(true);
   const [show2, setShow2] = useState<boolean>(false);
-  const [show3, setShow3] = useState<boolean>(false);
   const [show4, setShow4] = useState<boolean>(false);
   const [players, setPlayers] = useState<any[]>();
   const [dead, setDead] = useState<Character[]>([]);
@@ -28,14 +26,12 @@ const Home: NextPage = () => {
 
   const [player, setPlayer] = useState<Character | undefined>();
   const [mmToggle, setMmToggle] = useState<boolean>(false);
-  const [infoToggle, setInfoToggle] = useState<boolean>(false);
   const [tutoggle, setTutoggle] = useState<boolean>(true);
 
   const [prayer, setPrayer] = useState<string>("💀 Memento Mori 💀");
   const [isPayingRespects, setIsPayingRespects] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
   const [sounds, setSounds] = useState<Sounds>({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [filter, setFilter] = useState<Filter>({});
   const [audioController, setAudioController] = useState<AudioController | null>(null);
@@ -153,8 +149,9 @@ const Home: NextPage = () => {
   const address = account?.address;
 
   // LOGIN METHODS
-  async function createUrlAndCopy(filter: Filter): Promise<void> {
-    const baseUrl = "https://localhost:3000/";
+  async function createUrlAndCopy(fInChat: Character): Promise<void> {
+    const filter = { name: fInChat?.name, class: fInChat?.class, race: fInChat?.race, level: fInChat?.level } as Filter;
+    const baseUrl = "https://mmorionchain.com/";
     const queryParams = new URLSearchParams();
 
     Object.entries(filter).forEach(([key, value]) => {
@@ -557,14 +554,23 @@ const Home: NextPage = () => {
 
       <Modal show={show2} setShow={setShow2} config={INITIAL_CONFIG.modal2}>
         <>
-          <div className="text-center border-2 color-white p-1 mb-40">
-            💀 Memento Mori 💀
+          <div className="text-center border-2 color-white p-20 mb-52  bg-black">
+            <span className="text-2xl font-bold">💀 Memento Mori 💀</span>
+            <br />
             <br />
             <>
-              {fInChat.name}
-              {"level"}
-              {fInChat.level} {fInChat.race} {fInChat.class}
+              {!fInChat.name && <> Select a Hero</>}
+              {fInChat.name && (
+                <>
+                  <span className="text-xl font-bold">
+                    {fInChat.name}
+                    {"level"}
+                    {fInChat.level} {fInChat.race} {fInChat.class}
+                  </span>{" "}
+                </>
+              )}
             </>
+            <br />
             <br />
             <input
               type="text"
@@ -578,12 +584,16 @@ const Home: NextPage = () => {
             {isPayingRespects && <div>Respects paid.</div>}
             <S.ModalFooter>
               <div className="text-center">
-                <button onClick={handlePayRespects} className="border-2 color-white p-1">
+                <button onClick={handlePayRespects} className="color-white p-1 hover:bg-red-500">
                   Pay Respects
                 </button>
+                <br />
+
+                <br />
                 <button
+                  className="text-red-500 p-1 hover:text-blue-500"
                   onClick={() => {
-                    createUrlAndCopy(filter);
+                    createUrlAndCopy(fInChat);
                   }}
                 >
                   Share
@@ -638,19 +648,6 @@ const Home: NextPage = () => {
         setFilter={setFilter}
         setShowModal2={setShow2}
       />
-
-      <div className="fixed bottom-20 right-20 z-50 color-black">
-        <Buttons
-          show1={show1}
-          setShow1={setShow1}
-          show2={show2}
-          setShow2={setShow2}
-          show3={show3}
-          setShow3={setShow3}
-          show4={show4}
-          setShow4={setShow4}
-        />
-      </div>
     </>
   );
 };
