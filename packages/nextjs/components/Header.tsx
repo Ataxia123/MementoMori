@@ -19,11 +19,6 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "💀 Memento Mori 💀",
     href: "/",
   },
-  {
-    label: "Obituaries",
-    href: `/obituaries`,
-    icon: <BugAntIcon className="h-4 w-4" />,
-  },
 ];
 
 export const HeaderMenuLinks = () => {
