@@ -58,8 +58,9 @@ export const MainDisplay = (props: {
   address: string;
   user: any;
   fInChat: Character;
+  login: () => void;
 }) => {
-  const { mmToggle, dead, fInChat, player, playerSelector, address, user } = props;
+  const { mmToggle, dead, fInChat, player, playerSelector, address, user, login } = props;
   const settings = {
     dots: true,
     infinite: false,
@@ -106,7 +107,13 @@ export const MainDisplay = (props: {
                 {!address ? (
                   <>connect wallet</>
                 ) : (
-                  <>{!user ? <>LOGIN WITH BNET</> : <div>Logged in as {user.battleTag}</div>}</>
+                  <>
+                    {!user.battleTag ? (
+                      <button onClick={() => login()}>LOGIN WITH BNET</button>
+                    ) : (
+                      <div>Logged in as {user.battleTag}</div>
+                    )}
+                  </>
                 )}
               </div>
             )}
@@ -330,90 +337,90 @@ export const StatsDisplay = (props: {
             <span className="font-bold">{fInChat?.name}</span>
             <div>
               <AttestationCount players={players} respects={respected} filter={filter} />
-              Filter:
-              <form className="text-sm">
-                <br />
-                <label className="text-white">
-                  Name:
-                  <input
-                    className="text-black w-1/3 pl-2 ml-0"
-                    type="text"
-                    value={filter?.name}
-                    onChange={e => {
-                      e.stopPropagation();
-                      setFilter({ ...filter, name: e.target.value });
-                    }}
-                  />
-                  <label className="text-white">
-                    Level:
-                    <input
-                      className="text-black w-1/6 pl-4 ml-0"
-                      type="number"
-                      value={filter?.level}
-                      onChange={e => {
-                        e.stopPropagation();
-                        setFilter({ ...filter, level: Number(e.target.value) });
-                      }}
-                    />
-                  </label>
-                </label>
-                <br />
-                <label className={"text-white"}>
-                  Class:
-                  <select
-                    className="text-black"
-                    value={filter?.class}
-                    onChange={e => {
-                      e.stopPropagation();
-                      setFilter({ ...filter, class: e.target.value });
-                    }}
-                  >
-                    <option value="">Select Class</option>
-                    {classes.map(c => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <br />
-
-                <label className="text-white">
-                  Race:
-                  <select
-                    className="text-black pl-4 ml-4"
-                    value={filter?.race}
-                    onChange={e => {
-                      e.stopPropagation();
-                      setFilter({ ...filter, race: e.target.value });
-                    }}
-                  >
-                    <option value="">Select Race</option>
-                    {races.map(r => (
-                      <option key={r} value={r}>
-                        {r}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-
-                <br />
-                <br />
-                <button
-                  className="border-2 border-white text-center rounded-md ml-10 p-2"
-                  onClick={e => {
-                    e.preventDefault();
-                    if (!fInChat) return;
-                    setShowModal2(true);
-                  }}
-                >
-                  Press F to Pay Respects
-                </button>
-              </form>
             </div>
           </div>
         )}
       </div>
+      Filter:
+      <form className="text-sm">
+        <br />
+        <label className="text-white">
+          Name:
+          <input
+            className="text-black w-1/3 pl-2 ml-0"
+            type="text"
+            value={filter?.name}
+            onChange={e => {
+              e.stopPropagation();
+              setFilter({ ...filter, name: e.target.value });
+            }}
+          />
+          <label className="text-white">
+            Level:
+            <input
+              className="text-black w-1/6 pl-4 ml-0"
+              type="number"
+              value={filter?.level}
+              onChange={e => {
+                e.stopPropagation();
+                setFilter({ ...filter, level: Number(e.target.value) });
+              }}
+            />
+          </label>
+        </label>
+        <br />
+        <label className={"text-white"}>
+          Class:
+          <select
+            className="text-black"
+            value={filter?.class}
+            onChange={e => {
+              e.stopPropagation();
+              setFilter({ ...filter, class: e.target.value });
+            }}
+          >
+            <option value="">Select Class</option>
+            {classes.map(c => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </label>
+        <br />
+
+        <label className="text-white">
+          Race:
+          <select
+            className="text-black pl-4 ml-4"
+            value={filter?.race}
+            onChange={e => {
+              e.stopPropagation();
+              setFilter({ ...filter, race: e.target.value });
+            }}
+          >
+            <option value="">Select Race</option>
+            {races.map(r => (
+              <option key={r} value={r}>
+                {r}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <br />
+        <br />
+        <button
+          className="border-2 border-white text-center rounded-md ml-10 p-2"
+          onClick={e => {
+            e.preventDefault();
+            if (!fInChat) return;
+            setShowModal2(true);
+          }}
+        >
+          Press F to Pay Respects
+        </button>
+      </form>
     </div>
   );
 };
@@ -480,8 +487,10 @@ export const UserDisplay = (props: {
   blockNumber: bigint;
   setShow1: (value: boolean) => void;
   show1: boolean;
+  logout: () => void;
+  login: () => void;
 }) => {
-  const { database, fInChat, address, blockNumber, setHidden, hidden, show1, setShow1 } = props;
+  const { login, database, fInChat, address, blockNumber, setHidden, hidden, show1, setShow1, logout } = props;
   const tally = database.respects?.filter(x => x.hero === fInChat?.id);
   const user = useGlobalState(state => state.user);
   return (
@@ -516,6 +525,16 @@ export const UserDisplay = (props: {
           {"| INFO |"}{" "}
         </button>
         <br />
+        <>
+          {!user.battleTag ? (
+            <button onClick={() => login()}>LOGIN WITH BNET</button>
+          ) : (
+            <div>
+              Logged in as {user.battleTag}
+              <button onClick={() => logout()}>Logout</button>
+            </div>
+          )}
+        </>
       </div>
     </div>
   );

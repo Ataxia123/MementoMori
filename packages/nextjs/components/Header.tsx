@@ -62,59 +62,6 @@ export const Header = () => {
     burgerMenuRef,
     useCallback(() => setIsDrawerOpen(false), []),
   );
-  const setUser = useGlobalState(state => state.setUser);
-  const user = useGlobalState(state => state.user);
-
-  let popup: Window | null = null;
-  const url = process.env.NEXT_PUBLIC_WEBSITE || "http://localhost:3000";
-
-  const login = () => {
-    popup = window.open(
-      url + "/oauth/battlenet",
-      "targetWindow",
-      `toolbar=no,
-       location=no,
-       status=no,
-       menubar=no,
-       scrollbars=yes,
-       resizable=yes,
-       width=620,
-       height=700`,
-    );
-    // Once the popup is closed
-    window.addEventListener(
-      "message",
-      event => {
-        if (event.origin !== url) return;
-        console.log("event", event);
-
-        if (event.data) {
-          setUser(event.data);
-          popup?.close();
-        }
-      },
-      false,
-    );
-  };
-
-  const logout = async () => {
-    try {
-      const response = await fetch(url + "/oauth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        setUser(null);
-        toast.success("Logging out successful");
-      } else {
-        console.error("Failed to logout", response);
-        toast.error("Failed to logout");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   return (
     <div className="sticky lg:static top-0 navbar backdrop-blur-sm min-h-0 flex-shrink-0 justify-between z-20 px-0 sm:px-2 bg-transparent">
@@ -151,27 +98,6 @@ export const Header = () => {
             <RainbowKitCustomConnectButton />
           </div>
         </div>
-        {user.token == "" ? (
-          <button
-            className="border-2 border-black rounded-md"
-            onClick={() => {
-              login();
-            }}
-          >
-            LOGIN WITH BNET
-          </button>
-        ) : (
-          <div>
-            <button
-              onClick={() => {
-                logout();
-                toast.success("Successfully logged out");
-              }}
-            >
-              Logout
-            </button>
-          </div>
-        )}{" "}
       </div>
       <br />
     </div>

@@ -47,6 +47,7 @@ const Home: NextPage = () => {
   const database = useGlobalState(state => state.database);
   const url = process.env.NEXT_PUBLIC_WEBSITE || "http://localhost:3000";
 
+  const setUser = useGlobalState(state => state.setUser);
   const { data: blockNumber, isError, isLoading } = useBlockNumber();
   const loadSounds = useCallback(async () => {
     const spaceshipOn = await audioController?.loadSound("/firesound.wav");
@@ -89,6 +90,56 @@ const Home: NextPage = () => {
     }
   }
 
+  let popup: Window | null = null;
+
+  const login = () => {
+    popup = window.open(
+      url + "/oauth/battlenet",
+      "targetWindow",
+      `toolbar=no,
+       location=no,
+       status=no,
+       menubar=no,
+       scrollbars=yes,
+       resizable=yes,
+       width=620,
+       height=700`,
+    );
+    // Once the popup is closed
+    window.addEventListener(
+      "message",
+      event => {
+        if (event.origin !== url) return;
+        console.log("event", event);
+
+        if (event.data) {
+          setUser(event.data);
+          popup?.close();
+        }
+      },
+      false,
+    );
+  };
+
+  const logout = async () => {
+    try {
+      const response = await fetch(url + "/oauth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setUser(null);
+        toast.success("Logging out successful");
+      } else {
+        console.error("Failed to logout", response);
+        toast.error("Failed to logout");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const EASContractAddress = "0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587"; //
   // Initialize the sdk with the address of the EAS Schema contract address
   const eas = new EAS(EASContractAddress);
@@ -103,7 +154,7 @@ const Home: NextPage = () => {
 
   // LOGIN METHODS
   async function createUrlAndCopy(filter: Filter): Promise<void> {
-    const baseUrl = "https://example.com/characters";
+    const baseUrl = "https://localhost:3000/";
     const queryParams = new URLSearchParams();
 
     Object.entries(filter).forEach(([key, value]) => {
@@ -134,6 +185,10 @@ const Home: NextPage = () => {
 
     return filter;
   }
+  useEffect(() => {
+    loadFilterFromUrl(filter);
+    // Setting the initial volume to 50%
+  }, []);
 
   const postDb = async (players: Character) => {
     try {
@@ -416,7 +471,8 @@ const Home: NextPage = () => {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       console.log("weeee");
-      if (event.key === "F" || (event.key === "f" && fInChat.name)) {
+      if (event.key === "F" || event.key === "f") {
+        if (!fInChat.name) return toast.error("No one in chat");
         setShow2(true);
       }
     };
@@ -442,6 +498,7 @@ const Home: NextPage = () => {
       </>
     );
   }
+
   useEffect(() => {
     playSpaceshipOn();
     // Setting the initial volume to 50%
@@ -525,6 +582,13 @@ const Home: NextPage = () => {
                 <button onClick={handlePayRespects} className="border-2 color-white p-1">
                   Pay Respects
                 </button>
+                <button
+                  onClick={() => {
+                    createUrlAndCopy(filter);
+                  }}
+                >
+                  Share
+                </button>
               </div>
             </S.ModalFooter>
           </div>
@@ -547,6 +611,7 @@ const Home: NextPage = () => {
           address={address as string}
           user={user}
           fInChat={fInChat}
+          login={login}
         />
       )}
       <UserDisplay
@@ -558,6 +623,8 @@ const Home: NextPage = () => {
         hidden={hidden}
         setShow1={setShow1}
         show1={show1}
+        logout={logout}
+        login={login}
       />
 
       <StatsDisplay
