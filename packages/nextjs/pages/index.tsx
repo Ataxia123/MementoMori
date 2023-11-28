@@ -37,7 +37,7 @@ const Home: NextPage = () => {
   const [sounds, setSounds] = useState<Sounds>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [filter, setFilter] = useState<Filter>();
+  const [filter, setFilter] = useState<Filter>({});
   const [audioController, setAudioController] = useState<AudioController | null>(null);
   const [soundsLoaded, setSoundsLoaded] = useState<boolean>(false);
   const fInChat = useGlobalState(state => state.player);
