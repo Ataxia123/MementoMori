@@ -184,8 +184,9 @@ const Home: NextPage = () => {
   }
   useEffect(() => {
     loadFilterFromUrl(filter);
+    console.log(filter, "filter");
     // Setting the initial volume to 50%
-  }, []);
+  }, [database]);
 
   const postDb = async (players: Character) => {
     try {
