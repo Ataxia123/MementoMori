@@ -470,9 +470,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      console.log("weeee");
       if (event.key === "F" || event.key === "f") {
-        if (!fInChat.name) return toast.error("No one in chat");
         setShow2(true);
       }
     };
@@ -485,6 +483,7 @@ const Home: NextPage = () => {
   }, []);
 
   const handlePayRespects = () => {
+    if (!fInChat.name) return toast.error("No one in chat");
     setIsPayingRespects(true);
     setShow2(false);
   };
