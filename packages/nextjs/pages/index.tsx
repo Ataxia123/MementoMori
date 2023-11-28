@@ -594,6 +594,7 @@ const Home: NextPage = () => {
                   className="text-red-500 p-1 hover:text-blue-500"
                   onClick={() => {
                     createUrlAndCopy(fInChat);
+                    toast.success("Copied to clipboard");
                   }}
                 >
                   Share
